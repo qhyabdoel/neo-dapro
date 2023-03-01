@@ -1,0 +1,232 @@
+<!-- Menu Sidebar -->
+<div class="menu">
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="nav-item" *ngFor="let item of options">
+        <a [ngClass]="{ 'nav-link': true, active: valSelected.name == item.name }" (click)="tabOnClick(item.name)">
+          <div class="flex-center">
+            <div class="width-30" *ngIf="isLoadingList">
+              <loading-component [loading]="isLoadingList"></loading-component>
+            </div>
+            <span>{{ item.translateHeaderTitle | translate }}</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content list">
+      <div
+        class="tab-pane"
+        [ngClass]="{ active: valSelected.name == item.name }"
+        [id]="'tab_' + item.name"
+        *ngFor="let item of options"
+      >
+        <div class="row clearfix">
+          <div class="col-10 pr-2 mb-1">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder=" {{ 'GRID_VIEW.SD' | translate }}"
+                [(ngModel)]="searchText"
+                [ngModelOptions]="{ standalone: true }"
+                (keyup)="$event.which == 13 ? searchList() : 0"
+              />
+              <div class="input-group-text p-0">
+                <a href="javascript:void(0)" class="input-group-append p-0 pt-1" (click)="searchList()">
+                  <span class="input-group-addon mx-2"><i class="ti-search f-12"></i></span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-2 pl-0">
+            <a
+              href="javascript:void(0)"
+              class="p-1 text-center"
+              (click)="loadList()"
+              matTooltip="{{
+                (valSelected.name === 'application'
+                  ? 'MODULE.DATA_APPLICATIONS.LEFT_BAR.REFRESH_APP_LIST'
+                  : valSelected.name === 'dashboard'
+                  ? 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.RDL'
+                  : valSelected.name === 'chart'
+                  ? 'MODULE.DATA_VISUAL.CHART.LEFT_BAR.RCL'
+                  : valSelected.name === 'dataset'
+                  ? 'MODULE.DATA_VISUAL.CHART.LEFT_BAR.RDL'
+                  : 'Refresh'
+                ) | translate
+              }} "
+            >
+              <i class="ti-reload align-middle"></i
+            ></a>
+          </div>
+        </div>
+        <div class="row clearfix" *ngIf="valSelected.name !== 'dataset'">
+          <div class="col-10 pr-2">
+            <button
+              id="selectall"
+              type="checkbox"
+              class="btn btn-info btn-outline btn-sm w-100 mt-1 ml-0"
+              matTooltip="{{ 'MODULE.DATA_APPLICATIONS.LEFT_BAR.SA' | translate }}"
+              (click)="checkUncheckAll()"
+            >
+              {{ 'MODULE.DATA_APPLICATIONS.LEFT_BAR.SA' | translate }} <i class="zmdi zmdi-check-square f-12 ml-1"></i>
+            </button>
+          </div>
+          <div class="col-2 pl-0 mt-1">
+            <a
+              *ngIf="selectedlistforDelete.length > 0"
+              href="javascript:void(0)"
+              id="deletebutton"
+              class="p-1 text-center"
+              matTooltip="{{ 'MODULE.DATA_APPLICATIONS.LEFT_BAR.D' | translate }}"
+              (click)="multipleDelete()"
+            >
+              <i class="ti-trash align-middle"></i>
+            </a>
+          </div>
+        </div>
+        <div
+          [ngClass]="valSelected.name === 'dataset' ? 'panel-group mt-1 dv-sc dvc-sc' : 'panel-group mt-1 dv-sc'"
+          class="panel-group mt-1 dv-sc"
+          id="accordion_1"
+          role="tablist"
+          aria-multiselectable="true"
+        >
+          <div *ngIf="lists.length == 0 && !isLoadingList" class="panel panel-primary m-0">
+            <br />
+            <h6 align="center">{{ 'MODULE.DATA_APPLICATIONS.LEFT_BAR.ND' | translate }}</h6>
+          </div>
+          <div *ngIf="isLoadingList" class="panel panel-primary m-0">
+            <br />
+            <h6 align="center">Loading ...</h6>
+          </div>
+
+          <div class="panel panel-primary m-0" *ngFor="let item of lists">
+            <div class="panel-heading">
+              <h4 class="panel-title align-self-center">
+                <div class="row clearfix">
+                  <div class="col-2 pl-4 align-self-center" *ngIf="valSelected.name !== 'dataset'">
+                    <div class="checkbox simple individual">
+                      <input
+                        id="{{ 'mca-' + item[valSelected.deleteIdField] }}"
+                        type="checkbox"
+                        [(ngModel)]="item.isChecked"
+                        (change)="checkedList(item[valSelected.deleteIdField], item.isChecked)"
+                      />
+                      <label for="{{ 'mca-' + item[valSelected.deleteIdField] }}"></label>
+                    </div>
+                  </div>
+                  <div [ngClass]="valSelected.name === 'dataset' ? 'col-10 pr-0' : 'col-8 px-0'">
+                    <a
+                      [ngClass]="{
+                        'is-active':
+                          valSelected.name !== 'dataset'
+                            ? selectedItemFromList
+                              ? selectedItemFromList[valSelected.identity] == item[valSelected.identity]
+                              : false
+                            : false
+                      }"
+                      role="button"
+                      (dblclick)="doubleClickAction(item)"
+                      (click)="collapseDashboardAccordion(item.id)"
+                    >
+                      <!-- start application -->
+                      <div *ngIf="valSelected.name === 'application'">
+                        <p class="mb-0">{{ item.title }}</p>
+                        <span class="ml-0">{{ item.updated_at | dateformat: 'DD/MM/YYYY hh:mm:ss' }}</span>
+                        <span class="zmdi zmdi-more-vert f-8 mx-1"></span>
+                      </div>
+                      <!-- end application -->
+                      <!-- start dataset -->
+                      <div *ngIf="valSelected.name === 'dataset'">
+                        <p class="mb-0">
+                          {{ item.query }}
+                        </p>
+                        <span class="ml-0">{{ item.updated_on | dateformat: 'DD/MM/YYYY hh:mm:ss' }}</span>
+                        <span class="zmdi zmdi-more-vert f-8 mx-1"></span>
+                        <span class="ml-0"> {{ item.dataset_alias }}</span>
+                      </div>
+                      <!-- end dataset -->
+                      <!-- start chart -->
+                      <div *ngIf="valSelected.name === 'chart'">
+                        <p class="mb-0">
+                          <span class="zmdi zmdi-chart text-center ml-0 mr-1 align-middle"></span>{{ item.name }} |
+                          {{ item.viz_type }}
+                        </p>
+                        <span class="ml-0">{{ item.changed_on | dateformat: 'DD/MM/YYYY' }}</span
+                        ><br />
+                        <span class="ml-0">{{ item.ds_name }}</span>
+                      </div>
+                      <!-- end chart -->
+                      <!-- start dashboard -->
+                      <div *ngIf="valSelected.name === 'dashboard'">
+                        <p class="mb-0">{{ item.dashboard_title }}</p>
+                        <span class="ml-0">{{ item.changed_on | dateformat: 'DD/MM/YYYY hh:mm:ss' }}</span>
+                        <span class="zmdi zmdi-more-vert f-8 mx-1"></span>
+                        <span class="ml-0"> {{ item.charts != null ? item.charts.length : 0 }} Charts</span>
+                      </div>
+                      <!-- end dashboard -->
+                    </a>
+                  </div>
+
+                  <div class="col-1 align-self-center p-0">
+                    <div class="dropdown">
+                      <a
+                        href="javascript:void(0);"
+                        class="dropdown-toggle pr-2 float-right"
+                        (click)="handleSelectOption(item)"
+                      >
+                        <i class="zmdi zmdi-more-vert d-inline"></i>
+                      </a>
+                      <ul
+                        class="dropdown-menu dropdown-menu-right"
+                        [ngClass]="{
+                          show: selectedOptionId === item[selectedTypeOption]
+                        }"
+                      >
+                        <li *ngFor="let item of dropdownOptions">
+                          <a href="javascript:void(0);" (click)="loadTo(item)">{{ item.title | translate }}</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="panel-collapse collapse in" role="tabpanel">
+                    <div class="panel-body">
+                      <div class="body">
+                        <span *ngFor="let id of item.charts">
+                          <a href="javascript:void(0);" class="p-0">{{ getChartNameById(id) }}</a>
+                          <hr class="my-2" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </h4>
+            </div>
+
+            <div class="panel-collapse collapse in" [ngClass]="{ show: activeId === item.id }">
+              <div class="panel-body">
+                <div class="body">
+                  <span *ngFor="let activeId of item.charts">
+                    <a href="javascript:void(0);" class="p-0">{{ getChartNameById(activeId) }}</a>
+                    <hr class="my-2" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="hide-menu"
+    (click)="hideAndShowLeftbar()"
+    matTooltip="{{ 'MODULE.DATA_APPLICATIONS.LEFT_BAR.HIDE' | translate }}"
+  >
+    <div class="btn-toggle btn-toggle-menu">
+      <a href="javascript:void(0);" class="btn-menu"></a>
+    </div>
+  </div>
+</div>

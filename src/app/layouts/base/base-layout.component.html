@@ -1,0 +1,14 @@
+<ng-container *ngIf="selfLayout !== 'blank'; else blankLayout">
+  <div id="kt_wrapper">
+    <kt-header *ngIf="isShowHeader$ | async"></kt-header>
+
+    <div id="kt_content">
+      <kt-subheader *ngIf="subheaderDisplay"></kt-subheader>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #blankLayout>
+  <router-outlet></router-outlet>
+</ng-template>

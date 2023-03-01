@@ -1,0 +1,29 @@
+  .overlay {
+	fill: none;
+	pointer-events: all;
+  }
+  g.zoom-controls {
+	cursor: pointer;
+	pointer-events: all;
+  }
+  g.zoom-controls rect {
+  	fill: white;
+  	stroke: #596877;
+  	stroke-width: 1;
+  }
+  g.zoom-controls line {
+  	stroke: #596877;
+  	stroke-width: 2;
+  }
+  title.d3-tip {
+	line-height: 1;
+	font-weight: bold;
+	padding: 12px;
+	background: #001;
+	color: #F00;
+	border-radius: 2px;
+	pointer-events: none;
+  }
+  title.d3-tip span {
+	color: #755f70;
+  }

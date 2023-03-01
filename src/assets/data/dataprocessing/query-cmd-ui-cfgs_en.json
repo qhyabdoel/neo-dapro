@@ -1,0 +1,1444 @@
+{
+  "SEARCH": {
+    "properties": [
+      {
+        "name": "search_type",
+        "displayed": true,
+        "value": null,
+        "label": "Source Type",
+        "placeholder": "",
+        "dataContent": "Use when you want select type of source",
+        "type": "select",
+        "valuetype": "string",
+        "dataOptions": [
+          {
+            "value": "CSV",
+            "text": "CSV"
+          },
+          {
+            "value": "FILE",
+            "text": "File"
+          },
+          {
+            "value": "FOLDER",
+            "text": "Folder"
+          }
+        ],
+        "isRequired": true,
+        "isTriggerOnSelect": true,
+        "triggeredPropValues": [
+          {
+            "triggerValue": "CSV",
+            "propValues": {
+              "is_csv": true,
+              "is_folder": false,
+              "include_header": true
+            }
+          },
+          {
+            "triggerValue": "FILE",
+            "propValues": {
+              "is_csv": false,
+              "is_folder": false,
+              "include_header": false
+            }
+          },
+          {
+            "triggerValue": "FOLDER",
+            "propValues": {
+              "is_csv": false,
+              "is_folder": true,
+              "include_header": false
+            }
+          }
+        ]
+      },
+      {
+        "name": "paths",
+        "displayed": true,
+        "label": "File Path",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use When you want select path of file",
+        "type": "text",
+        "valuetype": "array-of-string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "search_str",
+        "displayed": true,
+        "label": "Search Keyword(s)",
+        "placeholder": "Keywords to search",
+        "dataContent": "Use when you want filter specific value from all column, add comma (,) for multiple search.",
+        "type": "text",
+        "valuetype": "single-quoted-words-separated-by-space",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "csv_separator",
+        "displayed": true,
+        "label": "Separator",
+        "placeholder": "",
+        "dataContent": "Use when you want insert character for separator between columns",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": ",",
+        "toggledBySelectedValue": "CSV"
+      },
+      {
+        "name": "has_limit",
+        "displayed": true,
+        "label": "Limit",
+        "placeholder": "",
+        "dataContent": "Use when you want filter count value of result",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "toggledOnCheck": "limit",
+        "reversedToggle": false,
+        "value": false
+      },
+      {
+        "name": "limit",
+        "displayed": true,
+        "label": "Number of Limit",
+        "placeholder": "Limit",
+        "dataContent": "Input your number of limit data",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "1",
+        "isOnChange": true,
+        "reversedToggle": false
+      },
+      {
+        "name": "has_offset",
+        "displayed": true,
+        "label": "Offset",
+        "placeholder": "",
+        "dataContent": "Use when you want skip row and show value start from row -n",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "toggledOnCheck": "offset",
+        "reversedToggle": false,
+        "value": false
+      },
+      {
+        "name": "offset",
+        "displayed": true,
+        "label": "Number of Offset",
+        "placeholder": "Offset",
+        "dataContent": "Input your start row for first data",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "0",
+        "isOnChange": true,
+        "reversedToggle": false
+      },
+      {
+        "name": "include_header",
+        "displayed": true,
+        "label": "First Row as Header",
+        "placeholder": "",
+        "dataContent": "Use when you want set first row as your header data",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "toggledOnCheck": "csv_columns",
+        "reversedToggle": true,
+        "value": false,
+        "toggledBySelectedValue": "CSV"
+      },
+      {
+        "name": "csv_columns",
+        "displayed": true,
+        "label": "Column(s) Name",
+        "placeholder": "",
+        "dataContent": "Use when you want set alias name on destination table. Add comma (,) for any columns",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "",
+        "isOnChange": true,
+        "reversedToggle": true,
+        "toggledBySelectedValue": "CSV"
+      },
+      {
+        "name": "label",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      },
+      {
+        "name": "is_csv",
+        "displayed": false,
+        "label": "",
+        "placeholder": "",
+        "dataContent": "",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": false
+      },
+      {
+        "name": "is_folder",
+        "displayed": false,
+        "label": "",
+        "placeholder": "",
+        "dataContent": "",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": false
+      }
+    ]
+  },
+  "EXTRACT": {
+    "properties": [
+      {
+        "name": "extract_type",
+        "displayed": true,
+        "value": null,
+        "label": "Extract Type",
+        "placeholder": "",
+        "dataContent": "Use when you want select type of extract",
+        "type": "select",
+        "valuetype": "string",
+        "dataOptions": [
+          {
+            "value": "SPLIT",
+            "text": "Split"
+          },
+          {
+            "value": "JSON",
+            "text": "JSON"
+          },
+          {
+            "value": "REX",
+            "text": "Regular Expression"
+          },
+          {
+            "value": "KV",
+            "text": "Key Value Pairs"
+          },
+          {
+            "value": "FORMULA",
+            "text": "Formula"
+          }
+        ],
+        "isRequired": true,
+        "isTriggerOnSelect": true,
+        "subKeyPrefix": "extract"
+      },
+      {
+        "name": "col_target",
+        "displayed": true,
+        "value": null,
+        "label": "Column",
+        "placeholder": "",
+        "dataContent": "Insert specific column",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "SPLIT|JSON|KV|REX"
+      },
+      {
+        "name": "columns",
+        "displayed": true,
+        "value": null,
+        "label": "Alias Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use when you want set alias name on destination table",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "REX"
+      },
+      {
+        "name": "pattern",
+        "displayed": true,
+        "value": null,
+        "label": "Regex Pattern",
+        "placeholder": "",
+        "dataContent": "Use when you want to set pattern of regex which will be implemented",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "REX"
+      },
+      {
+        "name": "field_delimiter",
+        "displayed": true,
+        "value": null,
+        "label": "Column Separator",
+        "placeholder": "",
+        "dataContent": "Use when you want to set separator between column",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "KV"
+      },
+      {
+        "name": "kv_delimiter",
+        "displayed": true,
+        "value": null,
+        "label": "Key Value Separator",
+        "placeholder": "",
+        "dataContent": "Use when you want to set separator of Key Value",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "KV"
+      },
+      {
+        "name": "formulas",
+        "displayed": true,
+        "value": null,
+        "label": "Formula",
+        "placeholder": "",
+        "dataContent": "Use when you want to set formula function",
+        "type": "formula",
+        "valuetype": "array-of-string",
+        "dataOptions": ["formula", "description"],
+        "isRequired": true,
+        "toggledBySelectedValue": "FORMULA",
+        "jsonFile": "formula"
+      },
+      {
+        "name": "delimiter",
+        "displayed": true,
+        "value": ",",
+        "label": "Separator",
+        "placeholder": "",
+        "dataContent": "Use when you want insert character for separator between columns",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "SPLIT"
+      },
+      {
+        "name": "aliases",
+        "displayed": true,
+        "value": null,
+        "label": "Alias Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use when you want set alias name on destination table",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "SPLIT"
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "AGGREGATE": {
+    "properties": [
+      {
+        "name": "functions",
+        "displayed": true,
+        "label": "Formula",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use when you want to set formula function",
+        "type": "formula",
+        "valuetype": "square-bracket-value",
+        "dataOptions": ["formula", "description"],
+        "isRequired": true,
+        "value": null,
+        "jsonFile": "aggregate"
+      },
+      {
+        "name": "aliases",
+        "displayed": true,
+        "label": "Alias Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use when you want set alias name on destination table",
+        "type": "text",
+        "valuetype": "square-bracket-value",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "groups",
+        "displayed": true,
+        "label": "Group By",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use when you want make an aggregate a table by column",
+        "type": "text",
+        "valuetype": "array-of-string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "CONFIG": {
+    "properties": [
+      {
+        "name": "type",
+        "displayed": true,
+        "value": null,
+        "label": "Source Type",
+        "placeholder": "",
+        "dataContent": "Use when you want select type of source",
+        "type": "select",
+        "valuetype": "string",
+        "dataOptions": [
+          {
+            "value": "CSV",
+            "text": "CSV"
+          },
+          {
+            "value": "GZ",
+            "text": "GZ"
+          }
+        ],
+        "isRequired": true
+      },
+      {
+        "name": "path",
+        "displayed": true,
+        "label": "File Path",
+        "placeholder": "File Path",
+        "dataContent": "Use when you want select path of file. Ex: /data/Result.csv",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "separator",
+        "displayed": true,
+        "value": null,
+        "label": "Separator",
+        "placeholder": "",
+        "dataContent": "Use when you want insert character for separator between columns",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      },
+      {
+        "name": "columns",
+        "displayed": true,
+        "value": null,
+        "label": "Alias Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use when you want set alias name on destination table",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "minLength": null
+      },
+      {
+        "name": "head_pos",
+        "displayed": true,
+        "label": "Header Position",
+        "placeholder": "Define Header Position",
+        "dataContent": "Use when you want to set position of header",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": 0
+      },
+      {
+        "name": "trim",
+        "displayed": true,
+        "label": "Trimspace",
+        "placeholder": "",
+        "dataContent": "Use when you want to trim all of space on value",
+        "type": "checkbox",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": false
+      },
+      {
+        "name": "validate",
+        "displayed": true,
+        "label": "Validate",
+        "placeholder": "",
+        "dataContent": "Use when you want to validate all of character",
+        "type": "checkbox",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": false
+      }
+    ]
+  },
+  "COPY": {
+    "properties": [
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "CORRELATEREF": {
+    "properties": [
+      {
+        "name": "src",
+        "displayed": true,
+        "label": "Source",
+        "isValueObject": true,
+        "value": [
+          {
+            "name": "table",
+            "displayed": true,
+            "value": null,
+            "label": "Source Table",
+            "placeholder": "",
+            "dataContent": "Use when you want to set a table as source for join between table",
+            "type": "text",
+            "valuetype": "string",
+            "dataOptions": [],
+            "isRequired": true,
+            "minLength": null
+          },
+          {
+            "name": "cols",
+            "displayed": true,
+            "value": null,
+            "label": "Source Columns",
+            "placeholder": "",
+            "dataContent": "Use when you want to set a column from source table as a primary key",
+            "type": "text",
+            "valuetype": "string",
+            "dataOptions": [],
+            "isRequired": true,
+            "minLength": null
+          }
+        ]
+      },
+      {
+        "name": "ref",
+        "displayed": true,
+        "label": "Reference",
+        "isValueObject": true,
+        "value": [
+          {
+            "name": "table",
+            "displayed": true,
+            "value": null,
+            "label": "Reference Table",
+            "placeholder": "",
+            "dataContent": "Use when you want to set a table as reference for join between table",
+            "type": "text",
+            "valuetype": "string",
+            "dataOptions": [],
+            "isRequired": true,
+            "minLength": null
+          },
+          {
+            "name": "cols",
+            "displayed": true,
+            "value": null,
+            "label": "Reference Column",
+            "placeholder": "",
+            "dataContent": "Use when you want to set a column from reference table as a foreign key",
+            "type": "text",
+            "valuetype": "string",
+            "dataOptions": [],
+            "isRequired": true,
+            "minLength": null
+          }
+        ]
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "CREATEINDEX": {
+    "properties": [
+      {
+        "name": "cols",
+        "displayed": true,
+        "value": null,
+        "label": "Select Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use when you want select some column of source data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      },
+      {
+        "name": "path",
+        "displayed": true,
+        "label": "File Path",
+        "placeholder": "File Path",
+        "dataContent": "Insert file path location",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null,
+        "toggledBySelectedValue": "CSV"
+      }
+    ]
+  },
+  "DEDUP": {
+    "properties": [
+      {
+        "name": "by",
+        "displayed": true,
+        "label": "Select Column",
+        "placeholder": "Select Column",
+        "dataContent": "Use when you want select some column of source data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "DROP": {
+    "properties": [
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      }
+    ]
+  },
+  "EXPLODE": {
+    "properties": [
+      {
+        "name": "distinct",
+        "displayed": true,
+        "label": "Distinct",
+        "placeholder": "",
+        "tooltip": "Distinct",
+        "dataContent": "Usen when you want to get value with select distinct",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "column",
+        "displayed": true,
+        "label": "Alias Column",
+        "placeholder": "",
+        "dataContent": "Use when you want set alias name on destination table",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "delimiter",
+        "displayed": true,
+        "label": "Separator",
+        "placeholder": "",
+        "dataContent": "Use when you want insert character for separator between columns",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "sort",
+        "displayed": true,
+        "label": "Sort",
+        "placeholder": "",
+        "dataContent": "Use when you want to sorting column",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "label": "From Table",
+        "placeholder": "",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "value": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      }
+    ]
+  },
+  "FILTER": {
+    "properties": [
+      {
+        "name": "condition",
+        "displayed": true,
+        "label": "Formula",
+        "placeholder": "Formula",
+        "dataContent": "Use when you want to set formula function",
+        "type": "textarea",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "IMPLODE": {
+    "properties": [
+      {
+        "name": "target_col",
+        "displayed": true,
+        "label": "Select Column",
+        "placeholder": "",
+        "dataContent": "Use when you want select some column of source data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "by",
+        "displayed": true,
+        "label": "Group by",
+        "placeholder": "",
+        "dataContent": "Use when you want make an aggregate a table by column",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "as",
+        "displayed": true,
+        "label": "Alias Column",
+        "placeholder": "",
+        "dataContent": "Use when you want set alias name on destination table",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "label": "From Table",
+        "placeholder": "",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "value": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      }
+    ]
+  },
+  "LIMIT": {
+    "properties": [
+      {
+        "name": "limit",
+        "displayed": true,
+        "label": "Limit",
+        "placeholder": "Limit",
+        "dataContent": "Use when you want filter count value of result",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": "1"
+      },
+      {
+        "name": "has_offset",
+        "displayed": true,
+        "label": "Offset",
+        "placeholder": "",
+        "tooltip": "Has Offset?",
+        "dataContent": "Use when you want skip row and show value start from row -n",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": false,
+        "toggledOnCheck": "offset",
+        "reversedToggle": false,
+        "value": false
+      },
+      {
+        "name": "offset",
+        "displayed": true,
+        "label": "Number of Offset",
+        "placeholder": "Number of Offset",
+        "dataContent": "Input your start row for first data",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "0",
+        "isOnChange": true,
+        "reversedToggle": false
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "MERGE": {
+    "properties": [
+      {
+        "name": "froms",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "SELECTDB": {
+    "properties": [
+      {
+        "name": "connection",
+        "displayed": true,
+        "label": "Connection Name",
+        "placeholder": "Connection Name",
+        "dataContent": "Use when you want to set name of connection database which will be used",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "select_db_clause_a",
+        "displayed": true,
+        "label": "Select Table",
+        "placeholder": "Select Table",
+        "dataContent": "Use when you want to set table name from selected database",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "select_db_clause_b",
+        "displayed": true,
+        "label": "Select Column",
+        "placeholder": "Select Column",
+        "dataContent": "Use when you want select some column of source data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "SELECT": {
+    "properties": [
+      {
+        "name": "from_type",
+        "displayed": true,
+        "value": null,
+        "label": "Source Type",
+        "placeholder": "",
+        "dataContent": "Use when you want select type of source",
+        "type": "select",
+        "valuetype": "string",
+        "hasPreSelectedValue": true,
+        "dataOptions": [
+          {
+            "value": "FILE",
+            "text": "File",
+            "preSelected": true
+          },
+          {
+            "value": "CSV",
+            "text": "CSV"
+          },
+          {
+            "value": "TABLE",
+            "text": "Table"
+          },
+          {
+            "value": "GZ",
+            "text": "GZ"
+          }
+        ],
+        "isRequired": true,
+        "isTriggerOnSelect": true,
+        "subKeyPrefix": "from"
+      },
+      {
+        "name": "path",
+        "displayed": true,
+        "label": "File Path",
+        "placeholder": "File Path",
+        "dataContent": "Use when you want select path of file",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null,
+        "toggledBySelectedValue": "FILE|CSV|GZ"
+      },
+      {
+        "name": "tables",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Use for set source table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null,
+        "toggledBySelectedValue": "TABLE"
+      },
+      {
+        "name": "selectors",
+        "displayed": true,
+        "label": "Select Column",
+        "placeholder": "Select Column",
+        "dataContent": "Use when you want select some column of source data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": "*"
+      },
+      {
+        "name": "where",
+        "displayed": true,
+        "label": "Condition Statement",
+        "placeholder": "Condition Statement",
+        "dataContent": "Use when you want to add condition for filter column",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "alias",
+        "displayed": true,
+        "label": "Alias Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use when you want set alias name on destination table",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": "",
+        "toggledBySelectedValue": "FILE|CSV|TABLE|GZ"
+      },
+      {
+        "name": "order_by",
+        "displayed": true,
+        "label": "Order By",
+        "placeholder": "Order By",
+        "dataContent": "Use when you want to sorting table by value of column",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "has_limit",
+        "displayed": true,
+        "label": "Limit",
+        "placeholder": "",
+        "dataContent": "Use when you want filter count value of result",
+        "type": "checkbox",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "toggledOnCheck": "limit",
+        "reversedToggle": false,
+        "value": false
+      },
+      {
+        "name": "limit",
+        "displayed": true,
+        "label": "Number of Limit",
+        "placeholder": "Number of Limit",
+        "dataContent": "Input your number of limit data",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "1",
+        "isOnChange": true,
+        "reversedToggle": false
+      },
+      {
+        "name": "has_offset",
+        "displayed": true,
+        "label": "Offset",
+        "placeholder": "",
+        "dataContent": "Use when you want skip row and show value start from row -n",
+        "type": "checkbox",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "toggledOnCheck": "offset",
+        "reversedToggle": false,
+        "value": false
+      },
+      {
+        "name": "offset",
+        "displayed": true,
+        "label": "Number of Offset",
+        "placeholder": "Number of Offset",
+        "dataContent": "Input your start row for first data",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "0",
+        "isOnChange": true,
+        "reversedToggle": false
+      },
+      {
+        "name": "group_by",
+        "displayed": true,
+        "label": "Group By",
+        "placeholder": "Group By",
+        "dataContent": "Use when you want make an aggregate a table by column",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "SORT": {
+    "properties": [
+      {
+        "name": "order_by",
+        "displayed": true,
+        "label": "Order By",
+        "placeholder": "Order By",
+        "dataContent": "Use when you want to sorting table by value of column",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "STORE": {
+    "properties": [
+      {
+        "name": "sink_type",
+        "displayed": true,
+        "value": null,
+        "label": "Source Type",
+        "placeholder": "",
+        "dataContent": "Use when you want select type of source",
+        "type": "select",
+        "valuetype": "string",
+        "dataOptions": [
+          {
+            "value": "FILE",
+            "text": "File"
+          },
+          {
+            "value": "DB",
+            "text": "DB"
+          }
+        ],
+        "isRequired": false,
+        "minLength": null
+      },
+      {
+        "name": "connection_name",
+        "displayed": true,
+        "label": "Connection Name",
+        "placeholder": "Connection Name",
+        "dataContent": "Use when you want to set name of connection database which will be used",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into File Path",
+        "placeholder": "",
+        "dataContent": "Use when you want to set path destination of command result ",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "VIEW": {
+    "properties": [
+      {
+        "name": "columns",
+        "displayed": true,
+        "value": null,
+        "label": "Select Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use when you want select some column of source data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Use when you want to set source table name which will be connect",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Use for set destination table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  }
+}

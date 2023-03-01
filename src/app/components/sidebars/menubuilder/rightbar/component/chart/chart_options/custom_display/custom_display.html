@@ -1,0 +1,104 @@
+<div class="collapse-group">
+  <div class="collapse-panel" *ngIf="visualType">
+    <input class="collapse-check" type="checkbox" [ngClass]="{ checked: activeColapse.customDisplayGroup == true }" />
+    <label class="collapse-label" (click)="collapsible('customDisplayGroup')"
+      >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CD' | translate }}</label
+    >
+    <div class="collapse" [ngClass]="{ show: activeColapse.customDisplayGroup == true }">
+      <div class="row clearfix" *ngFor="let item of listField">
+        <custom_checkbox
+          *ngIf="item.type.includes(visualType) && item.field === 'checkbox' "
+          [value]="item.model"
+          [name]="item.name"
+          [title]="item.label"
+          (onChangeValue)="handleChange($event)"
+        ></custom_checkbox>
+        <div *ngIf="item.type.includes(visualType) && item.field === 'button' ">
+          <div class="col-sm-12 form-control-label">
+            <label for="last_run" class="mb-0">{{ item.label | translate }} </label>
+          </div>
+          <div class="col-sm-12 mb-2">
+            <button
+              [ngClass]="form_data.border_position=='left' ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini active ml-0' : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini btn-sm ml-0'"
+              (click)="setBorderPosition('left')"
+              matTooltip="Align Left"
+            >
+              <img src="./assets/images/v_left.svg" width="10" height="10" alt="Label Align Left" />
+            </button>
+
+            <button
+              [ngClass]="form_data.border_position=='right' ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini active' : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini'"
+              (click)="setBorderPosition('right')"
+              matTooltip="Align Right"
+            >
+              <img src="./assets/images/v_right.svg" width="10" height="10" alt="Label Align Right" />
+            </button>
+
+            <button
+              [ngClass]="form_data.border_position=='top' ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini active' : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini'"
+              (click)="setBorderPosition('top')"
+              matTooltip="Align Top"
+            >
+              <img src="./assets/images/v_top.svg" width="10" height="10" alt="Label Align Top" />
+            </button>
+
+            <button
+              [ngClass]="form_data.border_position=='bottom' ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini active' : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini'"
+              (click)="setBorderPosition('bottom')"
+              matTooltip="Align Bottom"
+            >
+              <img src="./assets/images/v_bottom.svg" width="10" height="10" alt="Label Align Bottom" />
+            </button>
+          </div>
+        </div>
+      </div>
+      <custom_checkbox
+        *ngIf="['table'].includes(visualType)"
+        [value]="form_data.include_search"
+        [name]="'include_search'"
+        [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.SB'"
+        (onChangeValue)="handleChange($event)"
+      ></custom_checkbox>
+      <div *ngIf="['table'].includes(visualType) ">
+        <custom_select_component
+          (onChangeValue)="handleChange($event)"
+          [selectedValue]="tableType"
+          [name]="'display_view_table'"
+          [options]="static_display_view_table"
+          value="value"
+          label="label"
+          [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CV'"
+          [type]="'select_specific_object'"
+        ></custom_select_component>
+        <div class="row clearfix" *ngFor="let item of listFieldForTable">
+          <custom_input
+            *ngIf="item.trigger.includes(form_data.display_view_table) && item.field === 'input' "
+            [value]="item.model"
+            [name]="item.name"
+            [title]="item.label"
+            [type]="'number'"
+            (onChangeValue)="handleChange($event)"
+          >
+          </custom_input>
+          <custom_select_component
+            *ngIf="item.trigger.includes(form_data.display_view_table) && item.field === 'select' "
+            (onChangeValue)="handleChange($event)"
+            [selectedValue]="item.model"
+            [name]="item.name"
+            [options]="fontFamilyList"
+            [defaultValue]="'Default'"
+            [title]="item.label"
+            [type]="'select'"
+          ></custom_select_component>
+          <custom_checkbox
+            *ngIf="item.trigger.includes(form_data.display_view_table)&& item.field === 'checkbox' "
+            [value]="item.model"
+            [name]="item.name"
+            [title]="item.label"
+            (onChangeValue)="handleChange($event)"
+          ></custom_checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

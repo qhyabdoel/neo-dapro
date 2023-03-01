@@ -1,0 +1,43 @@
+<div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="title f-16">{{ 'MODULE.DATA_APPLICATIONS.MODAL.SLS' | translate }}</h5>
+      <button type="button" class="close" (click)="closeFormula()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4" *ngFor="let style of assetJsonData.login_style">
+            <div class="card">
+              <a href="javascript:void(0);" (click)="saveLoginStyle(style)">
+                <div class="image">
+                  <img [attr.src]="style.image_style" alt="img" class="img-fluid clickable" />
+                </div>
+              </a>
+              <div class="file-name">
+                <div class="row">
+                  <div class="col-md-9">
+                    <p class="text-muted"><small>{{style.label_style}}</small></p>
+                  </div>
+                  <div class="col-md-3 mt-1">
+                    <a
+                      href="javascript:;"
+                      target="_blank"
+                      [routerLink]="['/auth/application_login']"
+                      [queryParams]="style"
+                      ><i class="zmdi zmdi-fullscreen pull-right"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"></div>
+  </div>
+  <div></div>
+</div>

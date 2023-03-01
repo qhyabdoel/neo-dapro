@@ -1,0 +1,27 @@
+[
+		   {
+			  "formula":"avg({fieldName})",
+			  "description":"Notation {fieldName} on Average Must replace your fieldName"
+		   },
+		   {
+			  "formula":"count()",
+			  "description":"Notation {fieldName} on Count Must replace your fieldName"
+		   },
+		   {
+			  "formula":"count(distinct {fieldName})",
+			  "description":"Notation {fieldName} on Count Distinct Must replace your fieldName"
+		   },
+		   {
+			  "formula":"sum({fieldName})",
+			  "description":"Notation {fieldName} on Sum Must replace your fieldName"
+		   },
+		   {
+			  "formula":"min({fieldName})",
+			  "description":"Notation {fieldName} on Min Must replace your fieldName"
+		   },
+		   {
+			  "formula":"max({fieldName})",
+			  "description":"Notation {fieldName} on Max Must replace your fieldName"
+		   }
+	]
+  

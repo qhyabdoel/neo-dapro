@@ -1,0 +1,382 @@
+<div class="card">
+  <div class="header">
+    <h2>{{ 'MODULE.USER_MANAGEMENT.UM' | translate }}</h2>
+  </div>
+  <div class="body">
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a [ngClass]="{ 'nav-link f-14': true, active: activeTab === 'user' }" (click)="changeTab('user')"
+            ><i class="zmdi zmdi-account mr-1"></i> Users</a
+          >
+        </li>
+        <li class="nav-item">
+          <a [ngClass]="{ 'nav-link f-14': true, active: activeTab === 'group' }" (click)="changeTab('group')"
+            ><i class="zmdi zmdi-accounts mr-1"></i> Groups</a
+          >
+        </li>
+        <li class="nav-item">
+          <a [ngClass]="{ 'nav-link f-14': true, active: activeTab === 'role' }" (click)="changeTab('role')"
+            ><i class="zmdi zmdi-toll mr-1"></i> Roles</a
+          >
+        </li>
+      </ul>
+
+      <div class="tab-content list">
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'user' }">
+          <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+              <h5 class="f-16 py-1 mb-0">{{ 'MODULE.USER_MANAGEMENT.UL' | translate }}</h5>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12 text-right" style="text-align: right">
+              <button
+                (click)="addUser()"
+                class="btn btn-info btn-outline btn-sm"
+                type="button"
+                data-toggle="modal"
+                data-target="#createUser"
+              >
+                {{ 'MODULE.USER_MANAGEMENT.CU' | translate }} <i class="zmdi zmdi-plus f-12 ml-1"></i>
+              </button>
+              <div class="dropdown d-inline-flex" [ngClass]="{ show: showCsvDropdown }">
+                <button
+                  (click)="showCsvDropdown = !showCsvDropdown"
+                  class="btn btn-info btn-outline btn-sm dropdown-toggle"
+                  type="button"
+                >
+                  Download CSV <i class="zmdi zmdi-file f-12 ml-1"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" [ngClass]="{ show: showCsvDropdown }">
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      (click)="downloadAuditTrail()"
+                      class="f-10"
+                      data-toggle="modal"
+                      data-target="#modalDownloadSuccess"
+                      >Download User Activity</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="javascript:void(0);"
+                      (click)="downloadUserList()"
+                      class="f-10"
+                      data-toggle="modal"
+                      data-target="#modalDownloadSuccess"
+                      >Download User List</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <hr class="mt-2 mb-4" />
+          <div class="row">
+            <div class="col-md-4 mb-4">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ 'MODULE.USER_MANAGEMENT.SU' | translate }}"
+                  [(ngModel)]="searchText"
+                  (keyup)="$event.which == 13 ? searchData('username') : 0"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- <loading-component [loading]="loading"></loading-component> -->
+          <div class="col-sm-12" *ngFor="let row of [1]">
+            <mat-card *ngIf="loading" class="shimmer bg-grey" style="height: 13em"></mat-card>
+          </div>
+          <div class="table-responsive">
+            <mat-table
+              *ngIf="activeTab === 'user' && !loading"
+              multiTemplateDataRows
+              [dataSource]="dataSource"
+              matSort
+              class="table-striped table-hover js-basic-example dataTable table-dark"
+              style="width: 100%"
+            >
+              <ng-container matColumnDef="username">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+                <mat-cell *matCellDef="let user">{{ user.username }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                <mat-cell *matCellDef="let user">{{ user.email }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="firstname">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.USER_MANAGEMENT.FN' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let user">{{ user.firstname }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="lastname">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.USER_MANAGEMENT.LN' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let user">{{ user.lastname }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="groups">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>Groups</mat-header-cell>
+                <mat-cell *matCellDef="let user">{{ user.groups[0].groupname }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef>{{
+                  'MODULE.USER_MANAGEMENT.A' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let user">
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Edit User"
+                    type="button"
+                    (click)="editUser(user)"
+                  >
+                    <i class="zmdi zmdi-edit"></i>
+                  </button>
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Audit Trail"
+                    type="button"
+                    (click)="loadAuditTrailLog(user)"
+                  >
+                    <i class="zmdi zmdi-chart"></i>
+                  </button>
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Change password"
+                    type="button"
+                    (click)="changePassword(user)"
+                  >
+                    <i class="zmdi zmdi-key"></i>
+                  </button>
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Delete user"
+                    type="button"
+                    (click)="deleteUser(user)"
+                  >
+                    <i class="zmdi zmdi-delete"></i>
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'group' }">
+          <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+              <h5 class="f-16 py-1 mb-0">{{ 'MODULE.USER_MANAGEMENT.GL' | translate }}</h5>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12 text-right" style="text-align: right">
+              <button (click)="addGroup()" class="btn btn-info btn-outline btn-sm" type="button">
+                {{ 'MODULE.USER_MANAGEMENT.CG' | translate }} <i class="zmdi zmdi-plus f-12 ml-1"></i>
+              </button>
+            </div>
+          </div>
+          <hr class="mt-2 mb-4" />
+          <div class="row">
+            <div class="col-md-4 mb-4">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ 'MODULE.USER_MANAGEMENT.SEG' | translate }}"
+                  [(ngModel)]="searchText"
+                  (keyup)="$event.which == 13 ? searchData('groupname') : 0"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12" *ngFor="let row of [1]">
+            <mat-card *ngIf="loading" class="shimmer bg-grey" style="height: 13em"></mat-card>
+          </div>
+          <div class="table-responsive">
+            <mat-table
+              *ngIf="activeTab === 'group' && !loading"
+              multiTemplateDataRows
+              [dataSource]="dataSource"
+              matSort
+              class="table-striped table-hover js-basic-example dataTable table-dark"
+              style="width: 100%"
+            >
+              <ng-container matColumnDef="groupname">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.USER_MANAGEMENT.GN' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let group">{{ group.groupname }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="groupdesc">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.USER_MANAGEMENT.GD' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let group">
+                  {{ group.groupdesc }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="scope">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+                <mat-cell *matCellDef="let group">
+                  <ul class="pl-3">
+                    <li *ngFor="let role of group.roles">{{ role.rolename }}</li>
+                  </ul>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef>{{
+                  'MODULE.USER_MANAGEMENT.A' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let group">
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Edit Group"
+                    type="button"
+                    (click)="editGroup(group)"
+                  >
+                    <i class="zmdi zmdi-edit"></i>
+                  </button>
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Delete Group"
+                    type="button"
+                    (click)="deleteGroup(group)"
+                  >
+                    <i class="zmdi zmdi-delete"></i>
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'role' }">
+          <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+              <h5 class="f-16 py-1 mb-0">{{ 'MODULE.USER_MANAGEMENT.RL' | translate }}</h5>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12 text-right" style="text-align: right">
+              <button (click)="addRole()" class="btn btn-info btn-outline btn-sm" type="button">
+                {{ 'MODULE.USER_MANAGEMENT.CR' | translate }} <i class="zmdi zmdi-plus f-12 ml-1"></i>
+              </button>
+            </div>
+          </div>
+          <hr class="mt-2 mb-4" />
+          <div class="row">
+            <div class="col-md-4 mb-4">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ 'MODULE.USER_MANAGEMENT.SR' | translate }}"
+                  [(ngModel)]="searchText"
+                  (keyup)="$event.which == 13 ? searchData('rolename') : 0"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- <loading-component [loading]="loading"></loading-component> -->
+          <div class="col-sm-12" *ngFor="let row of [1]">
+            <mat-card *ngIf="applicationList.length === 0" class="shimmer bg-grey" style="height: 13em"></mat-card>
+          </div>
+          <div class="table-responsive">
+            <mat-table
+              *ngIf="activeTab === 'role' && !loading && applicationList.length > 0"
+              #table
+              multiTemplateDataRows
+              [dataSource]="dataSource"
+              matSort
+              class="table-striped table-hover js-basic-example dataTable table-dark"
+              style="width: 100%"
+            >
+              <ng-container matColumnDef="rolename">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.USER_MANAGEMENT.RN' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let role">{{ role.rolename }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="roledesc">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.USER_MANAGEMENT.RD' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let role"> {{ role.roledesc }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="scope">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>Scope</mat-header-cell>
+                <mat-cell *matCellDef="let role">
+                  <ul class="pl-3">
+                    <li *ngFor="let scope of role.scopes">{{ scope.name }}</li>
+                  </ul>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="application_name">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.USER_MANAGEMENT.APP' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let app">{{ app.application_name }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef>{{
+                  'MODULE.USER_MANAGEMENT.A' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let role">
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Edit Role"
+                    type="button"
+                    (click)="editRole(role)"
+                  >
+                    <i class="zmdi zmdi-edit"></i>
+                  </button>
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Delete Role"
+                    type="button"
+                    (click)="deleteRole(role)"
+                  >
+                    <i class="zmdi zmdi-delete"></i>
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+        <div class="col-sm-12" style="text-align: -webkit-right" *ngFor="let row of [1]">
+          <mat-card
+            *ngIf="activeTab === 'role' ? applicationList.length === 0 : loading"
+            class="shimmer bg-grey col-sm-6"
+            style="height: 2em; margin-top: 1em"
+          ></mat-card>
+        </div>
+
+        <div
+          [ngClass]="{
+            'hide-div': activeTab === 'role' ? applicationList.length === 0 : loading
+          }"
+        >
+          <mat-paginator
+            #paginator
+            [length]="pagelength"
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 20]"
+            [showFirstLastButtons]="true"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

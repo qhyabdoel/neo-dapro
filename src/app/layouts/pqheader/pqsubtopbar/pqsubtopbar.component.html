@@ -1,0 +1,228 @@
+<div
+  class="col-12 col-md-5"
+  *ngIf="
+    options?.isButtonToggleLeft ||
+    options?.isButtonToggleRight ||
+    options?.isTitle ||
+    options?.isButtonNew ||
+    options?.isButtonSave ||
+    options?.isButtonPreview
+  "
+>
+  <div class="row">
+    <div class="col" *ngIf="options?.isTitleOnSharePage">
+      <h4 class="m-0">{{ options.title != '' ? options.title : 'Untitled' }}</h4>
+    </div>
+    <div *ngIf="options?.isButtonBack" class="col-auto pr-0">
+      <a (click)="buttonBack()">
+        <button
+          class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+          mat-raised-button
+          matTooltip="Back to previous page"
+        >
+          <i class="zmdi zmdi-arrow-left"></i>
+        </button>
+      </a>
+    </div>
+
+    <div class="col-5 col-lg-6 pr-0" *ngIf="options?.isTitle">
+      <div class="form-group mb-0">
+        <input
+          type="text"
+          class="form-control form-bottomline mt-1"
+          [ngClass]="isLoadData ? '' : ' disabled'"
+          [readonly]="!isLoadData"
+          placeholder="{{ 'GRID_VIEW.D' | translate }}"
+          [ngModel]="options.title"
+          (ngModelChange)="titleChange($event)"
+        />
+      </div>
+    </div>
+    <div
+      class="col-auto pr-0"
+      *ngIf="options?.isButtonNew || options?.isButtonSave || options?.isButtonPreview || options?.isButtonEdit"
+    >
+      <button
+        *ngIf="options?.isButtonEdit"
+        class="btn btn-info btn-outline btn-sm"
+        matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_EDIT_DASHBOARD' | translate }}"
+        (click)="buttonView()"
+      >
+        {{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_EDIT_DASHBOARD' | translate }}
+        <i class="zmdi zmdi-edit ml-1"></i>
+      </button>
+
+      <button
+        *ngIf="options?.isButtonSave"
+        [ngClass]="
+          isLoadData
+            ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini'
+            : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini disabled'
+        "
+        mat-raised-button
+        matTooltip="{{ 'GRID_VIEW.S' | translate }}"
+        (click)="buttonSave(options?.menuName)"
+      >
+        <i class="ti-save"></i>
+      </button>
+      <button
+        *ngIf="options?.isButtonNew"
+        [ngClass]="
+          isLoadData
+            ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini'
+            : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini disabled'
+        "
+        mat-raised-button
+        matTooltip="{{ 'GRID_VIEW.N' | translate }}"
+        (click)="buttonNew(options?.menuName)"
+      >
+        <i class="ti-file"></i>
+      </button>
+
+      <!-- [ngClass]="id ? 'btn btn-info btn-outline btn-sm' : 'btn btn-info btn-outline btn-sm disabled'" -->
+      <button
+        *ngIf="options?.isButtonPreview"
+        class="btn btn-info btn-outline btn-sm"
+        mat-raised-button
+        matTooltip="{{ 'GRID_VIEW.FP' | translate }}"
+        (click)="buttonView()"
+      >
+        {{ 'GRID_VIEW.FP' | translate }} &nbsp;
+        <i class="zmdi zmdi-tv"></i>
+      </button>
+      <button
+        *ngIf="options?.isButtonFolder"
+        class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+        mat-raised-button
+        matTooltip="Open Folder"
+        (click)="buttonFolder()"
+      >
+        <i class="ti-folder"></i>
+      </button>
+
+      <button
+        *ngIf="options?.isButtonAnalyze"
+        (click)="buttonAnalyze()"
+        class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+        mat-raised-button
+        matTooltip="Add More Analyze"
+      >
+        <i class="ti-bar-chart-alt"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div [ngClass]="options?.isButtonTabs ? 'col-auto col-md-5' : 'col-7'" *ngIf="options?.isButtonCreate">
+  <div class="row">
+    <div class="col-12">
+      <button
+        class="btn btn-info btn-outline btn-sm"
+        mat-raised-button
+        matTooltip="{{ buttonCreateName | async }}"
+        [routerLink]="[options.routeButtonCreate]"
+      >
+        {{ buttonCreateName | async }}
+        <i class="zmdi zmdi-plus f-12 ml-1"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="col-auto px-0 align-self-center" *ngIf="options?.isButtonTabs">
+  <ul class="nav nav-tabs nav-tabs-success" role="tablist">
+    <li class="nav-item" *ngFor="let button of options?.buttonTabs">
+      <a
+        id="{{ button.name }}"
+        class="nav-link mb-0 px-3"
+        [ngClass]="{ active: button.isActive }"
+        data-toggle="tab"
+        href="javascript:void()"
+        [routerLink]="[button.routerUrl]"
+      >
+        <i [ngClass]="button.class"></i>{{ button.title }}
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="col-12 col-md-5 ml-auto" style="text-align: right">
+  <!-- class="btn btn-info btn-outline btn-sm" -->
+  <button
+    *ngFor="let item of options?.chartAction"
+    [ngClass]="handleStylingButtonAction(item)"
+    mat-raised-button
+    matTooltip="{{ item.tooltips | translate }}"
+    (click)="buttonAction(item)"
+  >
+    {{ item.text | translate }} <i class="{{ item.icon }}"></i>
+  </button>
+
+  <ul
+    [ngClass]="{
+      'dropdown-menu dropdown-menu-right mt-1 ShareURLDropdown': true,
+      show: openMenu
+    }"
+  >
+    <li>
+      <a href="javascript:void(0);" (click)="buttonAction('dark')">
+        {{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_COPY_URL_DARK' | translate }}
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0);" (click)="buttonAction('light')">
+        {{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_COPY_URL_LIGHT' | translate }}
+      </a>
+    </li>
+  </ul>
+
+  <!-- <button
+    *ngIf="options?.isDownload"
+    class="btn btn-info btn-outline btn-sm"
+    mat-raised-button
+    matTooltip="Download"
+    (click)="ngOnDownload()"
+  >
+    {{ buttonCreateName | async }}
+    <i class="zmdi zmdi-download f-14 ml-1"></i>
+  </button>
+  <button
+    *ngIf="options?.isButtonFullscreen"
+    class="btn btn-outline btn-icon btn-sm btn-outline-mini"
+    mat-raised-button
+    matTooltip="{{ 'PAMEDI.COMMON.F' | translate }}"
+    (click)="ngOnFullScreen()"
+  >
+    <i class="zmdi zmdi-fullscreen f-14"></i>
+  </button>
+  <button
+    mat-raised-button
+    matTooltip="{{ 'PAMEDI.COMMON.R' | translate }}"
+    (click)="ngOnRefresh()"
+    *ngIf="options?.isButtonRefresh"
+    class="btn btn-outline btn-icon btn-sm btn-outline-mini"
+  >
+    <i class="zmdi zmdi-refresh-alt"></i>
+  </button>
+
+  <button
+    *ngIf="options?.isButtonDownloadSummaryReport"
+    mat-raised-button
+    matTooltip="Download Summary Report"
+    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+    (click)="onDownloadSummaryReportCampaign()"
+  >
+    <i class="zmdi zmdi-assignment"></i>
+  </button> -->
+</div>
+
+<div class="col-3 text-right align-self-center" *ngIf="options?.isButtonToggleRight">
+  <button
+    *ngIf="options?.isButtonShare"
+    (click)="buttonShare()"
+    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini right_icon_toggle_btn"
+    type="button"
+  >
+    <i class="zmdi zmdi-share"></i>
+  </button>
+</div>

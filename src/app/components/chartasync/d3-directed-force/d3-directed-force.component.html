@@ -1,0 +1,842 @@
+<div class="containerList" *ngIf="!isTemplate">
+  <div class="row clearfix justify-content-end align-items-center">
+    <div class="col-auto pr-0">
+      <mat-form-field
+        appearance="fill"
+        *ngIf="
+          formdata?.form_data?.filter_date === 'date_range_picker' && formdata?.form_data?.filter_date_type === 'year'
+        "
+      >
+        <mat-label>Start Year</mat-label>
+        <input matInput [matDatepicker]="sinceYearPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+        <input
+          matInput
+          [ngModel]="sinceDate | date: 'yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="sinceYearPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="sinceYearPicker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #sinceYearPicker
+          startView="multi-year"
+          (yearSelected)="yearPickerHandler($event, sinceYearPicker, 'since')"
+          panelClass="example-month-picker"
+        >
+        </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field
+        appearance="fill"
+        *ngIf="
+          formdata?.form_data?.filter_date === 'date_range_picker' && formdata?.form_data?.filter_date_type === 'month'
+        "
+      >
+        <mat-label>Start Month</mat-label>
+        <input matInput [matDatepicker]="sinceMonthPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+        <input
+          matInput
+          [ngModel]="sinceDate | date: 'MM/yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="sinceMonthPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="sinceMonthPicker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #sinceMonthPicker
+          startView="multi-year"
+          (yearSelected)="yearMonthPickerHandler($event, 'since')"
+          (monthSelected)="monthMonthPickerHandler($event, sinceMonthPicker, 'since')"
+          panelClass="example-month-picker"
+        >
+        </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field
+        appearance="fill"
+        *ngIf="
+          formdata?.form_data?.filter_date === 'date_range_picker' && formdata?.form_data?.filter_date_type === 'date'
+        "
+      >
+        <mat-label>Start Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="sinceDayPicker"
+          [formControl]="sinceDateFC"
+          readonly
+          hidden="true"
+          (dateInput)="datePickerHandler($event.value, 'since')"
+        />
+        <input
+          matInput
+          [ngModel]="sinceDate | date: 'dd/MM/yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="sinceDayPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="sinceDayPicker"></mat-datepicker-toggle>
+        <mat-datepicker #sinceDayPicker startView="multi-year" panelClass="example-month-picker"> </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field
+        appearance="fill"
+        *ngIf="
+          (formdata?.form_data?.filter_date === 'date_range_picker' ||
+            formdata?.form_data?.filter_date === 'date_picker') &&
+          formdata?.form_data?.filter_date_type === 'year'
+        "
+      >
+        <mat-label>End Year</mat-label>
+        <input matInput [matDatepicker]="untilYearPicker" [formControl]="untilDateFC" hidden="true" readonly />
+        <input
+          matInput
+          [ngModel]="untilDate | date: 'yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="untilYearPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="untilYearPicker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #untilYearPicker
+          startView="multi-year"
+          (yearSelected)="yearPickerHandler($event, untilYearPicker, 'until')"
+          panelClass="example-month-picker"
+        >
+        </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field
+        appearance="fill"
+        *ngIf="
+          (formdata?.form_data?.filter_date === 'date_range_picker' ||
+            formdata?.form_data?.filter_date === 'date_picker') &&
+          formdata?.form_data?.filter_date_type === 'month'
+        "
+      >
+        <mat-label>End Month</mat-label>
+        <input matInput [matDatepicker]="untilMonthPicker" [formControl]="untilDateFC" hidden="true" readonly />
+        <input
+          matInput
+          [ngModel]="untilDate | date: 'MM/yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="untilMonthPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="untilMonthPicker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #untilMonthPicker
+          startView="multi-year"
+          (yearSelected)="yearMonthPickerHandler($event, 'until')"
+          (monthSelected)="monthMonthPickerHandler($event, untilMonthPicker, 'until')"
+          panelClass="example-month-picker"
+        >
+        </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field
+        appearance="fill"
+        *ngIf="
+          (formdata?.form_data?.filter_date === 'date_range_picker' ||
+            formdata?.form_data?.filter_date === 'date_picker') &&
+          formdata?.form_data?.filter_date_type === 'date'
+        "
+      >
+        <mat-label>End Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="untilDayPicker"
+          [formControl]="untilDateFC"
+          readonly
+          hidden="true"
+          (dateInput)="datePickerHandler($event.value, 'until')"
+        />
+        <input
+          matInput
+          *ngIf="formdata?.form_data?.filter_date === 'date_range_picker'"
+          [ngModel]="untilDate | date: 'dd/MM/yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="untilDayPicker.open(); onClickOverlay()"
+        />
+        <input
+          matInput
+          *ngIf="formdata?.form_data?.filter_date === 'date_picker'"
+          [ngModel]="sinceDate | date: 'dd/MM/yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="untilDayPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="untilDayPicker"></mat-datepicker-toggle>
+        <mat-datepicker #untilDayPicker startView="multi-year" panelClass="example-month-picker"> </mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div *ngIf="show_row_limit" class="row clearfix justify-content-end align-items-center">
+    <div class="col-auto" id="selectRowLimit">
+      <div class="row clearfix">
+        <div class="col-md-12 form-control-label">
+          <label>Row Limit</label>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <!-- 						
+						<select (change)="onRowLimitChange($event.target.value)" class="form-control ms select2"
+							data-placeholder="Select">
+							<option *ngFor="let row of list_row_limit | keyvalue : originalOrder"
+								[selected]="row.value[1] == row_limit" [value]="row.value[1]">
+								{{ row.value[1] }}
+							</option>
+						</select> -->
+            <select (change)="onRowLimitChange($any($event))" class="form-control ms select2" data-placeholder="Select">
+              <option *ngFor="let row of list_row_limit" [selected]="row_limit" [value]="row.value[1]">
+                {{ row.value[1] }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  #directedForce
+  *ngIf="!isTemplate && !noData"
+  (chartInit)="onChartInit($event)"
+  (window:resize)="onResize($event)"
+  class="demo-chart directedForce-{{ myChartID }}"
+  [id]="myChartID"
+>
+  <svg id="directedForce-{{ myChartID }}">
+    <g class="zoom-controls" transform="translate(10, 10)">
+      <g id="zoom-in" transform="translate(0, 0)">
+        <rect width="30" height="30"></rect>
+        <line x1="5" y1="15" x2="25" y2="15"></line>
+        <line x1="15" y1="5" x2="15" y2="25"></line>
+      </g>
+      <g id="zoom-out" transform="translate(30, 0)">
+        <rect width="30" height="30"></rect>
+        <line x1="5" y1="15" x2="25" y2="15"></line>
+      </g>
+    </g>
+  </svg>
+</div>
+<div *ngIf="noData && !isTemplate">
+  <h4 style="top: 5px" align="center">No Result Data</h4>
+</div>
+
+<div *ngIf="isTemplate && !isSearchResult" class="card">
+  <div
+    class="header"
+    [ngClass]="{ 'header-transparent': formdata?.form_data?.hide_title || formdata?.form_data?.hide_background }"
+  >
+    <h2>
+      <!-- *ngIf="(meId$ | async)?.includes(myChartID)" -->
+      <div *ngIf="meId$?.includes(myChartID)" class="loader loader--style1" title="0">
+        <svg
+          version="1.1"
+          id="loader-1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          width="20px"
+          height="20px"
+          viewBox="0 0 40 40"
+          enable-background="new 0 0 40 40"
+          xml:space="preserve"
+        >
+          <path
+            opacity="0.2"
+            fill="#000"
+            d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+				s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+				c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+          />
+          <path
+            fill="#000"
+            d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+				C22.32,8.481,24.301,9.057,26.013,10.047z"
+          >
+            <animateTransform
+              attributeType="xml"
+              attributeName="transform"
+              type="rotate"
+              from="0 20 20"
+              to="360 20 20"
+              dur="0.5s"
+              repeatCount="indefinite"
+            />
+          </path>
+        </svg>
+      </div>
+      <div [ngClass]="{ 'd-none': formdata?.form_data?.hide_title }">{{ title }}</div>
+    </h2>
+    <ul class="header-dropdown" [ngClass]="{ 'h-title-bg': formdata?.form_data?.hide_title }">
+      <li>
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Hide/Show Filter"
+          href="javascript:;"
+          (click)="onToggleFilter(myChartID)"
+          class="d-none"
+          [ngClass]="{
+            'd-inline-block':
+              isView &&
+              (formdata?.form_data?.show_label_sort ||
+                formdata?.form_data?.show_label_sort ||
+                formdata?.form_data?.filter_date)
+          }"
+        >
+          <i class="zmdi zmdi-eye"></i>
+        </a>
+      </li>
+      <li>
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Fullscreen"
+          href="javascript:;"
+          *ngIf="isView"
+          (click)="onFullscreen(cardID)"
+          ><i class="zmdi zmdi-fullscreen"></i
+        ></a>
+      </li>
+      <li>
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Refresh"
+          href="javascript:;"
+          (click)="onRefresh(myChartID)"
+        >
+          <i class="zmdi zmdi-refresh-alt"></i>
+        </a>
+      </li>
+      <li>
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Edit Chart"
+          href="javascript:;"
+          *ngIf="formdata?.can_add && !isView"
+          (click)="onEdit(myChartID)"
+        >
+          <i class="zmdi zmdi-edit"></i>
+        </a>
+      </li>
+      <li>
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Download"
+          href="javascript:;"
+          *ngIf="formdata?.can_download && isView"
+          (click)="onDownload(myChartID)"
+        >
+          <i class="zmdi zmdi-download"></i>
+        </a>
+      </li>
+      <li class="remove">
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Remove Chart"
+          href="javascript:;"
+          *ngIf="!isView"
+          (click)="onDelete()"
+          class="boxs-close"
+          ><i class="zmdi zmdi-delete"></i
+        ></a>
+      </li>
+    </ul>
+  </div>
+  <div
+    id="myDiv-{{ cardID }}"
+    class="body"
+    [ngClass]="{ 'body-transparent': formdata?.form_data?.hide_background, roundeds: formdata?.form_data?.hide_title }"
+  >
+    <h2 *ngIf="isFullscreen">{{ title }}</h2>
+
+    <div class="containerList">
+      <div class="row clearfix justify-content-end align-items-center">
+        <div class="col-auto pr-0">
+          <mat-form-field
+            appearance="fill"
+            *ngIf="
+              isView &&
+              formdata?.form_data?.filter_date === 'date_range_picker' &&
+              formdata?.form_data?.filter_date_type === 'year'
+            "
+          >
+            <mat-label>Start Year</mat-label>
+            <input matInput [matDatepicker]="sinceYearPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+            <input
+              matInput
+              [ngModel]="sinceDate | date: 'yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="sinceYearPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="sinceYearPicker"></mat-datepicker-toggle>
+            <mat-datepicker
+              #sinceYearPicker
+              startView="multi-year"
+              (yearSelected)="yearPickerHandler($event, sinceYearPicker, 'since')"
+              panelClass="example-month-picker"
+            >
+            </mat-datepicker>
+          </mat-form-field>
+          <mat-form-field
+            appearance="fill"
+            *ngIf="
+              isView &&
+              formdata?.form_data?.filter_date === 'date_range_picker' &&
+              formdata?.form_data?.filter_date_type === 'month'
+            "
+          >
+            <mat-label>Start Month</mat-label>
+            <input matInput [matDatepicker]="sinceMonthPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+            <input
+              matInput
+              [ngModel]="sinceDate | date: 'MM/yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="sinceMonthPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="sinceMonthPicker"></mat-datepicker-toggle>
+            <mat-datepicker
+              #sinceMonthPicker
+              startView="multi-year"
+              (yearSelected)="yearMonthPickerHandler($event, 'since')"
+              (monthSelected)="monthMonthPickerHandler($event, sinceMonthPicker, 'since')"
+              panelClass="example-month-picker"
+            >
+            </mat-datepicker>
+          </mat-form-field>
+          <mat-form-field
+            appearance="fill"
+            *ngIf="
+              isView &&
+              formdata?.form_data?.filter_date === 'date_range_picker' &&
+              formdata?.form_data?.filter_date_type === 'date'
+            "
+          >
+            <mat-label>Start Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="sinceDayPicker"
+              [formControl]="sinceDateFC"
+              readonly
+              hidden="true"
+              (dateInput)="datePickerHandler($event.value, 'since')"
+            />
+            <input
+              matInput
+              [ngModel]="sinceDate | date: 'dd/MM/yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="sinceDayPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="sinceDayPicker"></mat-datepicker-toggle>
+            <mat-datepicker #sinceDayPicker startView="multi-year" panelClass="example-month-picker"> </mat-datepicker>
+          </mat-form-field>
+          <mat-form-field
+            appearance="fill"
+            *ngIf="
+              isView &&
+              (formdata?.form_data?.filter_date === 'date_range_picker' ||
+                formdata?.form_data?.filter_date === 'date_picker') &&
+              formdata?.form_data?.filter_date_type === 'year'
+            "
+          >
+            <mat-label>End Year</mat-label>
+            <input matInput [matDatepicker]="untilYearPicker" [formControl]="untilDateFC" hidden="true" readonly />
+            <input
+              matInput
+              [ngModel]="untilDate | date: 'yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="untilYearPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="untilYearPicker"></mat-datepicker-toggle>
+            <mat-datepicker
+              #untilYearPicker
+              startView="multi-year"
+              (yearSelected)="yearPickerHandler($event, untilYearPicker, 'until')"
+              panelClass="example-month-picker"
+            >
+            </mat-datepicker>
+          </mat-form-field>
+          <mat-form-field
+            appearance="fill"
+            *ngIf="
+              isView &&
+              (formdata?.form_data?.filter_date === 'date_range_picker' ||
+                formdata?.form_data?.filter_date === 'date_picker') &&
+              formdata?.form_data?.filter_date_type === 'month'
+            "
+          >
+            <mat-label>End Month</mat-label>
+            <input matInput [matDatepicker]="untilMonthPicker" [formControl]="untilDateFC" hidden="true" readonly />
+            <input
+              matInput
+              [ngModel]="untilDate | date: 'MM/yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="untilMonthPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="untilMonthPicker"></mat-datepicker-toggle>
+            <mat-datepicker
+              #untilMonthPicker
+              startView="multi-year"
+              (yearSelected)="yearMonthPickerHandler($event, 'until')"
+              (monthSelected)="monthMonthPickerHandler($event, untilMonthPicker, 'until')"
+              panelClass="example-month-picker"
+            >
+            </mat-datepicker>
+          </mat-form-field>
+          <mat-form-field
+            appearance="fill"
+            *ngIf="
+              isView &&
+              (formdata?.form_data?.filter_date === 'date_range_picker' ||
+                formdata?.form_data?.filter_date === 'date_picker') &&
+              formdata?.form_data?.filter_date_type === 'date'
+            "
+          >
+            <mat-label>End Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="untilDayPicker"
+              [formControl]="untilDateFC"
+              readonly
+              hidden="true"
+              (dateInput)="datePickerHandler($event.value, 'until')"
+            />
+            <input
+              matInput
+              *ngIf="formdata?.form_data?.filter_date === 'date_range_picker'"
+              [ngModel]="untilDate | date: 'dd/MM/yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="untilDayPicker.open(); onClickOverlay()"
+            />
+            <input
+              matInput
+              *ngIf="formdata?.form_data?.filter_date === 'date_picker'"
+              [ngModel]="sinceDate | date: 'dd/MM/yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="untilDayPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="untilDayPicker"></mat-datepicker-toggle>
+            <mat-datepicker #untilDayPicker startView="multi-year" panelClass="example-month-picker"> </mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div *ngIf="show_row_limit" class="row clearfix justify-content-end align-items-center">
+        <div class="col-auto" id="selectRowLimit">
+          <div class="row clearfix">
+            <div class="col-md-12 form-control-label">
+              <label>Row Limit</label>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <!-- <select class="form-control ms select2" data-placeholder="Select">
+									<option *ngFor="let row of list_row_limit | keyvalue : originalOrder"
+										[selected]="row.value[1] == row_limit" [value]="row.value[1]">
+										{{ row.value[1] }}
+									</option>
+								</select> -->
+                <select class="form-control ms select2" data-placeholder="Select">
+                  <option *ngFor="let row of list_row_limit" [selected]="row_limit" [value]="row.value[1]">
+                    {{ row.value[1] }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      #directedForce
+      (chartInit)="onChartInit($event)"
+      (window:resize)="onResize($event)"
+      class="demo-chart directedForce-{{ myChartID }}"
+      [id]="myChartID"
+      *ngIf="!noData && !formdata?.form_data?.initial_chart_blank"
+      [ngClass]="{
+        'h-85':
+          formdata?.form_data?.show_label_sort ||
+          formdata?.form_data?.show_label_sort ||
+          formdata?.form_data?.filter_date
+      }"
+    >
+      <svg id="directedForce-{{ myChartID }}">
+        <g class="zoom-controls" transform="translate(10, 10)">
+          <g id="zoom-in" transform="translate(0, 0)">
+            <rect width="30" height="30"></rect>
+            <line x1="5" y1="15" x2="25" y2="15"></line>
+            <line x1="15" y1="5" x2="15" y2="25"></line>
+          </g>
+          <g id="zoom-out" transform="translate(30, 0)">
+            <rect width="30" height="30"></rect>
+            <line x1="5" y1="15" x2="25" y2="15"></line>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div *ngIf="noData">
+      <h4 style="top: 5px" align="center">No Result Data</h4>
+    </div>
+  </div>
+</div>
+
+<div class="card info-box-2 s-results" *ngIf="isSearchResult" style="height: inherit">
+  <div class="body">
+    <div class="icon col-12">
+      <div
+        id="myDiv-{{ cardID }}"
+        class="body"
+        [ngClass]="{
+          'body-transparent': formdata?.form_data?.hide_background,
+          roundeds: formdata?.form_data?.hide_title
+        }"
+      >
+        <h2 *ngIf="isFullscreen">{{ title }}</h2>
+
+        <div class="containerList">
+          <div class="row clearfix justify-content-end align-items-center">
+            <div class="col-auto pr-0">
+              <mat-form-field
+                appearance="fill"
+                *ngIf="
+                  isView &&
+                  formdata?.form_data?.filter_date === 'date_range_picker' &&
+                  formdata?.form_data?.filter_date_type === 'year'
+                "
+              >
+                <mat-label>Start Year</mat-label>
+                <input matInput [matDatepicker]="sinceYearPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+                <input
+                  matInput
+                  [ngModel]="sinceDate | date: 'yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="sinceYearPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="sinceYearPicker"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #sinceYearPicker
+                  startView="multi-year"
+                  (yearSelected)="yearPickerHandler($event, sinceYearPicker, 'since')"
+                  panelClass="example-month-picker"
+                >
+                </mat-datepicker>
+              </mat-form-field>
+              <mat-form-field
+                appearance="fill"
+                *ngIf="
+                  isView &&
+                  formdata?.form_data?.filter_date === 'date_range_picker' &&
+                  formdata?.form_data?.filter_date_type === 'month'
+                "
+              >
+                <mat-label>Start Month</mat-label>
+                <input matInput [matDatepicker]="sinceMonthPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+                <input
+                  matInput
+                  [ngModel]="sinceDate | date: 'MM/yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="sinceMonthPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="sinceMonthPicker"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #sinceMonthPicker
+                  startView="multi-year"
+                  (yearSelected)="yearMonthPickerHandler($event, 'since')"
+                  (monthSelected)="monthMonthPickerHandler($event, sinceMonthPicker, 'since')"
+                  panelClass="example-month-picker"
+                >
+                </mat-datepicker>
+              </mat-form-field>
+              <mat-form-field
+                appearance="fill"
+                *ngIf="
+                  isView &&
+                  formdata?.form_data?.filter_date === 'date_range_picker' &&
+                  formdata?.form_data?.filter_date_type === 'date'
+                "
+              >
+                <mat-label>Start Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="sinceDayPicker"
+                  [formControl]="sinceDateFC"
+                  readonly
+                  hidden="true"
+                  (dateInput)="datePickerHandler($event.value, 'since')"
+                />
+                <input
+                  matInput
+                  [ngModel]="sinceDate | date: 'dd/MM/yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="sinceDayPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="sinceDayPicker"></mat-datepicker-toggle>
+                <mat-datepicker #sinceDayPicker startView="multi-year" panelClass="example-month-picker">
+                </mat-datepicker>
+              </mat-form-field>
+              <mat-form-field
+                appearance="fill"
+                *ngIf="
+                  isView &&
+                  (formdata?.form_data?.filter_date === 'date_range_picker' ||
+                    formdata?.form_data?.filter_date === 'date_picker') &&
+                  formdata?.form_data?.filter_date_type === 'year'
+                "
+              >
+                <mat-label>End Year</mat-label>
+                <input matInput [matDatepicker]="untilYearPicker" [formControl]="untilDateFC" hidden="true" readonly />
+                <input
+                  matInput
+                  [ngModel]="untilDate | date: 'yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="untilYearPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="untilYearPicker"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #untilYearPicker
+                  startView="multi-year"
+                  (yearSelected)="yearPickerHandler($event, untilYearPicker, 'until')"
+                  panelClass="example-month-picker"
+                >
+                </mat-datepicker>
+              </mat-form-field>
+              <mat-form-field
+                appearance="fill"
+                *ngIf="
+                  isView &&
+                  (formdata?.form_data?.filter_date === 'date_range_picker' ||
+                    formdata?.form_data?.filter_date === 'date_picker') &&
+                  formdata?.form_data?.filter_date_type === 'month'
+                "
+              >
+                <mat-label>End Month</mat-label>
+                <input matInput [matDatepicker]="untilMonthPicker" [formControl]="untilDateFC" hidden="true" readonly />
+                <input
+                  matInput
+                  [ngModel]="untilDate | date: 'MM/yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="untilMonthPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="untilMonthPicker"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #untilMonthPicker
+                  startView="multi-year"
+                  (yearSelected)="yearMonthPickerHandler($event, 'until')"
+                  (monthSelected)="monthMonthPickerHandler($event, untilMonthPicker, 'until')"
+                  panelClass="example-month-picker"
+                >
+                </mat-datepicker>
+              </mat-form-field>
+              <mat-form-field
+                appearance="fill"
+                *ngIf="
+                  isView &&
+                  (formdata?.form_data?.filter_date === 'date_range_picker' ||
+                    formdata?.form_data?.filter_date === 'date_picker') &&
+                  formdata?.form_data?.filter_date_type === 'date'
+                "
+              >
+                <mat-label>End Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="untilDayPicker"
+                  [formControl]="untilDateFC"
+                  readonly
+                  hidden="true"
+                  (dateInput)="datePickerHandler($event.value, 'until')"
+                />
+                <input
+                  matInput
+                  *ngIf="formdata?.form_data?.filter_date === 'date_range_picker'"
+                  [ngModel]="untilDate | date: 'dd/MM/yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="untilDayPicker.open(); onClickOverlay()"
+                />
+                <input
+                  matInput
+                  *ngIf="formdata?.form_data?.filter_date === 'date_picker'"
+                  [ngModel]="sinceDate | date: 'dd/MM/yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="untilDayPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="untilDayPicker"></mat-datepicker-toggle>
+                <mat-datepicker #untilDayPicker startView="multi-year" panelClass="example-month-picker">
+                </mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div
+          #directedForce
+          (chartInit)="onChartInit($event)"
+          (window:resize)="onResize($event)"
+          class="demo-chart directedForce-{{ myChartID }}"
+          [id]="myChartID"
+          *ngIf="!noData"
+          [ngClass]="{
+            'h-85':
+              formdata?.form_data?.show_label_sort ||
+              formdata?.form_data?.show_label_sort ||
+              formdata?.form_data?.filter_date
+          }"
+        >
+          <svg id="directedForce-{{ myChartID }}">
+            <g class="zoom-controls" transform="translate(10, 10)">
+              <g id="zoom-in" transform="translate(0, 0)">
+                <rect width="30" height="30"></rect>
+                <line x1="5" y1="15" x2="25" y2="15"></line>
+                <line x1="15" y1="5" x2="15" y2="25"></line>
+              </g>
+              <g id="zoom-out" transform="translate(30, 0)">
+                <rect width="30" height="30"></rect>
+                <line x1="5" y1="15" x2="25" y2="15"></line>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div *ngIf="noData">
+          <h4 style="top: 5px" align="center">No Result Data</h4>
+        </div>
+      </div>
+    </div>
+    <div class="content col-12">
+      <div class="text">{{ title | uppercase }}</div>
+      <div class="flex-fill bd-highlight">
+        <span>{{ searchResultOptions.dashboard_title | uppercase }}</span>
+      </div>
+      <div class="d-flex bd-highlight mt-4">
+        <button
+          class="btn btn-info btn-outline btn-sm w-100"
+          type="button"
+          (click)="viewDetailChart(searchResultOptions.slug)"
+        >
+          View Detail<i class="zmdi zmdi-eye f-12 ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div>
+  <div class="modal-header">
+    <h5 class="title f-16">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.EL' | translate }}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="closeFormula()" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <input
+        *ngIf="!showVerboseName"
+        placeholder="{{ 'MODULE.DATA_VISUAL.CHART.COMMON.SOF' | translate }} "
+        name="searchVs"
+        [(ngModel)]="searchVs"
+        type="text"
+        id="formControlsText"
+        class="form-control input-sm"
+        value=""
+      />
+    </div>
+    <div class="row" *ngIf="explore">
+      <div class="col-md-12">
+        <div class="viztype-selector-container">
+          <table *ngIf="!showVerboseName" class="table-striped table-hover dataTable">
+            <thead>
+              <tr>
+                <th>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.MN' | translate }}</th>
+                <th>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.VN' | translate }}</th>
+                <th>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.E' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let row of explore?.datasource?.metrics | filter: searchVs:'verbose_name'"
+                (click)="editMetricName(row)"
+              >
+                <td>{{ row.metric_name }}</td>
+                <td>{{ row.verbose_name }}</td>
+                <td>
+                  <button type="button" class="btn btn-info btn-outline btn-sm" (click)="editMetricName(row)">
+                    {{ 'MODULE.DATA_VISUAL.CHART.COMMON.E' | translate }}
+                    <i class="zmdi zmdi-edit f-12 ml-1"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table *ngIf="showVerboseName" class="table-striped table-hover dataTable">
+            <thead>
+              <tr>
+                <th>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.VAL' | translate }}</th>
+                <th>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.LN' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <custom_input
+                    [value]="metric.metric_name"
+                    [name]="'metric_name'"
+                    [type]="'text'"
+                    [disabled]="true"
+                    (onChangeValue)="handleChange($event)"
+                  >
+                  </custom_input>
+                </td>
+                <td>
+                  <custom_input
+                    [value]="metric.verbose_name"
+                    [name]="'verbose_name'"
+                    [type]="'text'"
+                    (onChangeValue)="handleChange($event)"
+                  >
+                  </custom_input>
+                </td>
+              </tr>
+              <tr class="text-right">
+                <td colspan="2">
+                  <button type="button" class="btn btn-neutral btn-simple btn-sm f-10" (click)="closeMetric()">
+                    {{ 'MODULE.DATA_VISUAL.CHART.COMMON.CL' | translate }}
+                  </button>
+                  <button type="button" class="btn btn-info btn-outline btn-sm" (click)="saveVerboseName(metric)">
+                    {{ 'MODULE.DATA_VISUAL.CHART.COMMON.SUBMIT' | translate }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

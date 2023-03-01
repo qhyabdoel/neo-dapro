@@ -1,0 +1,73 @@
+<div>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.CWC' | translate }}</h5>
+    <button
+      id="btn-danger"
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeFormula()"
+      style="position: unset"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row clearfix">
+      <div class="col-md-4 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.COL_N' | translate }}</label>
+      </div>
+      <div class="col-md-4 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.SW' | translate }}</label>
+      </div>
+      <div class="col-md-4 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.R' | translate }}</label>
+      </div>
+    </div>
+    <div class="row clearfix" *ngFor="let item of form_data?.custom_width_column_arr; let i = index">
+      <div class="col-md-4">
+        <div class="form-group">
+          <select
+            class="form-control show-tick ms select2"
+            [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SC' | translate"
+            [(ngModel)]="form_data.custom_width_column_arr[i].column"
+            (change)="onChange(i, $event, 'column')"
+          >
+            <option [value]="null">Select Column</option>
+            <option *ngFor="let col of table_selected_column_width | keyvalue" [value]="col.value[0]">
+              {{ col.value[0] }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <select
+            class="form-control show-tick ms select2"
+            [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+            [(ngModel)]="form_data.custom_width_column_arr[i].width"
+            (change)="onChange(i, $event, 'width')"
+          >
+            <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.CH' | translate }} Width Size</option>
+            <option *ngFor="let col of column_width_arr" [value]="col.style">{{ col.width }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="i < 1"></div>
+      <div class="col-md-4" *ngIf="i >= 1">
+        <a type="button" class="p-1" (click)="onDelWidth(i)"><i class="ti-trash text-danger"></i> </a>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-info btn-outline btn-sm mx-0" (click)="onAddColumnWidth()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.AC' | translate }}
+      <i class="zmdi zmdi-plus f-12 ml-1"></i>
+    </button>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-info btn-outline btn-sm" type="button" data-dismiss="modal" (click)="saveAndRunQuery()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.A' | translate }}
+    </button>
+  </div>
+</div>

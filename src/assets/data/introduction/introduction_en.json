@@ -1,0 +1,72 @@
+{
+  "home": [
+	{
+		"element": ".home-step1",
+		"intro": "Welcome to PAQUES Studio",
+		"position": "right"
+	},{
+		"element": ".home-step2",
+		"intro": "Paques Data Studio Features",
+		"position": "top"
+	}],
+	"dataprocessing": [
+		{
+			"element": ".dataprocessing-step1",
+			"intro": "",
+			"position": "right"
+		},{
+			"element": ".dataprocessing-step2",
+			"intro": "",
+			"position": "right"
+	}],
+	"configurechart": [
+		{
+			"element": ".configurechart-step1",
+			"intro": "",
+			"position": "right"
+		},{
+			"element": ".configurechart-step2",
+			"intro": "",
+			"position": "right"
+	}],
+	"configuredashboard": [
+		{
+			"element": ".configuredashboard-step1",
+			"intro": "",
+			"position": "right"
+		},{
+			"element": ".configuredashboard-step2",
+			"intro": "",
+			"position": "right"
+	}],
+	"listdashboard": [
+		{
+			"element": ".listdashboard-step1",
+			"intro": "",
+			"position": "right"
+		},{
+			"element": ".listdashboard-step2",
+			"intro": "",
+			"position": "right"
+	}],
+	"listapplications": [
+		{
+			"element": ".listapplications-step1",
+			"intro": "",
+			"position": "right"
+		},{
+			"element": ".listapplications-step2",
+			"intro": "",
+			"position": "right"
+	}],
+	"configureapplications": [
+		{
+			"element": ".configureapplications-step1",
+			"intro": "",
+			"position": "right"
+		},{
+			"element": ".configureapplications-step2",
+			"intro": "",
+			"position": "right"
+	}]
+}

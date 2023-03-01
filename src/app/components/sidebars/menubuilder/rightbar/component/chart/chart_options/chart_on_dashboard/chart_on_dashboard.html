@@ -1,0 +1,183 @@
+<div class="collapse-group">
+  <div
+    class="collapse-panel"
+    *ngIf="
+                [
+                  'dist_bar',
+                  'markup',
+                  'horizontal_bar',
+                  'line',
+                  'dual_line',
+                  'pie',
+                  'directed_force',
+                  'bubble',
+                  'country_map',
+                  'box_plot',
+                  'heatmap',
+                  'sunburst',
+                  'big_number_total',
+                  'gauge',
+                  'table',
+                  'word_cloud'
+                ].includes(visualType)
+              "
+  >
+    <input class="collapse-check" type="checkbox" [ngClass]="{ checked: activeColapse.chartFilterGroup == true }" />
+    <label class="collapse-label" (click)="collapsible('chartFilterGroup')"
+      >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.FOC' | translate }}</label
+    >
+    <div class="collapse" [ngClass]="{ show: activeColapse.chartFilterGroup == true }">
+      <div
+        *ngIf="
+      
+          ![
+            'filter_box',
+            'markup',
+            'pivot_table',
+            'treemap',
+            'predictive',
+            'scatter',
+            'table_comparison',
+            'histogram'
+          ].includes(visualType)
+        "
+      >
+        <!-- Specific one column -->
+        <div
+          *ngIf="
+            ![
+              'filter_box',
+              'markup',
+              'pivot_table',
+              'treemap',
+              'predictive',
+              'scatter',
+              'word_cloud',
+              'table_comparison',
+              'bubble',
+              'directed_force',
+              'heatmap',
+             'sunburst'
+            ].includes(visualType)
+          "
+        >
+          <custom_checkbox
+            [value]="form_data.chart_on_click"
+            [name]="'chart_on_click'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.COC'"
+            (onChangeValue)="handleChange($event)"
+          ></custom_checkbox>
+
+          <div class="row clearfix" *ngIf="form_data.chart_on_click">
+            <div class="col-sm-12 form-control-label">
+              <label for="last_run">Drill Down to Dashboard</label>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="form-line">
+                  <ng-select
+                    class="text-light"
+                    [items]="dashboardList"
+                    [multiple]="false"
+                    [closeOnSelect]="true"
+                    [searchable]="true"
+                    bindLabel="dashboard_title"
+                    bindValue="slug"
+                    placeholder="{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.CH' | translate }} Dashboard"
+                    [(ngModel)]="form_data.link_to"
+                    [ngModelOptions]="{ standalone: true }"
+                    (change)="handleSelect( 'link_to',  $event, 'ng-select' )"
+                  >
+                    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                      <div class="ng-value" *ngFor="let item of items">
+                        <span class="ng-value-label"> {{ item.dashboard_title }} </span>
+                      </div>
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div
+              *ngIf="
+              form_data.chart_on_click &&
+              (['big_number_total'].includes(form_data.viz_type) || ['big_number_total'].includes(visualType))
+            "
+            >
+              <custom_select_component
+                (onChangeValue)="handleSelect( 'filter_item',  $event, 'ng-select' )"
+                [selectedValue]="form_data.filter_item"
+                [name]="'filter_item'"
+                [options]="explore?.datasource?.gb_cols | keyvals"
+                [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.FIB'"
+                [type]="'ng-select'"
+                [multiple]="false"
+                [bindLabel]="'value'"
+                [bindValue]="'value'"
+                [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CD'"
+                [visualType]="visualType"
+                [required]="true"
+              ></custom_select_component>
+              <custom_input
+                [value]="form_data.filter_label"
+                [name]="'filter_label'"
+                [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.FL'"
+                [type]="'text'"
+                (onChangeValue)="handleChange($event)"
+                [required]="true"
+              >
+              </custom_input>
+            </div>
+            <div class="col-md-12" *ngIf="visualType == 'table' && form_data.chart_on_click">
+              <custom_checkbox
+                [value]="form_data.chart_on_click_specific_col"
+                [name]="'chart_on_click_specific_col'"
+                [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.SOC'"
+                (onChangeValue)="handleChange($event)"
+              ></custom_checkbox>
+              <div class="row clearfix" *ngIf="visualType == 'table' && form_data.chart_on_click_specific_col">
+                <div class="col-md-12" *ngIf="form_data && explore">
+                  <div class="form-group">
+                    <select
+                      class="form-control show-tick ms select2"
+                      [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+                      [value]="form_data.chart_on_click_col"
+                      (change)="handleSelect( 'chart_on_click_col',  $event, 'select' )"
+                    >
+                      <option [value]="null">
+                        {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CHOSE_COL' | translate }}
+                      </option>
+                      <option *ngFor="let col of explore?.datasource.columns" [value]="col.column_name">
+                        {{ col.column_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Specific one column -->
+
+        <custom_checkbox
+          [value]="form_data.is_hide_togle_filter"
+          [name]="'is_hide_togle_filter'"
+          [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.HTF'"
+          (onChangeValue)="handleChange($event)"
+        ></custom_checkbox>
+      </div>
+      <custom_checkbox
+        [value]="form_data.initial_chart_blank"
+        [name]="'initial_chart_blank'"
+        [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.ICB'"
+        (onChangeValue)="handleChange($event)"
+      ></custom_checkbox>
+      <custom_checkbox
+        *ngIf=" ['dist_bar','horizontal_bar',].includes(visualType)"
+        [value]="form_data.show_label_sort"
+        [name]="'show_label_sort'"
+        [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.SLS'"
+        (onChangeValue)="handleChange($event)"
+      ></custom_checkbox>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title">
+      {{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.R' | translate }}
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="_close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="input-group">
+      <div class="form-group w-100">
+        <input
+          type="text"
+          class="form-control form-bottomline"
+          placeholder="rename"
+          autocomplete="off"
+          [(ngModel)]="newName"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-neutral btn-simple btn-sm close px-0" type="button" data-dismiss="modal" (click)="_close()">
+      {{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.C' | translate }}
+    </button>
+    <button class="btn btn-info btn-outline btn-sm f-12" type="button" (click)="_save()">
+      {{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.S' | translate }}
+    </button>
+  </div>
+</div>

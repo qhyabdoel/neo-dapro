@@ -1,0 +1,345 @@
+<div>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.CCBC' | translate }}</h5>
+    <button id="btn-danger" type="button" class="close" (click)="closeFormula()" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <b>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.LBC' | translate }}</b>
+    <div class="row clearfix">
+      <div class="col-md-2 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.N' | translate }}</label>
+      </div>
+      <div class="col-md-2 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.L' | translate }}</label>
+      </div>
+      <div class="col-md-2 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.COL' | translate }}</label>
+      </div>
+      <div class="col-md-2 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.M' | translate }}</label>
+      </div>
+      <div class="col-md-3 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.DFT' | translate }}</label>
+      </div>
+      <div class="col-md-1 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.R' | translate }}</label>
+      </div>
+    </div>
+    <div id="functionListComparison" *ngFor="let item of form_data?.base_columns; let i = index">
+      <div id="functionListRowComparison1" class="row clearfix">
+        <div class="col-md-2">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.ICN' | translate }}"
+              [(ngModel)]="form_data.base_columns[i].id"
+              (change)="onChange($event, 'base_columns', 'id', i)"
+            />
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.ILN' | translate }}"
+              [(ngModel)]="form_data.base_columns[i].label"
+              (change)="onChange($event, 'base_columns', 'label', i)"
+            />
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <!-- (change)="
+            setPickerComparison(
+              form_data.base_columns[i].static_value,
+              i,
+              form_data.base_columns[i].filter_date_type
+            )
+          " -->
+            <select
+              *ngIf="chartLinks"
+              class="form-control show-tick ms select2"
+              [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SC' | translate"
+              [(ngModel)]="form_data.base_columns[i].column"
+              (change)="onChange($event, 'base_columns', 'column', i)"
+            >
+              <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CC' | translate }}</option>
+              <option *ngFor="let row of chartLinks?.datasource?.gb_cols | keyvalue" [value]="row.value[0]">
+                {{ row.value[1] }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <!-- (change)="
+            setPickerComparison(
+              form_data.base_columns[i].static_value,
+              i,
+              form_data.base_columns[i].filter_date_type
+            )
+          " -->
+            <select
+              *ngIf="chartLinks"
+              class="form-control show-tick ms select2"
+              [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.VALIDATOR.SC' | translate"
+              name="columns[]"
+              [(ngModel)]="form_data.base_columns[i].metric"
+              (change)="onChange($event, 'base_columns', 'metric', i)"
+            >
+              <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CM' | translate }}</option>
+              <option *ngFor="let row of chartLinks?.datasource?.metrics_combo | keyvalue" [value]="row.value[0]">
+                {{ row.value[1] }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div
+          [ngClass]="
+            ['static_date', 'static_month', 'static_year'].includes(form_data.base_columns[i].filter_date_type)
+              ? 'col'
+              : 'col-3'
+          "
+        >
+          <div class="form-group">
+            <div class="form-line">
+              <!-- (change)="
+              setPickerComparison(
+                form_data.base_columns[i].static_value,
+                i,
+                form_data.base_columns[i].filter_date_type
+              )
+            " -->
+              <select
+                *ngIf="chartLinks"
+                class="form-control show-tick ms select2"
+                [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.VALIDATOR.SDFT' | translate"
+                [(ngModel)]="form_data.base_columns[i].filter_date_type"
+                (change)="onChange($event, 'base_columns', 'filter_date_type', i)"
+              >
+                <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CFD' | translate }}</option>
+                <option *ngFor="let row of filterDateTypeListComparison | keyvalue" [value]="row.value[0]">
+                  {{ row.value[1] }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="['static_date', 'static_month', 'static_year'].includes(form_data.base_columns[i].filter_date_type)"
+          class="col"
+        >
+          <!-- <div class="form-group">
+            <div class="form-line">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="zmdi zmdi-calendar"></i></span>
+                </div>
+                <input
+                  type="text"
+                  [(ngModel)]="form_data.base_columns[i].static_value"
+                  name="static_value[]"
+                  id="static_value_{{ i }}"
+                  (change)="setPickerComparison(form_data.base_columns[i].static_value, i)"
+                  class="form-control datepicker"
+                  placeholder="{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CDS' | translate }}"
+                />
+                
+              </div>
+            </div>
+          </div> -->
+
+          <mat-form-field class="no-label" appearance="fill">
+            <mat-label></mat-label>
+            <input
+              type="text"
+              readonly
+              matInput
+              [matDatepicker]="datePicker"
+              [value]="handleDateValue(form_data.base_columns[i].static_value)"
+              (dateChange)="onChange($event, 'base_columns', 'static_value', i)"
+              (click)="datePicker.open()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker> </mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-1">
+          <div class="form-group">
+            <a class="p-1" (click)="onDeleteAction('base_columns', i)" href="javascript:void(0)"
+              ><i id="functionListRowComparison1" class="ti-trash text-danger"></i
+            ></a>
+          </div>
+        </div>
+        <!-- <div class="row d-none">
+          <button
+            type="button"
+            class="btn btn-info btn-outline add-filters btn-sm w-100 m-0 mb-3"
+            [ngClass]="form_data.viz_type != undefined || stateloadDataset ? '' : '  disabled'"
+            (click)="onAddFiltersBaseColumns(i)"
+          >
+            {{ 'MODULE.DATA_VISUAL.CHART.COMMON.AF' | translate }}
+            <i class="zmdi zmdi-plus f-12 ml-1"></i>
+          </button>
+      
+          <div class="row d-none" *ngFor="let row of form_data.base_columns[i].filters; let j = index">
+            <div class="col-md-3">
+              <div class="form-group">
+                <select
+                  *ngIf="chartLinks"
+                  class="form-control show-tick ms select2"
+                  [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.VALIDATOR.CF' | translate"
+                  name="col[]"
+                  [(ngModel)]="form_data.base_columns[i].filters[j].col"
+                >
+                  <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CFD' | translate }}</option>
+                  <option *ngFor="let row of chartLinks?.datasource?.filterable_cols | keyvals" [value]="row.value">
+                    {{ row.value }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <select
+                  *ngIf="chartLinks"
+                  class="form-control show-tick ms select2"
+                  [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SO' | translate"
+                  name="op[i]"
+                  [(ngModel)]="form_data.base_columns[i].filters[j].op"
+                >
+                  <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CO' | translate }}</option>
+                  <option *ngFor="let row of list_cols | keyvals" [value]="row.value">
+                    {{ row.value }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <div class="form-line" *ngIf="['in', 'not in'].includes(form_data.base_columns[i].filters[j].op)">
+                  <ng-select
+                    [items]="form_data.base_columns[i].filters[j].val"
+                    [addTag]="addTagFn"
+                    addTagText="Add Value"
+                    [multiple]="true"
+                    [closeOnSelect]="true"
+                    [searchable]="true"
+                    [hideSelected]="true"
+                    bindLabel="val"
+                    bindValue="val"
+                    placeholder="input value"
+                    name="val[i]"
+                    [(ngModel)]="form_data.base_columns[i].filters[j].val"
+                  >
+                  </ng-select>
+                </div>
+                <div class="form-line" *ngIf="!['in', 'not in'].includes(form_data.base_columns[i].filters[j].op)">
+                  <input
+                    class="form-control"
+                    placeholder="input value"
+                    name="val[i]"
+                    [(ngModel)]="form_data.base_columns[i].filters[j].val"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div class="form-group">
+                <a class="p-1" (click)="onDelFiltersBaseColumns(i, j)" href="javascript:void(0)"
+                  ><i id="functionListRowComparison1" class="ti-trash text-danger"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <button
+      id="addFunctionComparison"
+      (click)="onAddAction('base_columns')"
+      class="btn btn-info btn-outline btn-sm mx-0"
+    >
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.ABCL' | translate }} <i class="zmdi zmdi-plus ml-1"></i>
+    </button>
+
+    <hr />
+
+    <b>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.LCC' | translate }} </b>
+    <div class="row clearfix">
+      <div class="col-md-3 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.L' | translate }}</label>
+      </div>
+      <div class="col-md-3 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.COMP_N' | translate }}<font color="red"> *</font></label>
+      </div>
+      <div class="col-md-5 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.FC' | translate }}</label>
+      </div>
+      <div class="col-md-1 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.R' | translate }}</label>
+      </div>
+    </div>
+    <div id="functionListComparison" *ngFor="let item of form_data?.comparison; let i = index">
+      <div id="functionListRowComparison1" class="row clearfix">
+        <div class="col-md-3">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Input label name"
+              [(ngModel)]="form_data.comparison[i].label"
+              (change)="onChange($event, 'comparison', 'label', i)"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Input column name"
+              [(ngModel)]="form_data.comparison[i].id"
+              (change)="onChange($event, 'comparison', 'id', i)"
+            />
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Input formula"
+              [(ngModel)]="form_data.comparison[i].formula"
+              (change)="onChange($event, 'comparison', 'formula', i)"
+            />
+          </div>
+        </div>
+        <div class="col-md-1" *ngIf="i >= 0">
+          <div class="form-group">
+            <a class="p-1" (click)="onDeleteAction('comparison', i)"
+              ><i id="functionListRowComparison1" class="ti-trash text-danger"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="addFunctionComparison" (click)="onAddAction('comparison')" class="btn btn-info btn-outline btn-sm mx-0">
+      Add Comparison List <i class="zmdi zmdi-plus ml-1"></i>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      type="button"
+      data-dismiss="modal"
+      (click)="activeModal.close(form_data)"
+    >
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.A' | translate }}
+    </button>
+  </div>
+</div>

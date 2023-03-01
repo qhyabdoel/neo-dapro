@@ -1,0 +1,73 @@
+:host {
+	.kt-splash-screen {
+		background-color: #f2f3f8;
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		width: 100%;
+		z-index: 1000;
+
+		img {
+			margin-left: calc(100vw - 100%);
+			width: 90px;
+			margin-bottom: 30px;
+		}
+
+		span {
+			margin-left: calc(100vw - 100%);
+			margin-bottom: 30px;
+		}
+
+		::ng-deep {
+			[role="progressbar"] {
+				margin-left: calc(100vw - 100%);
+			}
+			.mat-progress-spinner circle, .mat-spinner circle {
+				// brand color
+				stroke: #5d78ff;
+			}
+		}
+
+		.paques-spin{
+			animation-name: paques-spin;
+			-webkit-animation-name: paques-spin;
+			animation: paques-spin 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+			-webkit-animation: paques-spin 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+		}
+		
+		@keyframes paques-spin {
+		  0%, 100% {
+				animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+		  }
+		  0% {
+				transform: rotateY(0deg);
+		  }
+		  50% {
+				transform: rotateY(1800deg);
+				animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+		  }
+		  100% {
+				transform: rotateY(3600deg);
+		  }
+		}
+		
+		@-webkit-keyframes paques-spin {
+			0%, 100% {
+					-webkit-animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+			}
+			0% {
+				  -webkit-transform: rotateY(0deg);
+			}
+			50% {
+				  -webkit-transform: rotateY(1800deg);
+				  -webkit-animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+			}
+			100% {
+				  -webkit-transform: rotateY(3600deg);
+			}
+		  }
+	}
+}

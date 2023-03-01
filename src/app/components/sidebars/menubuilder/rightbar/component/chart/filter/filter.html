@@ -1,0 +1,104 @@
+<div class="panel panel-primary m-0" *ngIf="!['filter_box', 'markup'].includes(form_data.viz_type)">
+  <div class="panel-heading" role="tab" id="headingFive_1">
+    <h4 class="panel-title">
+      <a
+        [ngClass]="{ toggled: activeColapse.filter == true }"
+        class="menu-toggle collapsed text-uppercase"
+        role="button"
+        (click)="collapsible('filter')"
+        ><i
+          class="zmdi zmdi-info"
+          [matMenuTriggerFor]="showPopover"
+          #triggerpopover="matMenuTrigger"
+          (mouseover)="triggerpopover.openMenu(); setPopover();"
+          (mouseleave)="triggerpopover.closeMenu(); hidePopover()"
+        ></i
+        >&nbsp; {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.FILTER.LABEL' | translate }}
+      </a>
+      <mat-menu #showPopover="matMenu" class="tooltips popover pds-popover">
+        <h3 class="popover-header">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.FILTER.LABEL' | translate }}</h3>
+        <div class="popover-body">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.FILTER_TOOLTIP' | translate }}</div>
+      </mat-menu>
+    </h4>
+  </div>
+  <div [ngClass]="{ show: activeColapse.filter == true }" class="panel-collapse collapse" role="tabpanel">
+    <div class="panel-body">
+      <div class="form-horizontal">
+        <button
+          type="button"
+          class="btn btn-info btn-outline add-filters btn-sm w-100 m-0 mb-3"
+          [ngClass]="form_data.viz_type? '' : '  disabled'"
+          (click)="onAddFilters()"
+        >
+          {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.FILTER.AF' | translate }}
+          <i class="zmdi zmdi-plus f-12 ml-1"></i>
+        </button>
+      </div>
+
+      <div class="row clearfix" *ngFor="let item of form_data.filters; let i = index">
+        <custom_select_component
+          (onChangeValue)="onChange($event.value, 'col', i)"
+          [selectedValue]="form_data.filters[i].col"
+          [options]="explore?.datasource?.filterable_cols"
+          [defaultValue]="'MODULE.DATA_VISUAL.CHART.VALIDATOR.CFD'"
+          [title]="handleTitle('Filter Data', i)"
+          [type]="'select'"
+        ></custom_select_component>
+        <custom_select_component
+          (onChangeValue)="onChange($event.value, 'op', i)"
+          [selectedValue]="form_data.filters[i].op"
+          [options]="list_cols"
+          [defaultValue]="'MODULE.DATA_VISUAL.CHART.VALIDATOR.CO'"
+          [title]="handleTitle('Operator',i)"
+          [type]="'select'"
+        ></custom_select_component>
+        <div class="col-sm-12 form-control-label">
+          <label for="last_run">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.CH' | translate }} Value {{ i + 1 }}</label>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="form-line" *ngIf="['in', 'not in'].includes(form_data.filters[i].op)">
+              <ng-select
+                [items]="form_data.filters[i].val"
+                [addTag]="addTagFn"
+                addTagText="Add Value"
+                [multiple]="true"
+                [closeOnSelect]="true"
+                [searchable]="true"
+                [hideSelected]="true"
+                bindLabel="val"
+                bindValue="val"
+                placeholder="input value"
+                name="val[i]"
+                [(ngModel)]="form_data.filters[i].val"
+                (change)="onChange($event, 'value_select', i)"
+              >
+              </ng-select>
+            </div>
+            <div class="form-line" *ngIf="!['in', 'not in'].includes(form_data.filters[i].op)">
+              <input
+                type="text"
+                class="form-control show-tick ms"
+                inputNumber
+                [value]="form_data.filters[i] ? form_data.filters[i].val : ''"
+                (change)="onChange($event, 'val', i)"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <button
+              type="button"
+              class="btn btn-danger del-filters btn-sm w-100 m-0 mt-2 f-10"
+              (click)="onDelFilters(i)"
+            >
+              {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.FILTER.D' | translate }}
+              <i class="zmdi zmdi-delete f-12 ml-1"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

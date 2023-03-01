@@ -1,0 +1,74 @@
+kt-auth, .kt-login {
+	height: 100%;
+
+	.mat-form-field {
+		width: 100%;
+	}
+
+	// add extra right padding when displaying spinner in button
+	.kt-spinner {
+		padding-right: 3rem !important;
+	}
+}
+
+.login-dark {
+	height: 100%!important;
+	background: linear-gradient(180deg, #09090A 0%, #1F2325 31.77%, #3A4246 100%);
+	overflow: auto;
+}
+
+.login-dark .signin-title {
+    font-family: 'Roboto', sans-serif;
+}
+
+.login-dark .signin-title .welcome {
+    font-size: 26px;
+    color: #0e8293;
+    font-weight: 100;
+    margin-bottom: 0px;
+}
+
+.login-dark .signin-title .pqs {
+	font-size: 60px;
+    color: #FF7F00;
+    font-weight: 900;
+    margin-bottom: 0px;
+}
+
+.login-dark .signin-title .desc {
+    font-size: 24px;
+    color: #999999;
+    font-weight: 400;
+}
+
+.login-light {
+	height: 100%!important;
+	background: "#eff3f4";
+	// background: linear-gradient(180deg, rgb(9, 9, 214) 0%, rgb(4, 169, 252) 31.77%, rgb(248, 251, 252) 100%);
+	overflow: auto;
+}
+
+.login-light .signin-title {
+    font-family: 'Roboto', sans-serif;
+}
+
+.login-light .signin-title .welcome {
+    font-size: 26px;
+    color: #0e8293;
+    font-weight: 100;
+    margin-bottom: 0px;
+}
+
+.login-light .signin-title .pqs {
+	font-size: 60px;
+    color: #FF7F00;
+    font-weight: 900;
+    margin-bottom: 0px;
+}
+
+.login-light .signin-title .desc {
+    font-size: 24px;
+    color: #999999;
+    font-weight: 400;
+}
+

@@ -1,0 +1,249 @@
+<div class="panel-group footer_accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-primary" id="pane">
+    <!-- <div id="shade-handle" class="shade-handle collapse"></div> -->
+
+    <!-- panel heading -->
+    <div class="panel-heading" role="tab" id="heading_collapse_result">
+      <h4 class="panel-title text-center">
+        <a
+          id="result-accordion"
+          class="menu-toggle-close text-uppercase waves-effect waves-block"
+          [ngClass]="{ toggled: isResultExpanded }"
+          role="button"
+          data-toggle="collapse"
+          data-parent="#accordion_1"
+          aria-expanded="true"
+          aria-controls="body_collapse_result"
+          (click)="toggleResult()"
+        >
+          <span>{{ 'MODULE.DATA_PROCESSING.COMMON.RESULT' | translate }}</span>
+          <button class="btn btn-outline btn-sm btn-result close-result" *ngIf="isResultExpanded">Close</button>
+          <div *ngIf="loading$ | async" class="loader loader--style1" title="0">
+            <svg
+              version="1.1"
+              id="loader-1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              width="15px"
+              height="15px"
+              viewBox="0 0 40 40"
+              enable-background="new 0 0 40 40"
+              xml:space="preserve"
+            >
+              <path
+                opacity="0.2"
+                fill="#000"
+                d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                          s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                          c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+              />
+              <path
+                fill="#000"
+                d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                          C22.32,8.481,24.301,9.057,26.013,10.047z"
+              >
+                <animateTransform
+                  attributeType="xml"
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 20 20"
+                  to="360 20 20"
+                  dur="0.5s"
+                  repeatCount="indefinite"
+                />
+              </path>
+            </svg>
+          </div>
+        </a>
+        <button class="btn btn-outline btn-sm btn-result resize-result" *ngIf="isResultExpanded" (click)="resizeAccordionResult()" matTooltip="Resize Table Result"><i class="zmdi zmdi-square-down p-0" [style.transform]="'rotate('+ innerRotate + 'deg)'"></i></button>
+      </h4>
+    </div>
+
+    <!-- panel body -->
+    <div
+      id="body_collapse_result"
+      class="panel-collapse collapse in"
+      role="tabpanel"
+      aria-labelledby="heading_collapse_result"
+      [ngClass]="{ show: isResultExpanded }"
+    >
+      <div class="panel-body result_body" id="rowDashboard"
+      [style.height]="innerHeight">
+        <div class="tabbable">
+          <div class="row" *ngIf="tableResult.length > 0">
+            <div *ngIf="tableResult.length > 1" class="col-2">
+              <h5 class="py-1 mb-0">{{ 'MODULE.DATA_PROCESSING.COMMON.DATASET_LIST' | translate }}</h5>
+              <ul class="nav nav-tabs nav-tabs-vertical">
+                <li class="nav-item" *ngFor="let table of tableResult; index as loop">
+                  <span
+                    class="nav-link"
+                    [ngClass]="{ active: table.id === tableActive }"
+                    data-toggle="tab"
+                    contenteditable="false"
+                    (click)="showTable(table)"
+                  >
+                    {{ table.id }}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div [ngClass]="{ 'col-10': tableResult.length > 1, 'col-12': tableResult.length === 1 }">
+              <div class="tab-content list">
+                <div class="tab-pane" *ngFor="let table of tableResult; index as j" [id]="table"></div>
+
+                <!-- metadata settings button -->
+                <button
+                  class="btn btn-info btn-outline btn-sm mb-3"
+                  type="button"
+                  aria-expanded="false"
+                  (click)="toggleMetadata()"
+                >
+                  {{ 'MODULE.DATA_PROCESSING.COMMON.METADATA_SETTING' | translate }}
+                </button>
+
+                <div class="w-100">
+                  <mat-table
+                    #table
+                    [dataSource]="dataSource"
+                    class="fixed-table m-b-0 table-striped table-dark table-hover js-basic-example table-result"
+                    [ngClass]="dataSource?.data?.length <= 5 ? 'over-inherit' : ''"
+                  >
+                    <ng-container
+                      *ngFor="let disCol of displayedColumns; let colIndex = index"
+                      matColumnDef="{{ disCol.id }}"
+                    >
+                      <mat-header-cell *matHeaderCellDef class="ellipsis_cell">
+                        <ul
+                          class="list-inline mb0 w-100"
+                          [ngStyle]="{ display: disCol.id.includes('#col') ? 'none' : 'inline' }"
+                        >
+                          <!-- Metadata setting checkboxes -->
+                          <li
+                            id="collapseMetadata"
+                            class="list-inline-item w-100 m-0"
+                            [ngClass]="{ collapse: !isMetadataExpanded }"
+                          >
+                            <div
+                              class="dropdown dropdown-result"
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Edit Metadata"
+                            >
+                              <form>
+                                <label class="dropdown-item-metadata">
+                                  <mat-checkbox
+                                    [ngModel]="
+                                      multipleMetadata[tableActive] &&
+                                      multipleMetadata[tableActive][disCol.name] &&
+                                      multipleMetadata[tableActive][disCol.name].groupable
+                                    "
+                                    [ngModelOptions]="{ standalone: true }"
+                                    (change)="metadataOnChange($event, 'groupable', tableActive, disCol.name)"
+                                    >{{ 'MODULE.DATA_PROCESSING.COMMON.RESULT_LIST.G' | translate }}</mat-checkbox
+                                  >
+                                </label>
+                                <label class="dropdown-item-metadata">
+                                  <mat-checkbox
+                                    [ngModel]="
+                                      multipleMetadata[tableActive] &&
+                                      multipleMetadata[tableActive][disCol.name] &&
+                                      multipleMetadata[tableActive][disCol.name].filterable
+                                    "
+                                    [ngModelOptions]="{ standalone: true }"
+                                    (change)="metadataOnChange($event, 'filterable', tableActive, disCol.name)"
+                                    >{{ 'MODULE.DATA_PROCESSING.COMMON.RESULT_LIST.F' | translate }}</mat-checkbox
+                                  >
+                                </label>
+                                <label class="dropdown-item-metadata">
+                                  <mat-checkbox
+                                    [ngModel]="
+                                      multipleMetadata[tableActive] &&
+                                      multipleMetadata[tableActive][disCol.name] &&
+                                      multipleMetadata[tableActive][disCol.name].datetime
+                                    "
+                                    [ngModelOptions]="{ standalone: true }"
+                                    (change)="metadataOnChange($event, 'datetime', tableActive, disCol.name)"
+                                    >{{ 'MODULE.DATA_PROCESSING.COMMON.RESULT_LIST.D' | translate }}</mat-checkbox
+                                  >
+                                </label>
+                                <label class="dropdown-item-metadata">
+                                  <mat-checkbox
+                                    [ngModel]="
+                                      multipleMetadata[tableActive] &&
+                                      multipleMetadata[tableActive][disCol.name] &&
+                                      multipleMetadata[tableActive][disCol.name].aggregate
+                                    "
+                                    [ngModelOptions]="{ standalone: true }"
+                                    (change)="metadataOnChange($event, 'aggregate', tableActive, disCol.name)"
+                                    >{{ 'MODULE.DATA_PROCESSING.COMMON.RESULT_LIST.A' | translate }}</mat-checkbox
+                                  >
+                                </label>
+                                <label class="dropdown-item-metadata">
+                                  <mat-checkbox
+                                    [ngModel]="
+                                      multipleMetadata[tableActive] &&
+                                      multipleMetadata[tableActive][disCol.name] &&
+                                      multipleMetadata[tableActive][disCol.name].indexable
+                                    "
+                                    [ngModelOptions]="{ standalone: true }"
+                                    (change)="metadataOnChange($event, 'indexable', tableActive, disCol.name)"
+                                    >{{ 'MODULE.DATA_PROCESSING.COMMON.RESULT_LIST.I' | translate }}</mat-checkbox
+                                  >
+                                </label>
+                                <label class="dropdown-item-metadata">
+                                  <mat-checkbox
+                                    [ngModel]="
+                                      multipleMetadata[tableActive] &&
+                                      multipleMetadata[tableActive][disCol.name] &&
+                                      multipleMetadata[tableActive][disCol.name].fast_index
+                                    "
+                                    [ngModelOptions]="{ standalone: true }"
+                                    (change)="metadataOnChange($event, 'fast_index', tableActive, disCol.name)"
+                                    >{{ 'MODULE.DATA_PROCESSING.COMMON.RESULT_LIST.FI' | translate }}</mat-checkbox
+                                  >
+                                </label>
+                              </form>
+                            </div>
+                          </li>
+
+                          <li class="list-inline-item" *ngIf="12 > disCol.name.length">
+                            <p>
+                              <span class="elipstxt">{{ disCol.name }}</span>
+                            </p>
+                          </li>
+
+                          <li class="list-inline-item" *ngIf="disCol.name.length > 11">
+                            <p data-toggle="tooltip" data-placement="top" title="{{ disCol.name }}">
+                              <span>{{ disCol.name }}</span>
+                            </p>
+                          </li>
+                        </ul>
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let row">{{ fiilColumns(row[colIndex]) }}</mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="columnIds; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnIds"></mat-row>
+                  </mat-table>
+                </div>
+
+                <!-- pagination -->
+                <div class="result-pagination">
+                  <pq-paginator
+                    [length]="pageLength$ | async"
+                    [pageSize]="defPageSize"
+                    [pageSizeOptions]="[defPageSize]"
+                    (page)="onPageChange($event)"
+                  >
+                  </pq-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

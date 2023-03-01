@@ -1,0 +1,47 @@
+<div class="panel panel-primary m-0">
+  <div class="panel-heading" role="tab">
+    <h4 class="panel-title">
+      <a
+        class="menu-toggle collapsed text-uppercase"
+        role="button"
+        [ngClass]="{ toggled: activeColapse.dashboardOptions == true }"
+        (click)="collapsible('dashboardOptions')"
+      >
+        {{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.DO' | translate }}
+      </a>
+    </h4>
+  </div>
+  <div [ngClass]="{ show: activeColapse.dashboardOptions == true }" class="panel-collapse collapse" role="tabpanel">
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <div class="row clearfix">
+          <div class="col-sm-12">
+            <button
+              class="btn btn-info btn-outline btn-sm w-100 m-0 mb-3 py-0 px-2"
+              mat-raised-button
+              matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.RD' | translate }}"
+              [disabled]="parameter?.id == null"
+              (click)="refreshDashboard(parameter)"
+            >
+              {{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.RD' | translate }}
+              <i class="zmdi zmdi-refresh-alt f-12 ml-1"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-sm-12">
+            <label>{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.AR' | translate }} </label>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <select class="form-control show-tick ms select2" data-placeholder="Select">
+                <option>{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.D' | translate }}</option>
+                <option>{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.E' | translate }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

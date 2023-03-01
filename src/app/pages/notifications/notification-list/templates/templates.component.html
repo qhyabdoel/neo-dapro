@@ -1,0 +1,108 @@
+<!-- Modal Create/Edit Notification Template -->
+
+<div class="modal-open">
+  <div class="modal d-block" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" *ngIf="notificationTemplate">
+          <mat-progress-bar mode="indeterminate" *ngIf="viewLoading"></mat-progress-bar>
+          <h5 class="title f-16">{{ getTitle() }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="notificationTemplate">
+          <kt-alert
+            *ngIf="hasFormErrors"
+            [type]=""
+            [duration]="30000"
+            [showCloseButton]="true"
+            (close)="onAlertClose($event)"
+          >
+            {{ 'MODULE.NOTIFICATIONS.MSG_ERR' | translate }}
+          </kt-alert>
+
+          <div class="form-horizontal" [formGroup]="ntFG">
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark"
+                  >{{ 'MODULE.NOTIFICATIONS.TEMPLATE.TN' | translate }}&nbsp;<span class="text-red">*</span>
+                </label>
+              </div>
+              <div class="col-sm-12">
+                <mat-form-field class="mat-form-field-fluid">
+                  <input
+                    matInput
+                    type="text"
+                    id="template_name"
+                    class="form-control"
+                    formControlName="template_name"
+                    placeholder=""
+                    [attr.disabled]=""
+                  />
+                  <mat-error>{{ 'MODULE.NOTIFICATIONS.TEMPLATE.TNR' | translate }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark"
+                  >{{ 'MODULE.NOTIFICATIONS.TEMPLATE.ND' | translate }}&nbsp;<span class="text-red">*</span>
+                </label>
+              </div>
+              <div class="col-sm-12">
+                <mat-form-field class="mat-form-field-fluid">
+                  <textarea
+                    matInput
+                    type="text"
+                    id="notification_description"
+                    class="form-control"
+                    formControlName="notification_description"
+                    placeholder=""
+                    [attr.disabled]=""
+                    style="padding-top: 8px"
+                  ></textarea>
+                  <mat-error>{{ 'MODULE.NOTIFICATIONS.TEMPLATE.NDR' | translate }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark"
+                  >{{ 'MODULE.NOTIFICATIONS.TEMPLATE.ES' | translate }}&nbsp;<span class="text-red">*</span>
+                </label>
+              </div>
+              <div class="col-sm-12">
+                <mat-form-field class="mat-form-field-fluid">
+                  <input
+                    matInput
+                    type="text"
+                    id="email_subject"
+                    class="form-control"
+                    formControlName="email_subject"
+                    placeholder=""
+                  />
+                  <mat-error>{{ 'MODULE.NOTIFICATIONS.TEMPLATE.ESR' | translate }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark">{{ 'MODULE.NOTIFICATIONS.TEMPLATE.EB' | translate }}</label>
+              </div>
+              <custom-editor-component (change)="onChange($event)" [htmlContent]="mycontent"></custom-editor-component>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-neutral btn-simple btn-sm close px-0" type="button" (click)="onNoClick()">
+            {{ 'MODULE.NOTIFICATIONS.C' | translate }}
+          </button>
+          <button class="btn btn-info btn-outline btn-sm f-12" type="button" (click)="onSubmit()">
+            {{ 'MODULE.NOTIFICATIONS.S' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

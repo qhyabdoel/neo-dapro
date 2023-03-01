@@ -1,0 +1,84 @@
+<div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="title f-16" id="defaultModalLabel">{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.SQ' | translate }}</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row clearfix mb-3">
+        <div class="col-12">
+          <label>{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.SQ_DESC' | translate }}</label>
+        </div>
+        <div class="row row-filter">
+          <!-- search file & reload button -->
+          <div class="col-11 pr-2">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="{{ 'MODULE.USER_MANAGEMENT.SU' | translate }}"
+                [(ngModel)]="filterText"
+                (ngModelChange)="({ standalone: true })"
+                [ngModelOptions]="{ standalone: true }"
+                (keyup)="$event.which == 13 ? filterUser() : 0"
+              />
+              <div class="input-group-text p-0">
+                <a href="javascript:;" class="input-group-append p-0 pt-1" (click)="filterUser()"
+                  ><span class="input-group-addon mx-2"><i class="ti-search f-12"></i></span
+                ></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- filter based reload -->
+          <div class="col-1">
+            <a href="javascript:void(0)" class="p-1 text-center" (click)="getUserInGroups()"
+              ><i class="ti-reload align-middle"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table-striped table-hover dataTable">
+            <thead>
+              <tr>
+                <th>
+                  <input type="checkbox" (change)="selectAllUser($event)" />
+                </th>
+                <th>{{ 'MODULE.USER_MANAGEMENT.UL' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of userList ">
+                <td class="align-middle">
+                  <span>
+                    <input [(ngModel)]="row.checked" type="checkbox" (change)="onChangeCheckBox(row)" />
+                  </span>
+                </td>
+                <td><span>{{row.email}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-neutral btn-simple btn-sm close px-0" (click)="closeModal()">
+        {{ 'MODULE.DATA_PROCESSING.COMMON.CAN' | translate }}
+      </button>
+      <button
+        [disabled]="checkedList.length === 0"
+        class="btn btn-info btn-outline btn-sm mr-0"
+        type="button"
+        (click)="submit()"
+      >
+        {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.S' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

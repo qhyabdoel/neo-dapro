@@ -1,0 +1,7 @@
+<!-- splash screen -->
+<div #splashScreen class="kt-splash-screen">
+	<span *ngIf="loaderType === 'spinner-message'">{{loaderMessage}}</span>
+	<img *ngIf="loaderType === 'spinner-logo'" [attr.src]="loaderLogo" alt="Paques" class="paques-spin">
+	<p style="line-height: 1.61em;font-weight: 700;">Please wait...</p>
+	<!-- <mat-spinner diameter="40"></mat-spinner> -->
+</div>

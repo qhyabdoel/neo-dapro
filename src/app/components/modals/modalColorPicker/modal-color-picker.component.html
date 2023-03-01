@@ -1,0 +1,272 @@
+<div>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.CCE' | translate }}</h5>
+    <button
+      id="btn-danger"
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeModal()"
+      style="position: unset"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- pie & treemap by groupby & directed_force by group  -->
+    <div *ngIf="['directed_force'].includes(form_data.viz_type) || ['directed_force'].includes(visualType)">
+      <h5 align="center">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.LIST' | translate }} Group</h5>
+      <div class="form-group row" *ngFor="let item of form_data?.colorpickers; let i = index">
+        <label for="inputPassword" class="col-sm-5 col-form-label">{{ i + 1 }}. {{ item.entity }}</label>
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-md-1">
+              <div class="form-group">
+                <input
+                  class="w-30 h-25"
+                  type="text"
+                  id="colorinput_{{ i }}"
+                  [style.background]="form_data?.colorpickers[i]?.colorpicker"
+                  [(colorPicker)]="form_data.colorpickers[i].colorpicker"
+                  (colorPickerChange)="
+                    rgbaText = onChangeColorHex8($event); form_data.colorpickers[i].colorpicker = $event
+                  "
+                  (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event, i)"
+                />
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="form-group">
+                <input
+                  type="hidden"
+                  class="form-control"
+                  [name]="item[i]"
+                  [value]="item.source"
+                  [(ngModel)]="form_data.colorpickers[i].entity"
+                />
+                <input class="form-control" type="text" id="text" [(ngModel)]="form_data.colorpickers[i].colorpicker" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="['treemap', 'sunburst'].includes(form_data.viz_type) || ['treemap', 'sunburst'].includes(visualType)">
+      <div class="form-group row" *ngFor="let item of form_data?.groupby; let i = index">
+        <label for="inputPassword" class="col-sm-5 col-form-label">{{ i + 1 }}. {{ item[i] }}</label>
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-md-1">
+              <div class="form-group">
+                <input
+                  class="w-30 h-25"
+                  type="text"
+                  id="colorinput_{{ i }}"
+                  [style.background]="form_data?.colorpickers[i]?.colorpicker"
+                  [(colorPicker)]="form_data.colorpickers[i].colorpicker"
+                  (colorPickerChange)="
+                    rgbaText = onChangeColorHex8($event); form_data.colorpickers[i].colorpicker = $event
+                  "
+                  (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event, i)"
+                />
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="form-group">
+                <input
+                  type="hidden"
+                  class="form-control"
+                  [name]="item[i]"
+                  [value]="item[i]"
+                  [(ngModel)]="form_data.colorpickers[i].entity"
+                />
+                <input class="form-control" type="text" id="text" [(ngModel)]="form_data.colorpickers[i].colorpicker" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="['pie'].includes(form_data.viz_type) || ['pie'].includes(visualType)">
+      <div class="form-group row" *ngFor="let item of data_charts; let i = index">
+        <label for="inputPassword" class="col-sm-5 col-form-label">{{ i + 1 }}. {{ item.x }}</label>
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-md-1">
+              <div class="form-group">
+                <input
+                  class="w-30 h-25"
+                  type="text"
+                  id="colorinput_{{ i }}"
+                  [style.background]="form_data?.colorpickers[i]?.colorpicker"
+                  [(colorPicker)]="form_data.colorpickers[i].colorpicker"
+                  (colorPickerChange)="
+                    rgbaText = onChangeColorHex8($event); form_data.colorpickers[i].colorpicker = $event
+                  "
+                  (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event, i)"
+                />
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="form-group">
+                <input
+                  type="hidden"
+                  class="form-control"
+                  [name]="item[i]"
+                  [value]="item.x"
+                  [(ngModel)]="form_data.colorpickers[i].entity"
+                />
+                <input class="form-control" type="text" id="text" [(ngModel)]="form_data.colorpickers[i].colorpicker" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- bar, line, & big_number_total, ,'histogram'  by value -->
+    <div
+      *ngIf="
+        ['big_number_total', 'histogram'].includes(form_data.viz_type) ||
+        ['big_number_total', 'histogram'].includes(visualType)
+      "
+    >
+      <div class="form-group row" *ngFor="let item of form_data.colorpickers; let i = index">
+        <label for="inputPassword" class="col-sm-5 col-form-label">{{ i + 1 }}. {{ item.entity }}</label>
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-md-1">
+              <div class="form-group">
+                <input
+                  type="color"
+                  id="colorpicker"
+                  [value]="form_data.colorpickers[i].colorpicker"
+                  (change)="onChange($event, i)"
+                />
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="form-group">
+                <input type="hidden" class="form-control" [name]="item[i]" [(ngModel)]="item.entity" />
+                <input
+                  class="form-control"
+                  type="text"
+                  [value]="form_data.colorpickers[i].colorpicker"
+                  (change)="onChange($event, i)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        ['dist_bar', 'horizontal_bar', 'line', 'dual_line', 'bubble', 'box_plot'].includes(form_data.viz_type) ||
+        ['dist_bar', 'horizontal_bar', 'line', 'dual_line', 'bubble', 'box_plot'].includes(visualType)
+      "
+    >
+      <div class="form-group row" *ngFor="let item of data_charts; let i = index">
+        <label for="inputPassword" class="col-sm-5 col-form-label">{{ i + 1 }}. {{ item.key }}</label>
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-md-1">
+              <div class="form-group">
+                <input
+                  class="w-30 h-25"
+                  type="text"
+                  id="colorinput_{{ i }}"
+                  [style.background]="form_data?.colorpickers[i]?.colorpicker"
+                  [(colorPicker)]="form_data.colorpickers[i].colorpicker"
+                  (colorPickerChange)="
+                    rgbaText = onChangeColorHex8($event); form_data.colorpickers[i].colorpicker = $event
+                  "
+                  (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event, i)"
+                />
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="form-group">
+                <input
+                  type="hidden"
+                  class="form-control"
+                  [name]="item[i]"
+                  [value]="item.key"
+                  [(ngModel)]="form_data.colorpickers[i].entity"
+                />
+                <input class="form-control" type="text" id="text" [(ngModel)]="form_data.colorpickers[i].colorpicker" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- country_map  -->
+    <div *ngIf="['country_map', 'gauge'].includes(form_data.viz_type) || ['country_map', 'gauge'].includes(visualType)">
+      <div class="form-group row" *ngFor="let item of form_data?.colorpickers; let i = index">
+        <label for="inputPassword" class="col-sm-5 col-form-label">{{ i + 1 }}. {{ item.entity }}</label>
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <input
+                  class="w-30 h-25"
+                  type="text"
+                  id="colorinput_{{ i }}"
+                  [style.background]="form_data?.colorpickers[i]?.colorpicker"
+                  [(colorPicker)]="form_data.colorpickers[i].colorpicker"
+                  (colorPickerChange)="
+                    rgbaText = onChangeColorHex8($event); form_data.colorpickers[i].colorpicker = $event
+                  "
+                  (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event, i)"
+                />
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="form-group">
+                <input
+                  type="hidden"
+                  class="form-control"
+                  [name]="item[i]"
+                  [value]="item.entity"
+                  [(ngModel)]="form_data.colorpickers[i].entity"
+                />
+                <input class="form-control" type="text" id="text" [(ngModel)]="form_data.colorpickers[i].colorpicker" />
+              </div>
+            </div>
+            <!-- for deleteting -->
+            <div
+              class="col-md-2"
+              *ngIf="(form_data.viz_type == 'country_map' || form_data.viz_type == 'map') && i >= 3"
+            >
+              <button type="button" class="btn btn-danger del-filters btn-sm w-100" (click)="onDelColorPickers(i)">
+                <i class="zmdi zmdi-delete f-12 ml-1"></i>
+              </button>
+            </div>
+            <div class="col-md-2" *ngIf="form_data.viz_type == 'gauge' && i >= 2">
+              <button type="button" class="btn btn-danger del-filters btn-sm w-100" (click)="onDelColorPickers(i)">
+                <i class="zmdi zmdi-delete f-12 ml-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <button
+          type="button"
+          class="btn btn-info btn-outline add-filters btn-sm w-100 mb-3 mt-0"
+          (click)="onAddColorPickers()"
+        >
+          {{ 'MODULE.DATA_VISUAL.CHART.COMMON.ADD' | translate }}
+          {{ form_data.viz_type == 'country_map' ? '
+					Color In Range' : ' Custom Conditions' }}
+          <i class="zmdi zmdi-plus f-12 ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-info btn-outline btn-sm" type="button" data-dismiss="modal" (click)="apply()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.A' | translate }}
+    </button>
+  </div>
+</div>

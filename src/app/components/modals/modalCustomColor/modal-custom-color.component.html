@@ -1,0 +1,115 @@
+<div>
+  <div class="modal-header">
+    <h5 class="modal-title">Add Custom Field Color</h5>
+    <button
+      id="btn-danger"
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeFormula()"
+      style="position: unset"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row clearfix">
+      <div class="col-md-3 form-control-label">
+        <label>Column</label>
+      </div>
+      <div class="col-md-2 form-control-label">
+        <label>Condition</label>
+      </div>
+      <div class="col-md-2 form-control-label">
+        <label>Value</label>
+      </div>
+      <div class="col-md-2 form-control-label">
+        <label>Value 2</label>
+      </div>
+      <div class="col-md-1 form-control-label">
+        <label>Color</label>
+      </div>
+      <div class="col-md-1 form-control-label">
+        <label>Remove</label>
+      </div>
+    </div>
+
+    <div *ngFor="let colStyler of columnStyles; let i = index" class="row clearfix">
+      <div class="col-md-3">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="colStyler.col" (change)="onChange($event, 'col', i)">
+            <option [value]="null">Select Column</option>
+            <option *ngFor="let col of table_selected_column">{{ col }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <select class="form-control" [(ngModel)]="colStyler.op" (change)="onChange($event, 'op', i)">
+            <option value="==">==</option>
+            <option value="<">&lt;</option>
+            <option value=">">&gt;</option>
+            <option value="<=">=&lt;</option>
+            <option value=">=">&gt;=</option>
+            <option value="!=">!=</option>
+            <option value="between">BETWEEN</option>
+            <option value="not between">NOT BETWEEN</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Input value"
+            [value]="colStyler.values[0] ? colStyler.values[0] : ''"
+            (change)="onChange($event, 'values1', i)"
+          />
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control cl default condition-list-1"
+            placeholder="Input value 2"
+            [attr.disabled]="['between', 'not between'].indexOf(colStyler.op) >= 0 ? null : 'disabled'"
+            [value]="colStyler.values[1] ? colStyler.values[1] : ''"
+            (change)="onChange($event, 'values2', i)"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-1">
+        <div class="form-group">
+          <input
+            type="color"
+            style="width: 50px !important"
+            [value]="colStyler.format.color"
+            (change)="onChange($event, 'color', i)"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <a class="p-1" href="javascript:void(0)" (click)="removeColStyles(i)">
+          <i id="functionListRowCustomFieldColor2" class="ti-trash text-danger"> </i>
+        </a>
+      </div>
+    </div>
+
+    <div class="row clearfix">
+      <div class="col-sm-12 form-control-label">
+        <button type="button" class="btn btn-info btn-outline btn-sm m-0" (click)="addEmptyColStyles()">
+          Add Custom Field Color List <i class="zmdi zmdi-plus f-12 ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-info btn-outline btn-sm" type="button" (click)="applyColStyles()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.A' | translate }}
+    </button>
+  </div>
+</div>

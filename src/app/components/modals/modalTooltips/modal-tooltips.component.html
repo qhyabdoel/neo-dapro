@@ -1,0 +1,62 @@
+<div>
+  <div class="modal-header">
+    <h5 class="modal-title">Details Selected Area</h5>
+    <button id="btn-danger" type="button" (click)="closeModal()" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div class="row clearfix">
+        <div class="col-md-6" *ngFor="let item of explore?.form_data?.point_comparations; let i = index">
+          <div class="row">
+            <div class="col-md-11">
+              <div class="form-group">
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <div [innerHTML]="explore?.form_data?.point_comparations[i].marker"></div>
+                  </li>
+                  <li class="list-inline-item">{{ explore.form_data.point_comparations[i].name }}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <a class="p-1" (click)="onDelData(i)" href="javascript:void(0)"><i class="ti-trash text-danger"></i></a>
+            </div>
+          </div>
+          <!-- table comparison -->
+          <div class="form-group">
+            <!-- table tooltips -->
+            <table class="table-striped table-hover dataTable">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Name</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="explore?.form_data?.point_comparations[i].tooltips.length > 0">
+                <tr *ngFor="let row of explore?.form_data?.point_comparations[i].tooltips; let j = index">
+                  <td>{{ j + 1 }}.</td>
+                  <td>{{ row.name }}</td>
+                  <td>{{ row.value }}</td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="explore?.form_data?.point_comparations[i].tooltips.length == 0">
+                <tr>
+                  <td colspan="100%">
+                    <h6 align="center">No Data Found</h6>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info btn-outline btn-sm f-12 mt-3" (click)="closeModal()">Close</button>
+  </div>
+</div>

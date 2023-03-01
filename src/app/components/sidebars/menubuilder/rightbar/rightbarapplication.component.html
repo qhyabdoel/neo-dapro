@@ -1,0 +1,144 @@
+<aside id="rightSidebar" class="navbar-right">
+  <div class="button-container" *ngIf="typePage !== 'dashboard'">
+    <button
+      href="javascript:void(0);"
+      class="btn btn-info btn-outline btn-sm w-auto"
+      (click)="handleActionRightbar()"
+      *ngIf="typePage === 'application'"
+    >
+      {{
+        (formData.options.publish ? 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.UP' : 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.P')
+          | translate
+      }}
+      {{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.LABEL' | translate }}
+      <i class="zmdi zmdi-globe f-12 ml-1 p-0"></i>
+    </button>
+    <button
+      href="javascript:void(0);"
+      *ngIf="typePage === 'application' && formData ? formData.options?.publish : false"
+      class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini m-0"
+      data-toggle="tooltip"
+      data-placement="bottom"
+      [attr.data-original-title]="'MODULE.DATA_APPLICATIONS.RIGHT_BAR.CP_APP_LINK' | translate"
+      (click)="copyUrl()"
+    >
+      <i class="zmdi zmdi-share f-12"></i>
+    </button>
+
+    <button
+      class="btn btn-info btn-outline btn-sm w-100 m-0"
+      mat-raised-button
+      matTooltip="{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.APPLY_CHANGES' | translate }}"
+      (click)="handleActionRightbar()"
+      *ngIf="typePage === 'chart'"
+    >
+      <div class="flex-center">
+        <div class="width-30" *ngIf="isLoadingContent">
+          <loading-component [loading]="isLoadingContent"></loading-component>
+        </div>
+        <span
+          >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.APPLY_CHANGES' | translate }} <i class="zmdi zmdi-play f-12 ml-1"></i>
+        </span>
+      </div>
+    </button>
+  </div>
+
+  <div class="panel-group m-0 dp-h93v" role="tablist" aria-multiselectable="true">
+    <div *ngIf="typePage === 'application'">
+      <application_property
+        (collapseOnClick)="collapseOnClick($event)"
+        (openModalTemplate)="openModalTemplate($event)"
+        (errorHandler)="errorHandler($event)"
+        [formData]="formData"
+        [activeColapse]="activeColapse"
+        (handleChangeFormData)="handleChangeApplication($event)"
+      ></application_property>
+      <topbar_option
+        (collapseOnClick)="collapseOnClick($event)"
+        (checkboxAction)="checkboxAction($event)"
+        (openModalTemplate)="openModalTemplate($event)"
+        [formData]="formData"
+        [activeColapse]="activeColapse"
+        (handleChangeFormData)="handleChangeApplication($event)"
+      ></topbar_option>
+      <sub_topbar_option
+        (collapseOnClick)="collapseOnClick($event)"
+        (checkboxAction)="checkboxAction($event)"
+        [formData]="formData"
+        [activeColapse]="activeColapse"
+      ></sub_topbar_option>
+
+      <application_option
+        (collapseOnClick)="collapseOnClick($event)"
+        (handleChange)="handleChange($event)"
+        (iconMenuChange)="iconMenuChange($event)"
+        (updateMenu)="updateMenu($event)"
+        (checkboxActionMenu)="checkboxActionMenu()"
+        [formData]="formData"
+        [activeColapse]="activeColapse"
+        [propertyMenuSelected]="propertyMenuSelected"
+        [menuContentSelected]="menuContentSelected"
+        [isCheckedProtectModule]="isCheckedProtectModule"
+        [isDisabledProtectModule]="isDisabledProtectModule"
+        [dashboardList]="dashboardList"
+      ></application_option>
+    </div>
+    <div *ngIf="typePage === 'dashboard'">
+      <dashboard_property
+        (collapseOnClick)="collapseOnClick($event)"
+        [activeColapse]="activeColapse"
+      ></dashboard_property>
+      <dashboard_option
+        (itemto)="refreshDashboard($event)"
+        (collapseOnClick)="collapseOnClick($event)"
+        [activeColapse]="activeColapse"
+      ></dashboard_option>
+    </div>
+    <div *ngIf="typePage === 'chart'">
+      <!-- datasource -->
+      <datasource_chart
+        (collapseOnClick)="collapseOnClick($event)"
+        [activeColapse]="activeColapse"
+        (itemto)="refreshDashboard($event)"
+      ></datasource_chart>
+      <!-- visualization type -->
+      <visualization_type
+        (collapseOnClick)="collapseOnClick($event)"
+        [activeColapse]="activeColapse"
+      ></visualization_type>
+      <!-- query -->
+      <query_chart
+        (collapseOnClick)="collapseOnClick($event)"
+        [activeColapse]="activeColapse"
+        (runQuery)="runQuery()"
+      ></query_chart>
+      <!-- chart options -->
+      <chart_options
+        (collapseOnClick)="collapseOnClick($event)"
+        [activeColapse]="activeColapse"
+        (handleChangeFormData)="handleChangeFormData($event)"
+        (runQuery)="runQuery()"
+      ></chart_options>
+      <!-- time -->
+      <time_chart (collapseOnClick)="collapseOnClick($event)" [activeColapse]="activeColapse"></time_chart>
+      <!-- filter -->
+      <filter_chart (collapseOnClick)="collapseOnClick($event)" [activeColapse]="activeColapse"></filter_chart>
+      <!-- notification -->
+      <notification_chart
+        (collapseOnClick)="collapseOnClick($event)"
+        [activeColapse]="activeColapse"
+      ></notification_chart>
+    </div>
+  </div>
+
+  <div class="hide-menu rtl-sidebar" (click)="hideAndShowRightbar()">
+    <div
+      class="btn-toggle btn-toggle-menu"
+      data-toggle="tooltip"
+      data-placement="left"
+      [attr.data-original-title]="'MODULE.DATA_APPLICATIONS.RIGHT_BAR.HIDE' | translate"
+    >
+      <a href="javascript:void(0);" class="btn-menu"></a>
+    </div>
+  </div>
+</aside>

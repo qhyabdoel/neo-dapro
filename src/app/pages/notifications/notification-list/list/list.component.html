@@ -1,0 +1,399 @@
+<div class="card">
+  <div class="header">
+    <h2>Notification List</h2>
+  </div>
+  <div class="body">
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a
+            [ngClass]="{
+              'nav-link f-14': true,
+              active: activeTab === 'list'
+            }"
+            (click)="changeTab('list')"
+            ><i class="zmdi zmdi-account mr-1"></i> {{ 'MODULE.NOTIFICATIONS.NL' | translate }}</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="isShow_notif_configuration_manual">
+          <a
+            [ngClass]="{
+              'nav-link f-14': true,
+              active: activeTab === 'template'
+            }"
+            (click)="changeTab('template')"
+            ><i class="zmdi zmdi-accounts mr-1"></i> {{ 'MODULE.NOTIFICATIONS.NT' | translate }}</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="isShow_notification_template">
+          <a
+            [ngClass]="{
+              'nav-link f-14': true,
+              active: activeTab === 'manual'
+            }"
+            (click)="changeTab('manual')"
+            ><i class="zmdi zmdi-accounts mr-1"></i>
+            {{ 'MODULE.NOTIFICATIONS.MC' | translate }}
+          </a>
+        </li>
+      </ul>
+      <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+          <h5 class="f-16 py-1 mb-0" *ngIf="activeTab === 'list'">{{ 'MODULE.NOTIFICATIONS.NL' | translate }}</h5>
+          <h5 class="f-16 py-1 mb-0" *ngIf="activeTab === 'template'">{{ 'MODULE.NOTIFICATIONS.NTL' | translate }}</h5>
+          <h5 class="f-16 py-1 mb-0" *ngIf="activeTab === 'manual'">{{ 'MODULE.NOTIFICATIONS.MCL' | translate }}</h5>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12 text-right" style="text-align: right">
+          <button
+            (click)="addNotificationTemplate()"
+            class="btn btn-info btn-outline btn-sm"
+            type="button"
+            *ngIf="activeTab === 'template'"
+          >
+            {{ 'MODULE.NOTIFICATIONS.CT' | translate }} <i class="zmdi zmdi-plus f-12 ml-1"></i>
+          </button>
+          <button
+            (click)="addManualConfigurations()"
+            class="btn btn-info btn-outline btn-sm"
+            type="button"
+            data-toggle="modal"
+            data-target="#createManual"
+            *ngIf="activeTab === 'manual'"
+          >
+            {{ 'MODULE.NOTIFICATIONS.CMC' | translate }} <i class="zmdi zmdi-plus f-12 ml-1"></i>
+          </button>
+        </div>
+      </div>
+
+      <hr class="mt-2 mb-4" />
+
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="{{ 'MODULE.NOTIFICATIONS.SC' | translate }}"
+              [(ngModel)]="searchText"
+              (keyup)="$event.which == 13 ? searchData('slice_name') : 0"
+              *ngIf="activeTab === 'list'"
+            />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="{{ 'MODULE.NOTIFICATIONS.STM' | translate }}"
+              [(ngModel)]="searchText"
+              (keyup)="$event.which == 13 ? searchData('template_name') : 0"
+              *ngIf="activeTab === 'template'"
+            />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="{{ 'MODULE.NOTIFICATIONS.SU' | translate }}"
+              [(ngModel)]="searchText"
+              (keyup)="$event.which == 13 ? searchData('username') : 0"
+              *ngIf="activeTab === 'manual'"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12" *ngFor="let row of [1]">
+        <mat-card *ngIf="isloader" class="shimmer bg-grey" style="height: 13em"></mat-card>
+      </div>
+      <div class="tab-content list">
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'list' }">
+          <div class="table-responsive">
+            <mat-table
+              *ngIf="activeTab === 'list' && !isloader"
+              #table
+              multiTemplateDataRows
+              (matSortChange)="sortData($event)"
+              [dataSource]="dataSource"
+              matSort
+              class="table-striped table-hover js-basic-example dataTable table-dark w-100"
+            >
+              <ng-container matColumnDef="created_at">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.D' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let notification">{{ notification.created_at }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="slice_name">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.CP' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let notification">
+                  <a href="javascript:void(0);" (click)="openChartId(notification.chart_id)">
+                    <div style="display: flex; flex-direction: column">
+                      <label>{{ notification?.chart?.slice_name }}</label>
+                      <small class="text-info">{{ notification?.chart?.viz_type }}</small>
+                    </div>
+                  </a>
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="application_title">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.S' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let notification">
+                  <div
+                    *ngIf="notification?.menu?.application?.title != null"
+                    style="display: flex; flex-direction: column"
+                  >
+                    <label>App: {{ notification?.menu?.application?.title }}</label>
+                    <label>Menu: {{ notification?.menu?.title }}</label>
+                  </div>
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="alert">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.A' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let notification">
+                  <div *ngIf="notification.condition === '' && notification.criterias.length > 0">
+                    <span
+                      *ngFor="let criteria of notification.criterias"
+                      class="badge bg-pqs-tosca wrapLabel text-white"
+                      >{{ criteria.col }} {{ criteria.op }} {{ criteria.val }}</span
+                    >
+                  </div>
+                  <div *ngIf="notification.condition !== '' && notification.criterias.length <= 0">
+                    <span class="badge bg-pqs-tosca wrapLabel text-white">{{ notification.condition }}</span>
+                  </div>
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="template_name">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.T' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let notification">
+                  {{ notification?.notification_template?.template_name }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="enable">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.E' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let notification">
+                  <span [ngClass]="notification?.enable ? 'badge badge-success' : 'badge badge-warning'">{{
+                    notification?.enable ? 'Enable' : 'Disable'
+                  }}</span>
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef>{{
+                  'MODULE.NOTIFICATIONS.ACT' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let notification">
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Edit Alert On Chart"
+                    type="button"
+                    (click)="editNotification(notification)"
+                  >
+                    <i class="zmdi zmdi-edit"></i>
+                  </button>
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Add Recipient Email"
+                    type="button"
+                    (click)="loadRecipientNotification(notification)"
+                  >
+                    <i class="zmdi zmdi-email"></i>
+                  </button>
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Delete notification"
+                    type="button"
+                    (click)="deleteNotification(notification)"
+                  >
+                    <i class="zmdi zmdi-delete"></i>
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'template' }">
+          <div class="table-responsive">
+            <mat-table
+              *ngIf="activeTab === 'template' && !isloader"
+              #table
+              multiTemplateDataRows
+              (matSortChange)="sortData($event)"
+              [dataSource]="dataSource"
+              matSort
+              class="table-striped table-hover js-basic-example dataTable table-dark w-100"
+            >
+              <ng-container matColumnDef="created_at">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.D' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let template">{{ template.created_at }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="template_name">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.TN' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let template">
+                  {{ template.template_name }}
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="notification_description">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.TD' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let template">
+                  {{ template.notification_description }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="notification_count">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.UO' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let template">
+                  <span class="badge bg-pqs-tosca wrapLabel text-white"
+                    >{{ template.notification_count }} {{ 'MODULE.NOTIFICATIONS.N' | translate }}</span
+                  >
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef>{{
+                  'MODULE.NOTIFICATIONS.ACT' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let template">
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Edit Notification Template"
+                    type="button"
+                    (click)="editNotificationTemplate(template)"
+                  >
+                    <i class="zmdi zmdi-edit"></i>
+                  </button>
+                  <button
+                    [ngClass]="template.notification_count > 0 ? 'disabled' : ''"
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Delete Notification Template"
+                    type="button"
+                    (click)="deleteNotificationTemplate(template)"
+                  >
+                    <i class="zmdi zmdi-delete"></i>
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'manual' }">
+          <div class="table-responsive">
+            <mat-table
+              *ngIf="activeTab === 'manual' && !isloader"
+              #table
+              multiTemplateDataRows
+              (matSortChange)="sortData($event)"
+              [dataSource]="dataSource"
+              matSort
+              class="table-striped table-hover js-basic-example dataTable table-dark w-100"
+            >
+              <ng-container matColumnDef="created_at">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.D' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let manual">{{ manual?.created_at }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="setting_type">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.TYPE' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let manual">{{ manual?.setting_type }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="username">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+                <mat-cell *matCellDef="let manual">{{ manual?.data?.username }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="password">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>Password</mat-header-cell>
+                <mat-cell *matCellDef="let manual">{{ manual?.data?.password }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="host">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>Host</mat-header-cell>
+                <mat-cell *matCellDef="let manual">{{ manual?.data?.host }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="port">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>Port</mat-header-cell>
+                <mat-cell *matCellDef="let manual">{{ manual?.data?.port }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="sender">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef mat-sort-header>{{
+                  'MODULE.NOTIFICATIONS.SM' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let manual">{{ manual?.data?.sender }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <mat-header-cell class="ellipsistxt" *matHeaderCellDef>{{
+                  'MODULE.NOTIFICATIONS.ACT' | translate
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let manual">
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Edit Manual Configuration"
+                    type="button"
+                    (click)="editManualConfigurations(manual)"
+                  >
+                    <i class="zmdi zmdi-edit"></i>
+                  </button>
+                  <button
+                    class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+                    matTooltip="Delete Manual Configuration"
+                    type="button"
+                    (click)="deleteManualConfigurations(manual)"
+                  >
+                    <i class="zmdi zmdi-delete"></i>
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+        <div class="col-sm-12" style="text-align: -webkit-right" *ngFor="let row of [1]">
+          <mat-card *ngIf="isloader" class="shimmer bg-grey col-sm-6" style="height: 2em; margin-top: 1em"></mat-card>
+        </div>
+        <div
+          [ngClass]="{
+            'hide-div': isloader
+          }"
+        >
+          <mat-paginator
+            #paginator
+            [length]="pagelength"
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 20]"
+            [showFirstLastButtons]="true"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

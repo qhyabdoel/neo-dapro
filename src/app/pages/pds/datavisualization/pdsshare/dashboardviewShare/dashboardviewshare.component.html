@@ -1,0 +1,117 @@
+<div
+  class="row py-1 sub-top-nav t-0"
+  [ngStyle]="getStyle('subheader')"
+  *ngIf="!isHideSubtopbar"
+  [ngClass]="{ 'z-index': queryParams ? -1 : 999 }"
+>
+  <div class="col-md-8 align-self-center">
+    <h4 class="m-0" *ngIf="shareToken != ''">
+      {{ dashboardTitle == '' ? 'Judul Dashboard' : dashboardTitle }}
+    </h4>
+    <div class="col-sm-auto px-0 pt-1" *ngIf="shareToken == ''">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item" *ngFor="let bc of breadcrumb">
+          <a href="javascript:;" (click)="toDashboardFromApp(bc)">{{ bc.title }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-4 text-right" style="text-align: right">
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      role="button"
+      data-toggle="tooltip"
+      data-placement="top"
+      title="Fullscreen"
+      (click)="onFullscreen()"
+    >
+      <i class="zmdi zmdi-fullscreen f-14 ml-1"></i>
+    </button>
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      data-toggle="tooltip"
+      data-placement="bottom"
+      title="Refresh All"
+      (click)="reload()"
+    >
+      <i class="zmdi zmdi-refresh-alt f-14 ml-1"></i>
+    </button>
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      *ngIf="!isShared"
+      data-toggle="tooltip"
+      data-placement="bottom"
+      title="Preview"
+      [routerLink]="['../view/shared']"
+      [queryParams]="getQueryParam()"
+      target="_blank"
+    >
+      <i class="zmdi zmdi-crop-free f-12 ml-1"></i>
+    </button>
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      data-toggle="tooltip"
+      data-placement="bottom"
+      title="Copy url"
+      (click)="copyUrl()"
+    >
+      <i class="zmdi zmdi-copy f-12 ml-1"></i>
+    </button>
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      data-toggle="tooltip"
+      data-placement="bottom"
+      title="Email"
+      (click)="mailto()"
+    >
+      <i class="zmdi zmdi-email f-12 ml-1"></i>
+    </button>
+    <a
+      class="btn btn-info btn-outline btn-sm"
+      *ngIf="!isShared"
+      data-toggle="tooltip"
+      data-placement="bottom"
+      title="Edit"
+      (click)="onDashboardEdit()"
+      ><i class="zmdi zmdi-edit f-12 ml-1"></i
+    ></a>
+  </div>
+</div>
+<section
+  id="content-full"
+  class="content content-full content-full-max pt-5 roundeds dash-view"
+  style="overflow: scroll"
+  [ngStyle]="getStyle('content')"
+>
+  <div class="row clearfix" *ngIf="isLoadingContent">
+    <div class="col-md-12">
+      <mat-spinner class="mat-spinner-color" [diameter]="60" style="margin: 0 auto"></mat-spinner>
+      <h5 class="f-12 text-center mt-3">Loading Dashboard ...</h5>
+    </div>
+  </div>
+  <div class="row clearfix grid-stack" id="rowDashboard">
+    <ng-template appInject></ng-template>
+  </div>
+</section>
+
+<div class="modal fade show" id="alertDialog" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row text-center justify-content-center">
+          <div class="col-auto align-self-center">
+            <div class="w_icon orange"><i class="zmdi zmdi-alert-circle-o"></i></div>
+          </div>
+          <div class="col-8 align-self-center">
+            <h5 class="f-15 m-auto" *ngFor="let msg of validate_messages">
+              {{ msg }}
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-info btn-outline btn-sm f-12 mx-auto mt-3" type="button" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="collapse-group">
+  <div
+    class="collapse-panel"
+    *ngIf="['dist_bar', 'horizontal_bar', 'line', 'dual_line', 'pie', 'treemap', 'sunburst', 'directed_force', 'bubble', 'country_map', 'country_map2', 'map', 'gauge', 'big_number_total', 'predictive', 'pivot_table', 'box_plot', 'heatmap', 'scatter', 'table','table_comparison'].includes(visualType)"
+  >
+    <input
+      class="collapse-check"
+      type="checkbox"
+      id="chck2"
+      [ngClass]="{ checked: activeColapse.chartFormatGroup == true }"
+    />
+    <label class="collapse-label" (click)="collapsible('chartFormatGroup')"
+      >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CF' | translate }}</label
+    >
+    <div class="collapse" [ngClass]="{ show: activeColapse.chartFormatGroup == true }">
+      <custom_select_component
+        (onChangeValue)="handleChange($event)"
+        [selectedValue]="form_data.format_number_id"
+        [name]="'format_number_id'"
+        [options]="list_format_number"
+        value="value"
+        label="label"
+        [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CD'"
+        [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.RN'"
+        [type]="'select_specific_object'"
+      ></custom_select_component>
+      <div class="row clearfix" *ngFor="let item of looping_select_format">
+        <custom_select_component
+          *ngIf="item.type.includes(visualType) "
+          (onChangeValue)="handleChange($event)"
+          [selectedValue]="item.model"
+          [name]="item.name"
+          [options]="item.name ==='x_axis_format' ?list_table_timestamp_format : list_y_axis_format"
+          [defaultValue]="item.placeholder"
+          [title]="item.label"
+          [type]="'select'"
+        ></custom_select_component>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-info btn-outline btn-sm w-100 m-0 mb-3"
+        (click)="openModal('column_format')"
+        *ngIf="['table', 'table_comparison'].includes(visualType)"
+      >
+        {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.ACF' | translate }} <i class="zmdi zmdi-plus f-12 ml-1"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-info btn-outline btn-sm w-100 m-0 mb-3"
+        (click)="openModal('column_width_setting')"
+        *ngIf="['table'].includes(visualType)"
+      >
+        {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.SWC' | translate }}
+        <i class="zmdi zmdi-view-carousel f-12 ml-1"></i>
+      </button>
+    </div>
+  </div>
+</div>

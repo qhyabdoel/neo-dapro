@@ -1,0 +1,77 @@
+<div *ngIf="explore && ['filter_box'].includes(explore.form_data.viz_type)">
+  <div [ngClass]="explore?.form_data?.filter_alignment_horizontal ? 'flex-center row clearfix' : ''">
+    <div
+      [ngClass]="explore?.form_data?.filter_alignment_horizontal ? 'col' : 'row clearfix'"
+      *ngFor="let item of explore?.form_data?.groupby; let i = index"
+    >
+      <div *ngIf="item !== explore.form_data.filter_control_checkbox">
+        <div class="form-control-label">
+          <label class="text-capitalize mb-2">{{ item }}</label>
+        </div>
+        <div class="form-group">
+          <ng-select
+            class="text-light"
+            [items]="chartOption ? chartOption.data[item] : []"
+            [multiple]="true"
+            [closeOnSelect]="true"
+            [searchable]="true"
+            bindLabel="text"
+            placeholder="Select"
+            (change)="filter_function($event, i)"
+          >
+          </ng-select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row clearfix" *ngIf="explore?.form_data?.alphabet_filter">
+    <div class="col-md-12">
+      <div class="mw-100 d-flex overflow-auto border-0 mb-4">
+        <button
+          class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini ml-0 mr-1"
+          [ngClass]="{ active: filter[0] === activeAlphabet }"
+          id="AlphabethBtn-{{ filter[0] }}"
+          *ngFor="let filter of alphabethList; let i = index"
+          (click)="onAlphabetFilter(filter[0])"
+        >
+          {{ filter[1] }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row clearfix" *ngIf="explore?.form_data?.filter_checkbox">
+    <div class="col">
+      <div class="form-line">
+        <div class="checkbox">
+          <input id="fcb-selectAll" type="checkbox" (change)="onCheckboxFilter($event, 'all')" />
+          <label for="fcb-selectAll"> Select All</label>
+        </div>
+      </div>
+    </div>
+    <div class="col" *ngFor="let filter of filterCheckboxList">
+      <div class="form-line">
+        <div class="checkbox">
+          <input
+            id="{{ 'fcb-' + filter.id }}"
+            [(ngModel)]="filter.isChecked"
+            [ngModelOptions]="{ standalone: true }"
+            type="checkbox"
+            (change)="onCheckboxFilter($event, filter.id)"
+          />
+          <label for="{{ 'fcb-' + filter.id }}">{{ filter.text }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <custom_date_picker_component
+    *ngIf="explore?.form_data?.date_filter"
+    [filter_date]="explore ? explore?.form_data?.filter_date : ''"
+    [date_type]="explore ? explore?.form_data?.filter_date_type : ''"
+    (setState)="setState($event)"
+    [type]="'dynamic'"
+    [value1]="since ? since : ''"
+    [value2]="until ? until : ''"
+  >
+  </custom_date_picker_component>
+</div>

@@ -1,0 +1,141 @@
+<div>
+  <ngb-progressbar
+    class="kt-loading-bar"
+    *ngIf="(loader.progress$ | async) > 0"
+    [value]="loader.progress$ | async"
+    height="3px"
+  ></ngb-progressbar>
+  <nav
+    class="navbar navbar-top navbar-expand-lg fixed-top"
+    header-component
+    [options]="application?.options?.topbar_option"
+    [isNotiApp]="isNotificationApp"
+    [notifList]="notificationList"
+    [notifListCount]="notificationLength"
+    (onClickSearch)="globalSearch($event)"
+    [isApplication]="true"
+    [redirect]="application"
+  ></nav>
+  <!-- end header -->
+  <!-- start sidebar -->
+
+  <div id="app-sidebar" class="app-sidebar collapsed" style="overflow: auto">
+    <div class="custom-menu" (click)="toggleCustomMenu()">
+      <div class="btn-toggle btn-toggle-menu">
+        <a href="javascript:void(0)" class="btn-menu"></a>
+      </div>
+    </div>
+    <div class="list-group panel">
+      <a href="javascript:" class="list-group-item top-logo">
+        <img class="logo-dark" src="assets/images/pq-logo-w.svg" alt="Paques Logo" width="85px" />
+        <img class="logo-light" src="assets/images/pq-logo-dark.svg" alt="Paques Logo" width="85px" />
+      </a>
+
+      <ng-template #tmplNode let-node="node">
+        <a class="leftbar-app node-item" [attr.data-id]="node.id" [attr.id]="'node-' + node.id">
+          <div
+            class="node-title"
+            (click)="setSelectedItem(node)"
+            [ngClass]="selectedMenu.id == node.id ? 'is-active' : ''"
+          >
+            <span>{{ node.title }}</span>
+          </div>
+          <a href="javascript:void(0)" mat-icon-button (click)="handleClickMenu(node)" *ngIf="node.children.length > 0">
+            <mat-icon>
+              {{
+                node.children && node.children.length > 0
+                  ? node.expanded
+                    ? 'keyboard_arrow_down'
+                    : 'keyboard_arrow_right'
+                  : ''
+              }}
+            </mat-icon>
+          </a>
+
+          <div *ngIf="node.expanded && node.children.length" class="node-children" [id]="node.id">
+            <div *ngFor="let child of node.children">
+              <ng-container *ngTemplateOutlet="tmplNode; context: { node: child }"></ng-container>
+            </div>
+          </div>
+        </a>
+      </ng-template>
+
+      <div [id]="'main'">
+        <div *ngFor="let node of menu">
+          <ng-container *ngTemplateOutlet="tmplNode; context: { node: node }"></ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end sidebar -->
+  <section class="content content-full">
+    <!-- start loading app retrieve dashboard -->
+    <div class="row clearfix">
+      <div class="col-md-12">
+        <div class="block-header d-inline-box px-0 pt-0" *ngIf="isSearchResult">
+          <h2>{{ titleSearch }}</h2>
+          <label class="ml-3"
+            >{{ totalSize }} results about <b>{{ inputSearch }}</b></label
+          >
+        </div>
+        <div *ngIf="loadingPage">
+          <mat-spinner class="mat-spinner-color" [diameter]="60" style="margin: 0 auto"></mat-spinner>
+          <h5 class="f-12 text-center mt-3">
+            Loading {{ inputSearch ? 'search data' : 'application' }} from server...
+          </h5>
+        </div>
+      </div>
+    </div>
+    <!-- end loading app retrieve dashboard -->
+
+    <!-- start header dashboard breadcrumb -->
+    <div class="row clearfix app-content">
+      <div class="col-md-12">
+        <div class="row py-1 sub-top-nav t-0" *ngIf="!this.selectedMenu?.dashboard?.share_url">
+          <div class="col-md-8">
+            <div class="col-md-12">
+              <div class="col-sm-auto px-0 pt-1">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item" *ngFor="let bc of breadcrumb">
+                    <a href="javascript:;">{{ bc.title }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end header dashboard breadcrumb -->
+        <!-- start dashboard component by inject -->
+
+        <ng-template appInject></ng-template>
+
+        <!-- end dashboard component by inject -->
+      </div>
+      <div class="col-md-12">
+        <div class="pagination pagination-success justify-content-center mb-4 pb-2" *ngIf="totalSize > 0">
+          <mat-paginator
+            #paginator
+            [pageSize]="pageSize"
+            [showFirstLastButtons]="true"
+            [pageSizeOptions]="[6]"
+            [length]="totalSize"
+            [pageIndex]="currentPage"
+          ></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- App Footer -->
+  <div class="app-footer fixed-bottom">
+    <div class="container-fluid">
+      <span class="pull-left">
+        <span
+          >Copyright © <a target="_blank" href="https://paques.id/">{{ application?.title }}</a> 2020</span
+        >
+      </span>
+      <span class="pull-right">
+        <span>Created with Paques Data Studio v.3</span>
+      </span>
+    </div>
+  </div>
+</div>

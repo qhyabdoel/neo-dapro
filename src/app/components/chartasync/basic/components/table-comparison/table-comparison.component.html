@@ -1,0 +1,66 @@
+<div class="scrolling-table-comparison mat-table-container">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control form-bottomline"
+            placeholder="Searching data on table"
+            (keyup)="handleApplyFilter($event)"
+          />
+          <div class="input-group-append form-bottomline group-bottomline">
+            <span class="input-group-text border-0 mt-3"><i class="zmdi zmdi-search"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="sortData($event)"
+      style="margin-bottom: 40px"
+      *ngIf="!explore?.form_data?.table_grid_view"
+    >
+      <ng-container *ngFor="let disCol of displayedColumns" [matColumnDef]="disCol">
+        <mat-header-cell
+          class="ellipsistxt"
+          *matHeaderCellDef
+          mat-sort-header
+          [style]="'flex: ' + chartOption?.flexStyles[disCol]"
+        >
+          <div
+            class="mat-sort-header-container"
+            data-placement="top"
+            title="{{ disCol }}"
+            [ngStyle]="chartOption?.headerStyle"
+          >
+            <span>
+              {{ setColumnName(disCol) }}
+            </span>
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row; let i = index" [style]="'flex: ' + chartOption?.flexStyles[disCol]">
+          <span>{{ row[disCol] }}</span>
+        </mat-cell>
+        <mat-footer-cell *matFooterCellDef>
+          <span>{{ chartOption.displayedColumnsFooter[disCol] }}</span>
+        </mat-footer-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+    </mat-table>
+  
+    <div class="btmPaginator">
+      <div class="scrollPaginator">
+        <mat-paginator
+          #paginator
+          [length]="pagelength"
+          [pageSize]="10"
+          [pageSizeOptions]="[5, 10, 20]"
+          [showFirstLastButtons]="true"
+        ></mat-paginator>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.JS' | translate }}</h4>
+  </div>
+  <div class="modal-body">
+    <ngx-monaco-editor class="template-editor" [options]="editorOptions" [(ngModel)]="form_data.js">
+    </ngx-monaco-editor>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.CL' | translate }}
+    </button>
+  </div>
+</div>

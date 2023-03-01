@@ -1,0 +1,132 @@
+<div class="row py-1 sub-top-nav" [ngStyle]="getStyle('subheader')">
+  <div class="col-auto col-md-5">
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_EDIT_DASHBOARD' | translate }}"
+      (click)="onDashboardEdit()"
+    >
+      {{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_EDIT_DASHBOARD' | translate }}
+      <i class="zmdi zmdi-edit ml-1"></i>
+    </button>
+  </div>
+
+  <div class="col-auto px-0 align-self-center">
+    <ul class="nav nav-tabs nav-tabs-success" role="tablist">
+      <li class="nav-item">
+        <a
+          class="nav-link mb-0 px-3"
+          data-toggle="tab"
+          href="javascript:void()"
+          [routerLink]="['../../listdatavisualization']"
+        >
+          <i class="zmdi zmdi-chart"></i>
+          {{ 'MODULE.DATA_VISUAL.CHART.LIST.subTopbarOptions.title' | translate | uppercase }}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link mb-0 px-3 active"
+          data-toggle="tab"
+          href="javascript:void()"
+          [routerLink]="['../../dashboardvisualization']"
+          ><i class="zmdi zmdi-view-dashboard"></i>
+          {{ 'MODULE.DATA_VISUAL.DASHBOARD.LIST.subTopbarOptions.title' | translate | uppercase }}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-auto ml-auto">
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_FULLSCREEN' | translate }}"
+      (click)="onFullScreen()"
+    >
+      <i class="zmdi zmdi-fullscreen f-14 ml-1"></i>
+    </button>
+
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_REFRESH_ALL' | translate }}"
+      (click)="reload()"
+    >
+      <i class="zmdi zmdi-refresh-alt f-14 ml-1"></i>
+    </button>
+    <button class="dropdown-toggle btn btn-outline btn-sm" (click)="handleOpenMenu()"
+    matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_COPY_URL' | translate }}">
+      <i class="zmdi zmdi-copy f-12 ml-1"></i>
+    </button>
+    <ul
+      [ngClass]="{
+        'dropdown-menu dropdown-menu-right mt-1': true,
+        show: openMenu
+      }"
+    >
+      <li>
+        <a href="javascript:void(0);" (click)="copyUrl('dark')">
+          {{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_COPY_URL_DARK' | translate }}
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void(0);" (click)="copyUrl('light')">
+          {{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_COPY_URL_LIGHT' | translate }}
+        </a>
+      </li>
+    </ul>
+    <!-- <mat-menu #menu="matMenu" xPosition="before" class="providers-menu">
+      <button mat-menu-item (click)="copyUrl('dark')">
+        {{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_COPY_URL_DARK' | translate }}
+      </button>
+      <button mat-menu-item (click)="copyUrl('light')">
+        {{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_COPY_URL_LIGHT' | translate }}
+      </button>
+    </mat-menu> -->
+
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.SUB_TOP_BAR.BTN_SEND_TO_EMAIL' | translate }}"
+      (click)="mailto()"
+    >
+      <i class="zmdi zmdi-email f-12 ml-1"></i>
+    </button>
+  </div>
+</div>
+<section id="content-full" class="content content-full" [ngStyle]="getStyle('content')">
+  <div class="row clearfix" *ngIf="isLoadingContent">
+    <div class="col-md-12">
+      <h5 class="f-12 text-center mt-3">Loading Dashboard ...</h5>
+    </div>
+  </div>
+  <div class="row clearfix">
+    <div class="col-md-12">
+      <h3>
+        {{ dashboardTitle == '' ? 'Judul Dashboard' : dashboardTitle }}
+      </h3>
+    </div>
+  </div>
+  <div class="grid-stack" id="rowDashboard">
+    <div style="height: 100%" appInject></div>
+  </div>
+</section>
+
+<div class="modal fade show" id="alertDialog" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row text-center justify-content-center">
+          <div class="col-auto align-self-center">
+            <div class="w_icon orange"><i class="zmdi zmdi-alert-circle-o"></i></div>
+          </div>
+          <div class="col-8 align-self-center">
+            <h5 class="f-15 m-auto" *ngFor="let msg of validate_messages">
+              {{ msg }}
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-info btn-outline btn-sm f-12 mx-auto mt-3" type="button" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

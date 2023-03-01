@@ -1,0 +1,65 @@
+<div>
+  <div class="modal-header">
+    <h5 class="title f-16">{{ functionName }}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="_onClose()" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <ngx-monaco-editor
+          class="template-editor template-editor-agg-for"
+          [options]="editorOptions"
+          [ngModel]="formulaValue"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="_onChange($event)"
+        ></ngx-monaco-editor>
+      </div>
+    </div>
+
+    <form class="form-horizontal mt-4">
+      <div class="row clearfix">
+        <div class="col-sm-3 form-control-label">
+          <label>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.SF' | translate }}</label>
+        </div>
+        <div class="col-sm-9">
+          <div class="form-group">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Type formula"
+                [(ngModel)]="formulaFilter"
+                [ngModelOptions]="{ standalone: true }"
+                (keyup)="$event.which == 13 ? searchFormulaFilter() : 0"
+              />
+              <div class="input-group-text p-0">
+                <a href="javascript:;" class="input-group-append p-0 pt-1"
+                  ><span class="input-group-addon mx-2"
+                    ><i class="ti-search f-12" (click)="searchFormulaFilter()"></i></span
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <mat-table
+      [dataSource]="formulaDataSource"
+      class="table-striped table-dark table-hover js-basic-example mat-table-formula"
+    >
+      <ng-container [matColumnDef]="disCol" *ngFor="let disCol of formulaDisColumns">
+        <mat-header-cell *matHeaderCellDef
+          ><span>{{ disCol | titlecase }}</span></mat-header-cell
+        >
+        <mat-cell *matCellDef="let row"
+          ><a href="javascript:;" (click)="addFormulaToEditor(row)">{{ row[disCol] }}</a></mat-cell
+        >
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="formulaDisColumns; sticky: true"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: formulaDisColumns"></mat-row>
+    </mat-table>
+  </div>
+</div>

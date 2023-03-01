@@ -1,0 +1,10 @@
+<div class="col-sm-12">
+  <div class="form-group">
+    <div class="form-line">
+      <div class="checkbox">
+        <input [id]="name" [name]="name" [(ngModel)]="value" type="checkbox" (change)="onChange($event)" />
+        <label [for]="name">{{ title | translate }}</label>
+      </div>
+    </div>
+  </div>
+</div>

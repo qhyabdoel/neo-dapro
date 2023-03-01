@@ -1,0 +1,54 @@
+<div class="panel panel-primary m-0 resume">
+  <div class="panel-heading" role="tab" id="headingTwo_1">
+    <h4 class="panel-title">
+      <a
+        [ngClass]="{ toggled: activeColapse.subTopbarOption == true }"
+        class="menu-toggle text-uppercase"
+        role="button"
+        (click)="collapsible('subTopbarOption')"
+      >
+        <i
+          class="zmdi zmdi-info"
+          [matMenuTriggerFor]="showPopover"
+          #triggerpopover="matMenuTrigger"
+          (mouseover)="triggerpopover.openMenu(); setPopover();"
+          (mouseleave)="triggerpopover.closeMenu(); hidePopover()"
+        ></i
+        >&nbsp; {{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.STO' | translate }}
+      </a>
+      <mat-menu #showPopover="matMenu" class="tooltips popover pds-popover">
+          <h3 class="popover-header">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.STO' | translate }}</h3>
+          <div class="popover-body">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.STO_CONTENT' | translate }}</div>
+      </mat-menu>
+    </h4>
+  </div>
+  <div class="panel-collapse collapse" role="tabpanel" [ngClass]="{ show: activeColapse.subTopbarOption }">
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <div class="row clearfix">
+          <div class="col-md-12">
+            <div class="checkbox">
+              <input id="enable_breadcrumb" type="checkbox" (change)="checkBoxHandling('enable_breadcrumb')" checked />
+              <label for="enable_breadcrumb"> {{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.B' | translate }} </label>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="environtmentType != 'on_cloud'" class="row clearfix">
+          <div class="col-md-12">
+            <div class="checkbox">
+              <input
+                id="enable_refresh_page_button"
+                type="checkbox"
+                (change)="checkBoxHandling('enable_refresh_page_button')"
+                checked
+              />
+              <label for="enable_refresh_page_button">
+                {{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.RPB' | translate }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

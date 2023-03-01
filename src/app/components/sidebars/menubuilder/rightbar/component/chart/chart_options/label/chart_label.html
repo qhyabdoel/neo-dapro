@@ -1,0 +1,167 @@
+<div class="collapse-group">
+  <div
+    class="collapse-panel"
+    *ngIf="
+    [
+      'heatmap',
+      'horizontal_bar',
+      'dist_bar',
+      'pie',
+      'line',
+      'dual_line',
+      'box_plot',
+      'histogram',
+      'bubble',
+      'directed_force',
+      'gauge',
+      'big_number_total',
+      'map',
+      'country_map',
+      'country_map2',
+      'predictive',
+      'scatter',
+      'sunburst',
+    ].includes(visualType)
+  "
+  >
+    <input class="collapse-check" type="checkbox" [ngClass]="{ checked: activeColapse.chartLabelGroup == true }" />
+    <label class="collapse-label" (click)="collapsible('chartLabelGroup')"
+      >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CL' | translate }}</label
+    >
+    <div class="collapse" [ngClass]="{ show: activeColapse.chartLabelGroup == true }">
+      <div *ngIf="['heatmap','directed_force','gauge'].includes(visualType)">
+        <custom_checkbox
+          [value]="form_data.show_label"
+          [name]="'show_label'"
+          [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.SL'"
+          (onChangeValue)="handleChange($event)"
+        ></custom_checkbox>
+      </div>
+
+      <div *ngIf="['pie','sunburst'].includes(visualType)">
+        <custom_select_component
+          *ngIf="['pie'].includes(visualType)"
+          (onChangeValue)="handleChange($event)"
+          [selectedValue]="form_data.pie_label_type"
+          [name]="'pie_label_type'"
+          [options]="list_label_type"
+          [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CLT'"
+          [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LT'"
+          [type]="'select'"
+        ></custom_select_component>
+        <custom_select_component
+          *ngIf="['pie','sunburst'].includes(visualType)"
+          (onChangeValue)="handleChange($event)"
+          [selectedValue]="form_data.pie_label_position"
+          [name]="'pie_label_position'"
+          [options]="list_pie_label_position"
+          value="value"
+          label="label"
+          [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LP'"
+          [type]="'select_specific_object'"
+        ></custom_select_component>
+      </div>
+      <div *ngIf="['map', 'country_map', 'country_map2'].includes(visualType)">
+        <custom_checkbox
+          [value]="form_data.hide_label"
+          [name]="'hide_label'"
+          [title]=" 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.HL'"
+          (onChangeValue)="handleChange($event)"
+        ></custom_checkbox>
+      </div>
+
+      <div class="row clearfix" *ngFor="let item of looping_input_label">
+        <custom_input
+          *ngIf="item.visualType.includes(visualType)"
+          [value]="item.value"
+          [name]="item.name"
+          [title]="item.label"
+          [type]="item.type"
+          (onChangeValue)="handleChange($event)"
+        ></custom_input>
+      </div>
+
+      <!-- Gauge -->
+      <div *ngIf="['gauge'].includes(visualType)">
+        <custom_checkbox
+          [value]="form_data.show_axis_label"
+          [name]="'show_axis_label'"
+          [title]=" 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.SAL'"
+          (onChangeValue)="handleChange($event)"
+        ></custom_checkbox>
+
+        <custom_select_component
+          (onChangeValue)="handleChange($event)"
+          [selectedValue]="form_data.gauge_label_type"
+          [name]="'gauge_label_type'"
+          [options]="list_label_type"
+          [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CLT'"
+          [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LT'"
+          [type]="'select'"
+        ></custom_select_component>
+      </div>
+      <!-- Big Number -->
+      <div *ngIf="['big_number_total'].includes(visualType)">
+        <div class="form-horizontal">
+          <custom_input
+            [value]="form_data.subheader"
+            [name]="'subheader'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LN' "
+            [type]="'text'"
+            [placeholder]="'Label Name'"
+            (onChangeValue)="handleChange($event)"
+          ></custom_input>
+
+          <div class="row clearfix">
+            <div class="col-sm-12 form-control-label">
+              <label for="last_run" class="mb-0"
+                >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LP' | translate }}
+              </label>
+            </div>
+            <div class="col-sm-12 mb-2">
+              <button
+                [ngClass]="form_data.label_position=='left' ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini active ml-0' : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini ml-0'"
+                (click)="setPosition('label_position','left')"
+                matTooltip="Align Left"
+              >
+                <img src="./assets/images/v_left.svg" width="10" height="10" alt="Label Align Left" />
+              </button>
+
+              <button
+                [ngClass]="form_data.label_position=='right' ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini active' : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini'"
+                (click)="setPosition('label_position','right')"
+                matTooltip="Align Right"
+              >
+                <img src="./assets/images/v_right.svg" width="10" height="10" alt="Label Align Right" />
+              </button>
+
+              <button
+                [ngClass]="form_data.label_position=='top' ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini active' : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini'"
+                (click)="setPosition('label_position','top')"
+                matTooltip="Align Top"
+              >
+                <img src="./assets/images/v_top.svg" width="10" height="10" alt="Label Align Top" />
+              </button>
+
+              <button
+                [ngClass]="form_data.label_position=='bottom' ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini active' : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini'"
+                (click)="setPosition('label_position','bottom')"
+                matTooltip="Align Bottom"
+              >
+                <img src="./assets/images/v_bottom.svg" width="10" height="10" alt="Label Align Bottom" />
+              </button>
+            </div>
+          </div>
+          <custom_input
+            [value]="form_data.subheaderfontsize"
+            [name]="'subheaderfontsize'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LFS' "
+            [type]="'text'"
+            (onChangeValue)="handleChange($event)"
+          >
+          </custom_input>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

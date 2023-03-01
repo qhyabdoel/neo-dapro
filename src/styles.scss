@@ -1,0 +1,62 @@
+@import '~@ng-select/ng-select/themes/ant.design.theme.css';
+
+.dark-modal .modal-content {
+  background-color: #292b2c;
+  color: white;
+
+  .modal-header .close {
+    color: white !important;
+  }
+
+  .modal-header .modal-title {
+    color: white !important;
+  }
+}
+
+.mat-form-field-label {
+  /*change color of label*/
+  color: grey !important;
+}
+.mat-select-panel {
+  background: #292b2c !important;
+  color: grey !important;
+}
+.mat-select-value {
+  color: grey !important;
+}
+.mat-option-text {
+  color: grey !important;
+}
+
+.mat-hint {
+  color: grey !important;
+}
+
+.progress {
+  overflow: overlay !important;
+}
+
+@font-face {
+  font-family: Montserrat;
+  src: url(./assets/fonts/Montserrat-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: Lato;
+  src: url(./assets/fonts/Lato-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: Oswald;
+  src: url(./assets/fonts/Oswald-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url(./assets/fonts/Poppins-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: Raleway;
+  src: url(./assets/fonts/Raleway-Regular.ttf) format('truetype');
+}

@@ -1,0 +1,124 @@
+<div
+  *ngIf="item && queryCommandItemOnFocus && queryCommandItemEndpoint"
+  title="{{ item.title }}"
+  class="query-command-item btn btn-icon btn-45 {{ item.buttonClass }}"
+  data-toggle="tooltip"
+  data-placement="bottom"
+  style="position: fixed; z-index: 10"
+  cdkDragBoundary=".content"
+  cdkDrag
+  [attr.data-original-title]="item.title"
+  [id]="item.name"
+  [attr.data-alias]="item.alias"
+  [ngClass]="{ 'btn-outline-active': queryCommandItemOnFocus && queryCommandItemOnFocus.onFocus, 'invalid-props': hasInvalidProps }"
+  [cdkDragFreeDragPosition]="queryCommandItemDragPosition ? queryCommandItemDragPosition.dragPosition : null"
+  (click)="_setItemOnFocus($event)"
+  (cdkDragEnded)="_onDragEnded($event)"
+  (cdkDragMoved)="_onDragMoved($event)"
+  (contextmenu)="_onContextMenu($event)"
+>
+  <i
+    *ngIf="queryCommandItemEndpoint.in && queryCommandItemEndpoint.in.isExist"
+    [ngClass]="{
+      zmdi: true,
+      'zmdi-square-o': queryCommandItemEndpoint.in && !queryCommandItemEndpoint.in.isActive,
+      'alt-pds-i': true,
+      'zmdi-check-square': queryCommandItemEndpoint.in && queryCommandItemEndpoint.in.isActive,
+      'pds-i-active': queryCommandItemEndpoint.in && queryCommandItemEndpoint.in.isActive
+    }"
+    style="position: absolute; left: -2px; cursor: pointer"
+    [id]="'in-' + item.id"
+    [ngStyle]="{ top: queryCommandItemEndpoint.multiIn && queryCommandItemEndpoint.multiIn.isExist ? '13px' : null }"
+    (click)="_slotOnClick(queryCommandItemEndpoint, 'in')"
+  ></i>
+
+  <i
+    *ngIf="queryCommandItemEndpoint.multiIn && queryCommandItemEndpoint.multiIn.isExist"
+    [ngClass]="{
+      zmdi: true,
+      'zmdi-square-o': queryCommandItemEndpoint.multiIn && !queryCommandItemEndpoint.multiIn.isActive,
+      'alt-pds-i': true,
+      'zmdi-check-square': queryCommandItemEndpoint.multiIn && queryCommandItemEndpoint.multiIn.isActive,
+      'pds-i-active': queryCommandItemEndpoint.multiIn && queryCommandItemEndpoint.multiIn.isActive
+    }"
+    style="position: absolute; left: -2px; cursor: pointer"
+    [id]="'multiIn-' + item.id"
+    [ngStyle]="{ bottom: queryCommandItemEndpoint.multiIn && queryCommandItemEndpoint.multiIn.isExist ? '13px' : null }"
+    (click)="_slotOnClick(queryCommandItemEndpoint, 'multiIn')"
+  ></i>
+
+  <div class="qry-cmd-item-title">
+    <img [src]="'/assets/images/command_query/new/' + item.image" />
+    <span>{{ item.alias | titlecase }}</span>
+  </div>
+
+  <i
+    *ngIf="queryCommandItemEndpoint.out && queryCommandItemEndpoint.out.isExist"
+    [ngClass]="{
+      zmdi: true,
+      'zmdi-square-o': queryCommandItemEndpoint.out && !queryCommandItemEndpoint.out.isActive,
+      'pds-i': true,
+      'zmdi-check-square': queryCommandItemEndpoint.out && queryCommandItemEndpoint.out.isActive,
+      'pds-i-active': queryCommandItemEndpoint.out && queryCommandItemEndpoint.out.isActive
+    }"
+    style="position: absolute; right: -2px; cursor: pointer"
+    [ngStyle]="{
+      top:
+        queryCommandItemEndpoint.branch && queryCommandItemEndpoint.branch.isExist
+          ? queryCommandItemEndpoint.multiOut.isExist
+            ? '8px'
+            : '13px'
+          : null
+    }"
+    [id]="'out-' + item.id"
+    [attr.data-toggle]="'tooltip'"
+    [attr.data-placement]="'top'"
+    [title]="item.tooltip"
+    (mouseover)="_getTooltipAlias(item.name, 'Out')"
+    (click)="_slotOnClick(queryCommandItemEndpoint, 'out')"
+  ></i>
+
+  <i
+    *ngIf="queryCommandItemEndpoint.branch && queryCommandItemEndpoint.branch.isExist"
+    [ngClass]="{
+      zmdi: true,
+      'zmdi-square-o': queryCommandItemEndpoint.branch && !queryCommandItemEndpoint.branch.isActive,
+      'pds-i': true,
+      'zmdi-check-square': queryCommandItemEndpoint.branch && queryCommandItemEndpoint.branch.isActive,
+      'pds-i-active': queryCommandItemEndpoint.branch && queryCommandItemEndpoint.branch.isActive
+    }"
+    style="position: absolute; right: -2px; cursor: pointer"
+    [ngStyle]="{
+      bottom: queryCommandItemEndpoint.branch.isExist
+        ? queryCommandItemEndpoint.multiOut.isExist
+          ? '22px'
+          : '13px'
+        : null
+    }"
+    [id]="'branch-' + item.id"
+    data-toggle="tooltip"
+    data-placement="top"
+    [title]="item.tooltip"
+    (mouseover)="_getTooltipAlias(item.name, 'Branch')"
+    (click)="_slotOnClick(queryCommandItemEndpoint, 'branch')"
+  ></i>
+
+  <i
+    *ngIf="queryCommandItemEndpoint.multiOut && queryCommandItemEndpoint.multiOut.isExist"
+    [ngClass]="{
+      zmdi: true,
+      'zmdi-square-o': queryCommandItemEndpoint.multiOut && !queryCommandItemEndpoint.multiOut.isActive,
+      'pds-i': true,
+      'zmdi-check-square': queryCommandItemEndpoint.multiOut && queryCommandItemEndpoint.multiOut.isActive,
+      'pds-i-active': queryCommandItemEndpoint.multiOut && queryCommandItemEndpoint.multiOut.isActive
+    }"
+    style="position: absolute; right: -2px; cursor: pointer"
+    [ngStyle]="{ bottom: queryCommandItemEndpoint.multiOut ? '8px' : null }"
+    [id]="'multiOut-' + item.id"
+    data-toggle="tooltip"
+    data-placement="top"
+    [title]="item.tooltip"
+    (mouseover)="_getTooltipAlias(item.name, 'Out2')"
+    (click)="_slotOnClick(queryCommandItemEndpoint, 'multiOut')"
+  ></i>
+</div>

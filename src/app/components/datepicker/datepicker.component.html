@@ -1,0 +1,56 @@
+<div class="containerList" style="margin-bottom: 28px;">
+    <div class="row clearfix justify-content-end">
+      <div class="col-auto pr-0">
+        <mat-form-field appearance="fill">
+            <mat-label>Start Date</mat-label>
+            <input
+                matInput
+                [matDatepicker]="startDatePicker"
+                readonly
+                hidden="true"
+                (dateInput)="datePickerHandler($event.value, startDatePicker, 'start')"
+            />
+            <input
+                matInput
+                [ngModel]="startDate | date: 'dd/MM/yyyy'"
+                [ngModelOptions]="{ standalone: true }"
+                readonly
+                (click)="startDatePicker.open()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker 
+                #startDatePicker 
+                startView="multi-year" 
+                panelClass="example-month-picker"
+            > 
+            </mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>End Date</mat-label>
+            <input
+                matInput
+                [matDatepicker]="endDatePicker"
+                readonly
+                hidden="true"
+                (dateInput)="datePickerHandler($event.value, endDatePicker, 'end')"
+            />
+            <input
+                matInput
+                [ngModel]="endDate | date: 'dd/MM/yyyy'"
+                [ngModelOptions]="{ standalone: true }"
+                readonly
+                (click)="endDatePicker.open()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker 
+                #endDatePicker 
+                startView="multi-year" 
+                panelClass="example-month-picker"
+            > 
+            </mat-datepicker>
+        </mat-form-field>
+
+      </div>
+    </div>
+  </div>

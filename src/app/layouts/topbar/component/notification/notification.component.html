@@ -1,0 +1,48 @@
+<li class="dropdown nav-item">
+  <a
+    role="button"
+    href="javascript:void(0);"
+    (click)="clickNotif()"
+    class="nav-link notification-toggle-btn"
+    [ngClass]="notifListCount > 0 ? 'notif-visible' : ''"
+    matTooltip="{{ 'HEADER_BAR.N' | translate }}"
+    #toggleButton1
+  >
+    <i class="zmdi zmdi-notifications-active"></i>
+    <span class="badge badge-danger" *ngIf="notifListCount > 99; else elseBlock">99+</span>
+    <ng-template #elseBlock>
+      <span class="badge badge-danger" *ngIf="notifListCount > 0">{{ notifListCount }}</span>
+    </ng-template>
+  </a>
+  <ul
+    [ngClass]="{
+      'dropdown-menu slideUp2 notifScroll': true,
+      show: isOpen
+    }"
+    #menu1
+  >
+    <li class="body">
+      <ul class="menu list-unstyled py-2" *ngIf="logList.length > 0">
+        <li *ngFor="let item of logList">
+          <a href="javascript:void(0);">
+            <div class="icon-circle bg-pqs-green"><i class="zmdi zmdi-alert-triangle"></i></div>
+            <div class="menu-info">
+              <h4>{{ item?.description }}</h4>
+              <p><i class="zmdi zmdi-time"></i> {{ item?.logged_at }}</p>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <ul class="menu list-unstyled py-2" *ngIf="logList.length == 0">
+        <li>
+          <a href="javascript:void(0);">
+            <div class="icon-circle bg-grey"><i class="zmdi zmdi-info-outline"></i></div>
+            <div class="menu-info align-self-center mt-0">
+              <h4>{{ 'HEADER_BAR.E' | translate }}</h4>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>

@@ -1,0 +1,64 @@
+::ng-deep .table-condensed {
+  font-size: 10px !important;
+}
+.grid-stack {
+  background: lightgoldenrodyellow;
+}
+
+.grid-stack-item {
+  .ui-resizable-se,
+  .ui-resizable-sw {
+    bottom: 5px;
+  }
+}
+.grid-stack-item-content {
+  border-radius: 0.5rem;
+  overflow: unset;
+  text-align: left;
+  background-color: transparent;
+  // top: 10px;
+  left: 5px;
+  right: 5px;
+  height: 100%;
+
+  .card {
+    margin-bottom: 0px;
+    height: inherit;
+    display: block;
+
+    .header {
+      // min-height: 42px;
+      > h2 {
+        text-align: left;
+        display: flex;
+      }
+      .loader {
+        margin-right: 5px;
+      }
+    }
+
+    > .body {
+      height: calc(100% - 40px) !important;
+      // height: calc(100% - 33px)!important;
+      overflow-y: unset !important;
+      // display: flex;
+
+      &.ch-full {
+        height: 75vh;
+      }
+      &.ch-half {
+        height: 50vh;
+      }
+      &.ch-1-3 {
+        height: 25vh;
+      }
+      &.roundeds {
+        height: calc(100% - 2px) !important;
+      }
+    }
+
+    .demo-chart {
+      height: 100% !important;
+    }
+  }
+}

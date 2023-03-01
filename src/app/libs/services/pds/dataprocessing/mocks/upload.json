@@ -1,0 +1,21 @@
+{
+  "status": "success",
+  "code": 200,
+  "response": [
+    {
+      "name": "bogor.csv",
+      "modified": "2022-06-07T14:35:03.955677368+07:00",
+      "isDir": false,
+      "path": "√://tmp/bogor.csv",
+      "ext": ".csv",
+      "id": "4oiaOi8vXzFCcGsvenp6LzUuY3N2",
+      "key": 0,
+      "hasCaret": false,
+      "icon": "document",
+      "label": "bogor.csv",
+      "secondaryLabel": "640 B",
+      "searchMode": false
+    }
+  ],
+  "message": null
+}

@@ -1,0 +1,5 @@
+{
+  "/api": { "target": "https://dev.paques.dev:1122", "secure": false, "changeOrigin": true, "logLevel": "info" },
+  "/api1": { "target": "http://192.168.210.169:10012", "secure": false, "changeOrigin": true, "logLevel": "info" },
+  "/api2": { "target": "http://192.168.210.169:10004", "secure": false, "changeOrigin": true, "logLevel": "info" }
+}

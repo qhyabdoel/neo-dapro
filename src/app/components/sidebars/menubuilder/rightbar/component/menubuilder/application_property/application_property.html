@@ -1,0 +1,100 @@
+<div class="panel panel-primary m-0">
+  <div class="panel-heading" role="tab" id="headingOne_1">
+    <h4 class="panel-title">
+      <a
+        class="menu-toggle text-uppercase"
+        [ngClass]="{ toggled: activeColapse.applicationProperty == true }"
+        role="button"
+        id="app_prop"
+        (click)="collapsible('applicationProperty')"
+      >
+        <i
+          class="zmdi zmdi-info"
+          [matMenuTriggerFor]="showPopover"
+          #triggerpopover="matMenuTrigger"
+          (mouseover)="triggerpopover.openMenu(); setPopover();"
+          (mouseleave)="triggerpopover.closeMenu(); hidePopover()"
+        ></i
+        >&nbsp; {{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.AP_LABEL' | translate }}
+      </a>
+      <mat-menu #showPopover="matMenu" class="tooltips popover pds-popover">
+        <h3 class="popover-header">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.AP_LABEL' | translate }}</h3>
+        <div class="popover-body">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.AP_CONTENT' | translate }}</div>
+      </mat-menu>
+    </h4>
+  </div>
+  <div class="panel-collapse collapse show" role="tabpanel" [ngClass]="{ show: activeColapse.applicationProperty }">
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <div class="row clearfix">
+          <div class="col-sm-12">
+            <button
+              class="btn btn-danger btn-sm w-100 m-0 f-10 text-white"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title=""
+              [attr.data-original-title]="'MODULE.DATA_APPLICATIONS.RIGHT_BAR.DA' | translate"
+              (click)="deleteByOne(formData)"
+            >
+              {{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.DA' | translate }} <i class="zmdi zmdi-delete f-12 ml-1"></i>
+            </button>
+          </div>
+        </div>
+        <hr />
+
+        <div class="row clearfix">
+          <div class="col-md-12 form-control-label">
+            <label for="login_style"
+              >{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.SLS' | translate }} &nbsp;
+              <i
+                class="zmdi zmdi-info"
+                matTooltip="{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.SLS_CONTENT' | translate }}"
+              ></i
+            ></label>
+          </div>
+          <a href="javascript:void(0)" type="button" (click)="openTemplate('loginList')">
+            <div class="col-md-12">
+              <img
+                [attr.src]="formData?.options?.image_style || '/assets/images/logo_paques.svg'"
+                alt="Banner Login"
+                class="img-thumbnail"
+                *ngIf="formData?.options?.image_style != ''"
+                (error)="errorHandling($event)"
+              />
+            </div>
+          </a>
+          <div class="col-md-12 form-control-label">
+            <div class="form-group d-flex align-items-center">
+              <label for="login_style" class="mb-0">{{ formData?.options?.label_style }}</label>
+              <a
+                href="javascript:;"
+                target="_blank"
+                [routerLink]="['../../auth/application_login']"
+                [queryParams]="formData.options"
+                class="ml-auto"
+                ><i class="zmdi zmdi-fullscreen pull-right"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <custom_input
+          [value]="formData.options.background_image"
+          [name]="'background_image'"
+          [title]="'MODULE.DATA_APPLICATIONS.RIGHT_BAR.LBU'"
+          [type]="'text'"
+          [placeholder]="'URL'"
+          (onChangeValue)="handleChange($event, 'options')"
+        ></custom_input>
+
+        <custom_input
+          [value]="formData.options.logo_login"
+          [name]="'logo_login'"
+          [title]="'MODULE.DATA_APPLICATIONS.RIGHT_BAR.LIU'"
+          [type]="'text'"
+          [placeholder]="'URL'"
+          (onChangeValue)="handleChange($event, 'options')"
+        ></custom_input>
+      </form>
+    </div>
+  </div>
+</div>

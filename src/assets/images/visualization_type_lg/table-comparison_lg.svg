@@ -1,0 +1,17 @@
+<svg width="73" height="70" viewBox="0 0 73 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 4C0 1.79086 1.79086 0 4 0H35V70H4C1.79086 70 0 68.2091 0 66V4Z" fill="#F1F1F1"/>
+<path d="M38 0H69C71.2091 0 73 1.79086 73 4V66C73 68.2091 71.2091 70 69 70H38V0Z" fill="#F1F1F1"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="73" height="70">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C1.79086 0 0 1.79086 0 4V66C0 68.2091 1.79086 70 4 70H35V0H4ZM69 0H38V70H69C71.2091 70 73 68.2091 73 66V4C73 1.79086 71.2091 0 69 0Z" fill="#F1F1F1"/>
+</mask>
+<g mask="url(#mask0)">
+<rect y="14" width="73" height="7" fill="#9F9F9F"/>
+<rect y="28" width="73" height="7" fill="#9F9F9F"/>
+<rect y="42" width="73" height="7" fill="#9F9F9F"/>
+<rect y="56" width="73" height="7" fill="#9F9F9F"/>
+<rect y="21" width="73" height="7" fill="#D1D1D1"/>
+<rect y="35" width="73" height="7" fill="#D1D1D1"/>
+<rect y="49" width="73" height="7" fill="#D1D1D1"/>
+<rect y="63" width="73" height="7" fill="#D1D1D1"/>
+</g>
+</svg>

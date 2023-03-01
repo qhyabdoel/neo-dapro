@@ -1,0 +1,38 @@
+<div class="card" style="height: inherit">
+  <div
+    class="header"
+    [ngClass]="{
+      'header-transparent': formData?.hide_title || formData?.hide_background,
+      'd-none': formData?.hide_title
+    }"
+  >
+    <h2 [ngClass]="{ 'd-none': formData?.hide_title }">{{ title }}</h2>
+
+    <!-- loop buttons -->
+    <ul class="header-dropdown" [ngClass]="{ 'd-none': !hasActivity }">
+      <li *ngFor="let item of eventButtonData">
+        <button
+          type="submit"
+          class="btn btn-info btn-outline btn-sm pr-2 my-2"
+          (click)="handleEventButton(item.type)"
+          *ngIf="item.type === 'Apply'"
+        >
+          {{ item.type }}
+          <i [class]="item.icon"></i>
+        </button>
+
+        <a role="button" (click)="handleEventButton(item.type)" *ngIf="item.type !== 'Apply'">
+          <i [class]="item.icon"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="body"
+    [ngClass]="{ 'body-transparent': formData?.hide_background, roundeds: formData?.hide_title }"
+    [ngStyle]="borderStyle"
+  >
+    <!-- inject directive chart -->
+    <ng-template appInject> </ng-template>
+  </div>
+</div>

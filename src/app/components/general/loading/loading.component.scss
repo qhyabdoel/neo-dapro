@@ -1,0 +1,13 @@
+.shimmer {
+  display: inline-block;
+  -webkit-mask: linear-gradient(-85deg, #000 30%, rgba(217, 217, 217, 0.333), #000 70%) right/300% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 2.5s infinite;
+  border-radius: 5px;
+}
+
+@keyframes shimmer {
+  100% {
+    -webkit-mask-position: left;
+  }
+}

@@ -1,0 +1,21 @@
+<div>
+  <div class="modal-header">
+    <h5 class="title f-16">{{ type }} {{ 'MODULE.DATA_VISUAL.CHART.COMMON.CODE' | translate }}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="f-12">
+      <i class="zmdi zmdi-info vertical-align-middle"></i>
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.MARKUP_NOTES' | translate }}<br />
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.MARKUP_EX' | translate }}
+    </p>
+    <ngx-monaco-editor class="template-editor" [options]="editorOptions" [(ngModel)]="code"> </ngx-monaco-editor>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info btn-outline btn-sm m-0" (click)="activeModal.close(code)">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.A' | translate }}
+    </button>
+  </div>
+</div>

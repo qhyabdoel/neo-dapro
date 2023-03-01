@@ -1,0 +1,41 @@
+.toastr-main-wrapper {
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  position: absolute;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-top: 80px;
+  padding-bottom: 40px;
+
+  .toastr-card {
+    position: relative;
+    right: 20px;
+    z-index: 999999;
+    background-color: #2e3435;
+    border-radius: 3px;
+    margin-bottom: 20px;
+
+    &.error {
+      border-top: 5px solid red;
+    }
+
+    &.info {
+      border-top: 5px solid aqua;
+    }
+
+    &.warning {
+      border-top: 5px solid orange;
+    }
+
+    .toastr-card-content {
+      padding: 20px;
+
+      .toastr-body {
+        color: #ffffff;
+      }
+    }
+  }
+}

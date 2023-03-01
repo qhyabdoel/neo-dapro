@@ -1,0 +1,277 @@
+<section class="content">
+  <!-- TOP BAR -->
+  <div class="row clearfix">
+    <div class="col-md-12">
+      <h6>
+        <small>{{ 'MODULE.DATA_APPLICATIONS.COMMON.TB' | translate }}</small>
+      </h6>
+
+      <a href="javascript:void(0)" class="custom-card">
+        <nav class="navbar navbar-expand-lg position-relative clickable roundeds cursor-auto">
+          <span class="ml-1 py-2 nav-link" *ngIf="formData.options?.topbar_option?.logo != ''">
+            <img
+              [attr.src]="formData.options?.topbar_option?.logo || '/assets/images/logo_paques.svg'"
+              class="appBuilderLogo"
+              alt="Paques"
+              (error)="errorHandler($event)"
+            />
+          </span>
+          <div
+            class="input-group col-md-5"
+            *ngIf="formData.options?.topbar_option?.enable_global_search"
+            style="width: 41.66666667%"
+          >
+            <input type="text" class="form-control form-bottomline" placeholder="Global search" disabled readonly />
+            <div class="input-group-append form-bottomline group-bottomline">
+              <span class="input-group-addon icons p-1 px-2"><i class="ti-search f-12"></i></span>
+            </div>
+          </div>
+
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="justify-content: right">
+            <ul class="navbar-nav ml-md-auto item-center mr-1">
+              <li class="nav-item" *ngIf="formData.options?.topbar_option?.enable_notification_center">
+                <span class="nav-link icons disabled">
+                  <i class="zmdi zmdi-notifications-active"></i>
+                </span>
+              </li>
+              <li class="nav-item" *ngIf="formData.options?.topbar_option?.enable_application_setting">
+                <span class="nav-link icons disabled">
+                  <i class="zmdi zmdi-settings"></i>
+                </span>
+              </li>
+              <li class="nav-item" *ngIf="formData.options?.topbar_option?.enable_information_glossary">
+                <span class="nav-link icons disabled">
+                  <i class="zmdi zmdi-info"></i>
+                </span>
+              </li>
+              <li class="dropdown nav-item">
+                <span class="nav-link icons disabled">
+                  <span>{{ 'MODULE.DATA_APPLICATIONS.COMMON.UD' | translate }}</span>
+                  <img
+                    class="rounded-circle ml-2"
+                    src="assets/images/avatar1.jpg"
+                    alt="User"
+                    width="25"
+                    (error)="errorHandler($event)"
+                  />
+                </span>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </a>
+    </div>
+  </div>
+
+  <!-- SUB TOPBAR -->
+  <div class="row clearfix">
+    <div class="col-md-12">
+      <h6>
+        <small>{{ 'MODULE.DATA_APPLICATIONS.COMMON.ST' | translate }}</small>
+      </h6>
+      <a href="javascript:void(0)" class="custom-card">
+        <div class="row py-1 top-0 mb-3 sub-top-nav position-relative clickable roundeds cursor-auto">
+          <div class="col-sm-9">
+            <div class="row">
+              <!-- typo minta dibenerin dari BE. harusnya object name breadcrumd -->
+              <div class="col-sm-auto px-0 pt-1" *ngIf="formData.options?.sub_topbar_option?.enable_breadcrumb">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">{{ 'MODULE.DATA_APPLICATIONS.COMMON.H' | translate }}</li>
+                  <li class="breadcrumb-item">{{ 'MODULE.DATA_APPLICATIONS.COMMON.LP' | translate }}</li>
+                  <li class="breadcrumb-item">{{ 'MODULE.DATA_APPLICATIONS.COMMON.SL1' | translate }}</li>
+                  <li class="breadcrumb-item active">{{ 'MODULE.DATA_APPLICATIONS.COMMON.SL2' | translate }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-sm-3 text-right"
+            *ngIf="formData.options?.sub_topbar_option?.enable_refresh_page_button"
+            style="text-align: right"
+          >
+            <button
+              class="btn btn-outline btn-icon btn-sm btn-outline-mini disabled"
+              type="button"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="{{ 'MODULE.DATA_APPLICATIONS.COMMON.RP' | translate }}"
+              disabled
+            >
+              <i class="zmdi zmdi-refresh-alt"></i>
+            </button>
+          </div>
+          <div
+            class="col-sm-3 text-right"
+            *ngIf="!formData.options?.sub_topbar_option?.enable_refresh_page_button"
+            style="text-align: right"
+          >
+            <button
+              class="btn btn-outline btn-icon btn-sm btn-outline-mini disabled"
+              type="button"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="{{ 'MODULE.DATA_APPLICATIONS.COMMON.RP' | translate }}"
+              style="color: transparent !important; background-color: transparent !important"
+              disabled
+            >
+              <i class="zmdi zmdi-refresh-alt"></i>
+            </button>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- CONTENT & MENU -->
+  <div class="row clearfix">
+    <div class="col-md-12">
+      <h6>
+        <small>{{ 'MODULE.DATA_APPLICATIONS.COMMON.CM' | translate }}</small>
+      </h6>
+      <div class="card clickable roundeds cursor-auto">
+        <div class="body roundeds">
+          <div class="row">
+            <div class="col-md-6 px-2">
+              <div class="row mb-3 px-2">
+                <div class="col-md-5 align-self-center">
+                  <label class="f-12">{{ 'MODULE.DATA_APPLICATIONS.COMMON.ML' | translate }}</label>
+                </div>
+                <div class="col-md-7 text-right pl-2" style="text-align: right">
+                  <button href="javascript:void(0)" class="btn btn-info btn-outline btn-sm m-0" (click)="addNewMenu()">
+                    {{ 'MODULE.DATA_APPLICATIONS.COMMON.AM' | translate }} <i class="zmdi zmdi-plus ml-2"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="row clearfix" *ngIf="menu.length == 0">
+                <div class="text-center mb-5">
+                  <img class="mb-4 mx-auto d-block" src="assets/images/no-data-found.svg" alt="" />
+                  <h6 class="f-16">{{ 'MODULE.DATA_APPLICATIONS.COMMON.NMA' | translate }}</h6>
+                </div>
+              </div>
+              <ng-template #tmplNode let-node="node">
+                <div class="node-item" [attr.data-id]="node.id" [attr.id]="'node-' + node.id">
+                  <div class="node-item-wrapper">
+                    <a href="javascript:;" (click)="handleClickExpand(node.id)">
+                      <i
+                        class="zmdi f-20"
+                        *ngIf="node?.children?.length"
+                        [ngClass]="node.expanded ? 'zmdi-chevron-down' : 'zmdi-chevron-right'"
+                      ></i>
+                    </a>
+                    <div class="node-title" [ngClass]="propertyMenuSelected.id === node.id ? 'active' : ''">
+                      <a href="javascript:void(0)" (click)="deleteMenu(node)">
+                        <i class="ti-trash text-danger"></i>
+                      </a>
+                      <a href="javascript:void(0)" (click)="activateOption(node)">
+                        <i class="zmdi zmdi-edit"></i>
+                      </a>
+                      <div [ngClass]="{ 'img-menu ml-2': node.options.icon }">
+                        <img
+                          [ngClass]="{ 'p-1': node.options.icon }"
+                          width="20px"
+                          [src]="node.options.icon"
+                          *ngIf="!node.options.enable_icon_default"
+                        />
+                        <i [ngClass]="node.options.icon" *ngIf="node.options.enable_icon_default"></i>
+                      </div>
+                      <span class="item-notes"> {{ node.title }}</span>
+                    </div>
+                  </div>
+
+                  <div
+                    *ngIf="node.expanded && node.children.length"
+                    class="node-children"
+                    cdkDropList
+                    [cdkDropListData]="node.children"
+                    [id]="node.id"
+                    [cdkDropListConnectedTo]="dropTargetIds"
+                    (cdkDropListDropped)="drop($event)"
+                    [cdkDropListSortingDisabled]="true"
+                  >
+                    <div
+                      *ngFor="let child of node.children"
+                      cdkDrag
+                      [cdkDragData]="child.id"
+                      (cdkDragMoved)="dragMoved($event)"
+                    >
+                      <ng-container *ngTemplateOutlet="tmplNode; context: { node: child }"></ng-container>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+
+              <div
+                cdkDropList
+                [cdkDropListData]="menu"
+                [id]="'main'"
+                [cdkDropListConnectedTo]="dropTargetIds"
+                (cdkDropListDropped)="drop($event)"
+                [cdkDropListSortingDisabled]="true"
+              >
+                <div *ngFor="let node of menu" cdkDrag [cdkDragData]="node.id" (cdkDragMoved)="dragMoved($event)">
+                  <ng-container *ngTemplateOutlet="tmplNode; context: { node: node }"></ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 dv-sc overflow-auto">
+              <div class="card card-list mb-0" *ngIf="!dashboardSelected?.slug || menu.length === 0">
+                <div class="body">
+                  <section
+                    class="content content-full content-full-max p100 h-100 roundeds"
+                    *ngIf="!isLoadingContent || menu.length === 0"
+                  >
+                    <div class="text-center m-auto f-12 hidee">
+                      <p class="mb-0">{{ 'MODULE.DATA_APPLICATIONS.COMMON.P' | translate }}</p>
+                      <p>{{ 'MODULE.DATA_APPLICATIONS.COMMON.P2' | translate }}</p>
+                    </div>
+                  </section>
+                  <section class="content content-full content-full-max p100 h-100 roundeds" *ngIf="isLoadingContent">
+                    <div class="col-md-12">
+                      <mat-spinner class="mat-spinner-color" [diameter]="60" style="margin: auto"></mat-spinner>
+                      <h5 class="f-12 text-center mt-3">{{ 'MODULE.DATA_APPLICATIONS.COMMON.LD' | translate }}</h5>
+                    </div>
+                  </section>
+                </div>
+              </div>
+              <div class="card card-list mb-0" *ngIf="dashboardSelected?.slug">
+                <div class="header">
+                  <ul class="list-unstyled list-group">
+                    <li class="list-single justify-content-between">
+                      <div class="list-side">
+                        <i class="zmdi zmdi-view-dashboard mr-3 f-42"></i>
+                        <div class="list-info">
+                          <h5 class="list-title">{{ propertyMenuSelected?.title }}</h5>
+                          <label class="list-desc"
+                            >{{ 'GRID_VIEW.LM' | translate }} {{ formatDate(formData?.updated_at) }}</label
+                          >
+                        </div>
+                      </div>
+                      <div class="list-side">
+                        <label class="mb-0"
+                          ><b>{{ dashboardSelected?.slices?.length }}</b> Charts</label
+                        >
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="body">
+                  <ul class="list-unstyled list-group">
+                    <li *ngFor="let chart of dashboardSelected?.slices" class="list-single">
+                      <div class="btn-outline btn-outline-maxi d-flex justify-content-center mr-3">
+                        <img [src]="handleIcon(chart.form_data.viz_type)" />
+                      </div>
+                      <div class="list-info">
+                        <h5 class="list-title">{{ chart.slice_name }}</h5>
+                        <label class="list-desc">{{ handleLabelType(chart.form_data.viz_type) }}</label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

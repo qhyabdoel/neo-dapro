@@ -1,0 +1,57 @@
+<div class="row clearfix" *ngIf="filter_date  && date_type && type === 'dynamic'">
+  <div class="col">
+    <year-picker
+      *ngIf="date_type === 'year'"
+      [label]="handleLabel(date_type, 'since')"
+      [value]="value1"
+      [name]="'since'"
+      (dateChange)="handlePicker($event)"
+    ></year-picker>
+    <month-picker
+      *ngIf="date_type === 'month'"
+      [label]="handleLabel(date_type, 'since')"
+      [value]="value1"
+      [name]="'since'"
+      (dateChange)="handlePicker($event)"
+    ></month-picker>
+    <single-date-picker
+      *ngIf="date_type === 'date'"
+      [label]="handleLabel(date_type, 'since')"
+      [value]="value1"
+      [name]="'since'"
+      (dateChange)="handlePicker($event)"
+    ></single-date-picker>
+  </div>
+  <div class="col" *ngIf="filter_date === 'date_range_picker'">
+    <year-picker
+      *ngIf="date_type === 'year'"
+      [label]="handleLabel(date_type,'until')"
+      [value]="value2"
+      [name]="'until'"
+      (dateChange)="handlePicker($event)"
+    ></year-picker>
+    <month-picker
+      *ngIf="date_type === 'month'"
+      [label]="handleLabel(date_type,'until')"
+      [value]="value2"
+      [name]="'until'"
+      (dateChange)="handlePicker($event)"
+    ></month-picker>
+    <single-date-picker
+      *ngIf="date_type === 'date'"
+      [label]="handleLabel(date_type,'until')"
+      [value]="value2"
+      [name]="'until'"
+      (dateChange)="handlePicker($event)"
+    ></single-date-picker>
+  </div>
+</div>
+<div class="row clearfix" *ngIf="type === 'single'">
+  <single-date-picker
+    *ngIf="date_type === 'date'"
+    [label]="handleLabel(date_type,name)"
+    [value]="value2"
+    [name]="name"
+    (dateChange)="handlePicker($event)"
+  ></single-date-picker>
+</div>

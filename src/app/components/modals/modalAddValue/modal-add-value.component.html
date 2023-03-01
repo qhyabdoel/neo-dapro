@@ -1,0 +1,61 @@
+<div>
+  <div class="modal-header">
+    <h5 class="title f-16">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.EME' | translate }}</h5>
+    <button id="btn-danger" type="button" class="close" (click)="closeFormula()" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-3">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.VAL' | translate }}</label>
+      </div>
+      <div class="col-md-1">
+        <label> </label>
+      </div>
+      <div class="col-md-6">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.COL' | translate }}</label>
+      </div>
+      <!-- for deleteting -->
+      <div class="col-md-1">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.R' | translate }}</label>
+      </div>
+    </div>
+    <div class="row" *ngFor="let item of form_data?.groupby_arrs; let i = index">
+      <div class="col-md-3">
+        <label for="inputPassword">{{ i + 1 }}. {{ form_data.groupby_arrs[i].key }}</label>
+      </div>
+      <div class="col-md-1"><i class="zmdi zmdi-long-arrow-right"></i></div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <select
+            class="form-control show-tick ms select2"
+            [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.VALIDATOR.S' | translate"
+            name="value[{{ i }}]"
+            [(ngModel)]="form_data.groupby_arrs[i].value"
+          >
+            <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.CH' | translate }} Data</option>
+            <option *ngFor="let row of chartLinks?.datasource?.all_cols | keyvals" [value]="row.value">
+              {{ row.value }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- for deleteting -->
+      <div class="col-md-1">
+        <a (click)="onDelValueMarkup(i)" href="javascript:void(0)">
+          <i class="ti-trash text-danger"></i>
+        </a>
+      </div>
+    </div>
+    <button type="button" class="btn btn-info btn-outline add-filters btn-sm m-0" (click)="onAddValueMarkup()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.AVMM' | translate }}
+      <i class="zmdi zmdi-plus f-12 ml-1"></i>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-neutral btn-simple btn-sm close px-0" (click)="closeFormula()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.CL' | translate }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="panel panel-primary m-0 resume">
+  <div class="panel-heading" role="tab" id="headingSix_1">
+    <h4 class="panel-title">
+      <a
+        [ngClass]="{ toggled: activeColapse.topbarOption == true }"
+        class="menu-toggle text-uppercase"
+        role="button"
+        id="topbar_opt"
+        (click)="collapsible('topbarOption')"
+      >
+        <i
+          class="zmdi zmdi-info"
+          [matMenuTriggerFor]="showPopover"
+          #triggerpopover="matMenuTrigger"
+          (mouseover)="triggerpopover.openMenu(); setPopover();"
+          (mouseleave)="triggerpopover.closeMenu(); hidePopover()"
+        ></i
+        >&nbsp; {{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.TO' | translate }}
+      </a>
+      <mat-menu #showPopover="matMenu" class="tooltips popover pds-popover">
+        <h3 class="popover-header">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.TO' | translate }}</h3>
+        <div class="popover-body">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.TO_CONTENT' | translate }}</div>
+      </mat-menu>
+    </h4>
+  </div>
+  <div [ngClass]="{ show: activeColapse.topbarOption }" class="panel-collapse collapse" role="tabpanel">
+    <div class="panel-body text-justify">
+      <form class="form-horizontal">
+        <div class="row clearfix">
+          <div class="col-md-12">
+            <custom_checkbox
+              [value]="formData.options.topbar_option.logo"
+              [name]="'logo'"
+              [title]=" 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.LIU'"
+              (onChangeValue)="handleChange($event, 'topbar_option')"
+            ></custom_checkbox>
+          </div>
+          <div class="col-md-12">
+            <custom_input
+              [value]="[true, false].includes(formData.options.topbar_option.logo) ? '':formData.options.topbar_option.logo "
+              [name]="'logo'"
+              [title]="'MODULE.DATA_APPLICATIONS.RIGHT_BAR.URL' "
+              [type]="'text'"
+              [placeholder]="'URL Logo Image'"
+              (onChangeValue)="handleChange($event, 'topbar_option')"
+            ></custom_input>
+          </div>
+        </div>
+        <custom_checkbox
+          [value]="formData.options.topbar_option .enable_application_setting"
+          [name]="'enable_application_setting'"
+          [title]=" 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.AS'"
+          (onChangeValue)="handleChange($event, 'topbar_option')"
+        ></custom_checkbox>
+      </form>
+    </div>
+  </div>
+</div>

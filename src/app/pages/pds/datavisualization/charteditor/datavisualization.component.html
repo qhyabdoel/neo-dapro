@@ -1,0 +1,29 @@
+<!-- Top Navigation -->
+<topbar-datavisualization [removeComp]="removeComp"></topbar-datavisualization>
+
+<!-- Left Sidebar -->
+<leftbar-datavisualization></leftbar-datavisualization>
+
+<!-- temporary container for placing chart card -->
+
+<section class="content" *ngIf="isLoadingContent">
+    <div class="row clearfix">
+        <div class="col-md-12">
+          <mat-spinner class="mat-spinner-color" [diameter]="60" style="margin: 0 auto"></mat-spinner>
+          <h5 class="f-12 text-center mt-3">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.LC' | translate }}</h5>
+        </div>
+    </div>
+</section>
+
+<pq-card *ngIf="!isLoadingContent"
+    [createChildComponent]="createChart" 
+    (onEventButtonClick)="handleEventButton($event)"
+    [eventButtonData]="eventButtonData"
+>
+</pq-card>
+
+<!-- inject directive chart -->
+<!-- <ng-template appInject> </ng-template> -->
+
+<!-- Right Sidebar -->
+<rightbar-datavisualization [addCompChart]="addCompChart" [removeComp]="removeComp"></rightbar-datavisualization>

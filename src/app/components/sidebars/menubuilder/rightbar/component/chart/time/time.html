@@ -1,0 +1,82 @@
+<div class="panel panel-primary m-0" *ngIf="!['filter_box', 'markup', 'table_comparison'].includes(visualType)">
+  <div class="panel-heading" role="tab" id="headingFour_1">
+    <h4 class="panel-title">
+      <a
+        [ngClass]="{ toggled: activeColapse.time == true }"
+        class="menu-toggle collapsed text-uppercase"
+        role="button"
+        (click)="collapsible('time')"
+        ><i
+          class="zmdi zmdi-info"
+          [matMenuTriggerFor]="showPopover"
+          #triggerpopover="matMenuTrigger"
+          (mouseover)="triggerpopover.openMenu(); setPopover();"
+          (mouseleave)="triggerpopover.closeMenu(); hidePopover()"
+        ></i
+        >&nbsp; {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.LABEL' | translate }}
+      </a>
+      <mat-menu #showPopover="matMenu" class="tooltips popover pds-popover">
+        <h3 class="popover-header">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.LABEL' | translate }}</h3>
+        <div class="popover-body">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.LABEL_TOOLTIP' | translate }}</div>
+      </mat-menu>
+    </h4>
+  </div>
+  <div [ngClass]="{ show: activeColapse.time == true }" class="panel-collapse collapse" role="tabpanel">
+    <div class="panel-body">
+      <custom_select_component
+        *ngIf="!['line', 'dual_line'].includes(visualType)"
+        [selectedValue]="form_data.granularity_sqla"
+        [name]="'granularity_sqla'"
+        [options]="explore?.datasource?.granularity_sqla"
+        [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CTC'"
+        [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.TIME_COL'"
+        [type]="'select'"
+        (onChangeValue)="onChange($event)"
+      ></custom_select_component>
+
+      <custom_select_component
+        [selectedValue]="form_data.initial_date_filter"
+        [name]="'initial_date_filter'"
+        [options]="initialDateFilterList"
+        [defaultValue]="'Default'"
+        [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.IDF'"
+        [type]="'select'"
+        (onChangeValue)="onChange($event)"
+      ></custom_select_component>
+      <div class="row clearfix" *ngIf="form_data.initial_date_filter === 'custom_date'">
+        <div class="col-lg-12">
+          <single-date-picker
+            [label]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.S' | translate"
+            [value]="form_data.since"
+            [name]="'since'"
+            (dateChange)="handleDatePicker($event)"
+          ></single-date-picker>
+          <single-date-picker
+            [label]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.U' | translate"
+            [value]="form_data.until"
+            [name]="'until'"
+            (dateChange)="handleDatePicker($event)"
+          ></single-date-picker>
+        </div>
+      </div>
+      <custom_select_component
+        [selectedValue]="form_data.filter_date"
+        [name]="'filter_date'"
+        [options]="filterDateList"
+        [defaultValue]="'MODULE.DATA_VISUAL.CHART.VALIDATOR.CFD'"
+        [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.DF'"
+        [type]="'select'"
+        (onChangeValue)="onChange($event)"
+      ></custom_select_component>
+      <custom_select_component
+        [selectedValue]="form_data.filter_date_type"
+        [name]="'filter_date_type'"
+        [options]="filterDateTypeList"
+        [defaultValue]="'MODULE.DATA_VISUAL.CHART.VALIDATOR.SDFT'"
+        [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.DFT'"
+        [type]="'select'"
+        (onChangeValue)="onChange($event)"
+      ></custom_select_component>
+    </div>
+  </div>
+</div>

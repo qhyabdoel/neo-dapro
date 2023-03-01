@@ -1,0 +1,46 @@
+[
+    {
+      "team_credits": [
+        {
+          "role": "Chief Executive Officer",
+          "people": "Benni Adham"
+        },
+        {
+          "role": "Solution Architect",
+          "people": "Agung Prakasya"
+        },
+        {
+          "role": "Product Management",
+          "people": "Dimas Pandu Nugroho, Arya Dika Pratama, Ramadhanis Mulia Putra, Yundai Riviera, Citra Azizah Dewi, Yusdriani Arruan Bulawan"
+        },
+        {
+          "role": "Product Development",
+          "people": "Susilo Jono Hadiwibowo, Dony Sagala, Haydar, Kiki Abdulloh"
+        },
+        {
+          "role": "Product Support",
+          "people": "Ahmad Yokasano, Hery Yulianto, Raka Septian Sukmara, Nadiah Nurul Aulia, Inez Kamilla, Felix Suminta, Andrian Nurmansyah"
+        },
+        {
+          "role": "Product Manager",
+          "people": "Erik Eka Putra"
+        },
+        {
+          "role": "Marketing",
+          "people": "Dian Kansil, Jaka Bonar, Johanes"
+        },
+        {
+          "role": "Sales",
+          "people": "Julia Puspa Wardhani, Reza Wirata, Sandrina Oktiana, Fendi"
+        },
+        {
+          "role": "Business Office Coordinator",
+          "people": "Meriam Belina, Titus Dewanto"
+        },
+        {
+          "role": "Business Office Support",
+          "people": "Suprihatin"
+        }
+      ]
+    }
+]

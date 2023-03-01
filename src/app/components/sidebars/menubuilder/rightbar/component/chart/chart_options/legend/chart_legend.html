@@ -1,0 +1,166 @@
+<div class="collapse-group">
+  <div
+    class="collapse-panel"
+    *ngIf="
+                [
+                  'dist_bar',
+                  'horizontal_bar',
+                  'line',
+                  'dual_line',
+                  'pie',
+                  'treemap',
+                  'directed_force',
+                  'bubble',
+                  'box_plot',
+                  'heatmap'
+                ].includes(visualType)
+              "
+  >
+    <input
+      class="collapse-check"
+      type="checkbox"
+      id="chck7"
+      [ngClass]="{ checked: activeColapse.chartLagendGroup == true }"
+    />
+    <label class="collapse-label" (click)="collapsible('chartLagendGroup')"
+      >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CHART_LEGEND' | translate }}</label
+    >
+    <div class="collapse" [ngClass]="{ show: activeColapse.chartLagendGroup == true }">
+      <custom_checkbox
+        *ngIf="['directed_force'].includes(visualType)"
+        [value]="form_data.show_row_limit"
+        [name]="'show_row_limit'"
+        [title]=" 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.SHOW_ROW_LIMIT'"
+        (onChangeValue)="handleChange($event)"
+      ></custom_checkbox>
+      <custom_checkbox
+        *ngIf="
+        [
+          'dist_bar',
+          'horizontal_bar',
+          'line',
+          'dual_line',
+          'pie',
+          'treemap',
+          'directed_force',
+          'bubble',
+          'box_plot'
+        ].includes(visualType)
+      "
+        [value]="form_data.show_legend"
+        [name]="'show_legend'"
+        [title]=" 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.SHOW_LEGEND'"
+        (onChangeValue)="handleChange($event)"
+      ></custom_checkbox>
+
+      <div
+        *ngIf="
+          ![
+            'gauge',
+            'big_number_total',
+            'country_map',
+            'filter_box',
+            'markup',
+            'pivot_table',
+            'table',
+            'treemap',
+            'predictive',
+            'scatter',
+            'word_cloud',
+            'table_comparison',
+            'histogram'
+          ].includes(visualType)
+        "
+      >
+        <!-- Legend Orientation -->
+        <custom_select_component
+          (onChangeValue)="handleChange($event)"
+          [selectedValue]="form_data.legend_orient"
+          [name]="'legend_orient'"
+          [options]="list_legend_orient"
+          [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CD'"
+          [title]=" 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LO'"
+          [type]="'select'"
+        ></custom_select_component>
+
+        <!-- Legend Alignment -->
+        <div class="row clearfix">
+          <div class="col-sm-12 form-control-label">
+            <label for="last_run">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LA' | translate }}</label>
+          </div>
+          <div class="pl-2">
+            <div class="form-group">
+              <button
+                [ngClass]="
+                  form_data.legend_position == 'left'
+                    ? 'btn btn-info btn-outline btn-sm active'
+                    : 'btn btn-info btn-outline btn-sm'
+                "
+                (click)="setPosition('left')"
+                matTooltip="Align Left"
+              >
+                <img src="./assets/images/v_left.svg" width="10" height="10" alt="Align Left" />
+              </button>
+
+              <button
+                [ngClass]="
+                  form_data.legend_position == 'right'
+                    ? 'btn btn-info btn-outline btn-sm active'
+                    : 'btn btn-info btn-outline btn-sm'
+                "
+                (click)="setPosition('right')"
+                matTooltip="Align Right"
+              >
+                <img src="./assets/images/v_right.svg" width="10" height="10" alt="Align Right" />
+              </button>
+
+              <button
+                [ngClass]="
+                  form_data.legend_position == 'top'
+                    ? 'btn btn-info btn-outline btn-sm active'
+                    : 'btn btn-info btn-outline btn-sm'
+                "
+                (click)="setPosition('top')"
+                matTooltip="Align Top"
+              >
+                <img src="./assets/images/v_top.svg" width="10" height="10" alt="Align Top" />
+              </button>
+
+              <button
+                [ngClass]="
+                  form_data.legend_position == 'bottom'
+                    ? 'btn btn-info btn-outline btn-sm active'
+                    : 'btn btn-info btn-outline btn-sm'
+                "
+                (click)="setPosition('bottom')"
+                matTooltip="Align Bottom"
+              >
+                <img src="./assets/images/v_bottom.svg" width="10" height="10" alt="Align Bottom" />
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Legend Type -->
+        <custom_select_component
+          (onChangeValue)="handleChange($event)"
+          [selectedValue]="form_data.legend_type"
+          [name]="'legend_type'"
+          [options]=" ['heatmap'].includes(visualType) ? list_legend_heatmap:list_legend_type"
+          [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CD'"
+          [title]=" 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LEGEND_TYPE'"
+          [type]="'select'"
+        ></custom_select_component>
+
+        <!-- Legend Width -->
+        <custom_input
+          [value]="form_data.legend_width"
+          [name]="'legend_width'"
+          [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LW' "
+          [type]="'number'"
+          (onChangeValue)="handleChange($event)"
+        >
+        </custom_input>
+      </div>
+    </div>
+  </div>
+</div>

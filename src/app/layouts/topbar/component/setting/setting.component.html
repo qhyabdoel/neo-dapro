@@ -1,0 +1,68 @@
+<li class="dropdown nav-item">
+  <a
+    role="button"
+    href="javascript:void(0);"
+    class="dropdown nav-link"
+    (click)="handleDialog()"
+    matTooltip="{{ 'TOB_BAR.LABEL_SETTING' | translate }}"
+    #toggleButton2
+  >
+    <i class="zmdi zmdi-settings"></i>
+  </a>
+  <ul
+    [ngClass]="{
+      'dropdown-menu slideUp2': true,
+      show: isOpen
+    }"
+    #menu2
+  >
+    <li class="body">
+      <ul class="menu list-unstyled py-2">
+        <li>
+          <a href="javascript:void(0);">
+            <div class=""><i class="f-20 zmdi zmdi-palette"></i></div>
+            <div class="menu-info">
+              <h4>{{ 'TOB_BAR.LABEL_SETTING_THEME' | translate }}</h4>
+              <div class="row mt-3">
+                <div class="col-12 btn-group mx-auto">
+                  <button
+                    class="btn btn-info btn-outline btn-sm px-3 py-1 m-0 text-uppercase"
+                    [ngClass]="{ active: model.login.self.skin == 'dark' }"
+                    (click)="changeSkin('dark')"
+                  >
+                    <i class="zmdi zmdi-brightness-2 mr-1 align-baseline"></i>
+                    {{ 'TOB_BAR.LABEL_SETTING_THEME_DARK' | translate }}
+                  </button>
+                  <button
+                    class="btn btn-info btn-outline btn-sm px-3 py-1 m-0 text-uppercase"
+                    [ngClass]="{ active: model.login.self.skin == 'light' }"
+                    (click)="changeSkin('light')"
+                  >
+                    <i class="zmdi zmdi-brightness-5 mr-1 align-baseline"></i>
+                    {{ 'TOB_BAR.LABEL_SETTING_THEME_LIGHT' | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li *ngIf="isAdministrator && environtmentType != 'on_cloud'">
+          <a href="javascript:void(0);" routerLink="/user-management/users">
+            <div class=""><i class="f-20 zmdi zmdi-account-box"></i></div>
+            <div class="menu-info">
+              <h4>{{ 'TOB_BAR.LABEL_USER_MANAGEMENT' | translate }}</h4>
+            </div>
+          </a>
+        </li>
+        <li *ngIf="isAdministrator && environtmentType != 'on_cloud'">
+          <a href="javascript:void(0);" routerLink="/notifications/list">
+            <div class=""><i class="f-20 zmdi zmdi-notifications"></i></div>
+            <div class="menu-info">
+              <h4>{{ 'TOB_BAR.LABEL_NOTIFICATIONS' | translate }}</h4>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>

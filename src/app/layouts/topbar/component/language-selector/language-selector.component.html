@@ -1,0 +1,39 @@
+<li class="dropdown nav-item">
+  <a
+    role="button"
+    href="javascript:void(0);"
+    class="dropdown nav-link"
+    matTooltip="{{ 'HEADER_BAR.LANG' | translate }}"
+    (click)="handleDialog()"
+    #toggleButton
+  >
+    <span class="sm-icon mr-0">
+      <label>{{ language.flagname }}</label>
+    </span>
+  </a>
+  <ul
+    [ngClass]="{
+      'dropdown-menu slideUp2': true,
+      show: isOpen
+    }"
+    #menu
+  >
+    <li class="body">
+      <ul class="menu list-unstyled py-2">
+        <li *ngFor="let language of languages">
+          <a
+            href="javascript:void(0);"
+            (click)="handleSetLanguage(language.lang)"
+            [ngClass]="{ 'kt-nav__link--active': language.active }"
+            class="kt-nav__link align-items-center"
+          >
+            <span class="sm-icon">
+              <label>{{ language.flagname }}</label>
+            </span>
+            <span class="kt-nav__link-text"> {{ language.name }}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>

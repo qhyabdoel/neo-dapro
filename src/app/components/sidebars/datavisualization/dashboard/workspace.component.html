@@ -1,0 +1,62 @@
+<!-- Main Content -->
+<!-- breadcrumb -->
+<div class="row py-1 sub-top-nav t-3" [ngStyle]="{ display: typePage === 'app_preview' ? '' : 'none' }">
+  <div class="col-md-8 align-self-center">
+    <!----><!---->
+    <div class="col-sm-auto px-0 pt-1">
+      <ul class="breadcrumb">
+        <li
+          [ngClass]="{ 'breadcrumb-item': true, active: i === traversedMenu.length - 1 }"
+          *ngFor="let menuItem of traversedMenu; let i = index"
+          (click)="_setSelectedItem(menuItem)"
+        >
+          <a href="javascript:;">{{ menuItem.title }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-4 text-right">
+    <button
+      class="btn btn-info btn-outline btn-sm"
+      type="button"
+      data-toggle="tooltip"
+      data-placement="bottom"
+      title="{{ 'MODULE.DATA_APPLICATIONS.COMMON.RP' | translate }}"
+      (click)="refreshAllChart()"
+    >
+      <i class="zmdi zmdi-refresh-alt f-12 ml-1"></i>
+    </button>
+  </div>
+</div>
+
+<section
+  [ngClass]="['dashboardview', 'app_preview'].includes(typePage) ? 'content content-full' : 'content'"
+  [ngStyle]="{ position: isSharePage ? 'absolute' : '' }"
+>
+  <div class="text-center mt-3 f-12" *ngIf="parameter?.charts?.length == 0">
+    <p class="mb-0">
+      {{ 'MODULE.DATA_VISUAL.DASHBOARD.COMMON.LABEL' | translate }}
+    </p>
+    <p>{{ 'MODULE.DATA_VISUAL.DASHBOARD.COMMON.LABEL2' | translate }}</p>
+  </div>
+  <div class="row clearfix" *ngIf="parameter?.charts?.length > 0 && !isSharePage">
+    <div class="col-md-12">
+      <h3>{{ parameter?.dashboard_title != '' ? parameter?.dashboard_title : 'Untitled' }}</h3>
+    </div>
+  </div>
+  <div class="row clearfix">
+    <div class="col-md-12" *ngIf="isLoadingContent">
+      <mat-spinner class="mat-spinner-color" [diameter]="60" style="margin: 0 auto"></mat-spinner>
+      <h5 class="f-12 text-center mt-3">
+        {{ 'MODULE.DATA_VISUAL.DASHBOARD.COMMON.LD' | translate }}
+      </h5>
+    </div>
+  </div>
+  <div
+    class="grid-stack"
+    id="rowDashboard"
+    [ngClass]="{ 'dash-grid': !['dashboardview', 'app_preview'].includes(typePage) ? charts.length > 0 : '' }"
+  >
+    <ng-template appInject> </ng-template>
+  </div>
+</section>

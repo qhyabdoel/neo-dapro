@@ -1,0 +1,52 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title">
+      <label *ngIf="slice?.slice_id > 0 && slice?.slice_id != 'undefined'; else saveSlice"> Update</label>
+      <ng-template #saveSlice
+        ><label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.S' | translate }} </label></ng-template
+      >
+      <label>&nbsp;{{ 'MODULE.DATA_VISUAL.CHART.COMMON.CN' | translate }}?</label>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <mat-radio-group
+          *ngIf="slice?.slice_id > 0 && slice?.slice_id != 'undefined'"
+          aria-labelledby="radio-group-label"
+          class="radio-group mt-0"
+          [formControl]="hasFlagingControl"
+          name="hasFlaging"
+          [(ngModel)]="hasFlaging"
+          required
+        >
+          <mat-radio-button class="radio-button" value="overwrite">
+            {{ 'MODULE.DATA_VISUAL.CHART.COMMON.OC' | translate }}
+          </mat-radio-button>
+
+          <mat-radio-button class="radio-button" value="saveas">
+            {{ 'MODULE.DATA_VISUAL.CHART.COMMON.SAC' | translate }}
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <input
+          type="text"
+          class="form-control form-bottomline"
+          placeholder="{{ 'MODULE.DATA_VISUAL.CHART.COMMON.SCN' | translate }}"
+          [(ngModel)]="data.title"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button id="btn-danger" class="btn btn-neutral btn-simple btn-sm close px-0" type="button" (click)="closeModal()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.C' | translate }}
+    </button>
+    <button class="btn btn-info btn-outline btn-sm f-12" type="button" (click)="onYesClick()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.Y' | translate }}
+    </button>
+  </div>
+</div>

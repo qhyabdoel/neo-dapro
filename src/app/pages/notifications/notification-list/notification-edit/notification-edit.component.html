@@ -1,0 +1,125 @@
+<!-- Modal Edit Notification -->
+<div class="modal-open">
+  <div class="modal d-block" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" *ngIf="notification">
+          <mat-progress-bar mode="indeterminate" *ngIf="viewLoading"></mat-progress-bar>
+          <h5 class="title f-16">{{ getTitle() }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="notification">
+          <kt-alert
+            *ngIf="hasFormErrors"
+            [type]=""
+            [duration]="30000"
+            [showCloseButton]="true"
+            (close)="onAlertClose($event)"
+          >
+            {{ 'MODULE.NOTIFICATIONS.MSG_ERR' | translate }}
+          </kt-alert>
+          <kt-alert
+            *ngIf="getErrorMenu"
+            [type]=""
+            [duration]="30000"
+            [showCloseButton]="true"
+            (close)="onAlertClose($event)"
+          >
+            {{ messageErrMenu }}
+          </kt-alert>
+          <div [formGroup]="notificationForm" class="form-horizontal">
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark pr-3">Link:</label>
+                <a href="javascript:void(0);" (click)="openChartId()" class="f-12"
+                  >{{ 'MODULE.NOTIFICATIONS.OCC' | translate }} <i class="zmdi zmdi-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark pr-3">{{ 'MODULE.NOTIFICATIONS.AC' | translate }}</label>
+                <div *ngIf="notification.condition === '' && notification.criterias.length > 0">
+                  <span *ngFor="let criteria of notification.criterias" class="badge bg-pqs-tosca text-white"
+                    >{{ criteria.col }} {{ criteria.op }} {{ criteria.val }}</span
+                  >&nbsp;
+                </div>
+                <div *ngIf="notification.condition !== '' && notification.criterias.length <= 0">
+                  <span class="badge bg-pqs-tosca text-white">{{ notification.condition }}</span
+                  >&nbsp;
+                </div>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark pr-3">{{ 'MODULE.NOTIFICATIONS.EL' | translate }}</label>
+                <span class="badge bg-pqs-tosca text-white">{{ notification?.email_list }}</span>
+              </div>
+            </div>
+            <br />
+
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <div style="display: flex; flex-direction: row">
+                  <label class="text-dark">{{ 'MODULE.NOTIFICATIONS.MA' | translate }}</label> &nbsp;&nbsp;&nbsp;
+                </div>
+              </div>
+              <div class="col-md-12" *ngIf="notification.menu_id">
+                <select
+                  *ngIf="notification"
+                  class="form-control show-tick ms select2"
+                  [(ngModel)]="notification.menu_id"
+                  formControlName="menu_id"
+                >
+                  <option [value]="null">{{ 'MODULE.NOTIFICATIONS.SMA' | translate }}</option>
+                  <option *ngFor="let row of menuList" [value]="row.menu_id">
+                    {{ row?.application?.title }} - {{ row?.title }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row clearfix" *ngIf="isShow_notification_template">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark" for="last_run">{{ 'MODULE.NOTIFICATIONS.T' | translate }}</label>
+              </div>
+              <div class="col-md-12">
+                <select
+                  class="form-control show-tick ms select2"
+                  [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+                  [(ngModel)]="notification.notification_template_id"
+                  formControlName="notification_template_id"
+                >
+                  <option [value]="''">{{ 'MODULE.NOTIFICATIONS.ST' | translate }}</option>
+                  <option *ngFor="let row of notificationTemplateList" value="{{ row.id }}">
+                    {{ row.template_name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-md-12">
+                <div class="form-line">
+                  <div class="checkbox">
+                    <input id="enable" name="enable" formControlName="enable" class="form-control" type="checkbox" />
+                    <label class="text-dark" for="enable">{{ 'MODULE.NOTIFICATIONS.IE' | translate }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-neutral btn-simple btn-sm close px-0" type="button" (click)="onNoClick()">
+            {{ 'MODULE.NOTIFICATIONS.C' | translate }}
+          </button>
+          <button class="btn btn-info btn-outline btn-sm f-12" type="button" (click)="onSubmit()">
+            {{ 'MODULE.NOTIFICATIONS.S' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

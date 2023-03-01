@@ -1,0 +1,1179 @@
+<form *ngIf="!isTemplate" class="form-horizontal">
+  <div class="row clearfix" *ngIf="data?.form_data?.filter_alignment_horizontal">
+    <div class="col" *ngFor="let item of filterList">
+      <div
+        class="form-control-label"
+        *ngIf="item != data?.form_data?.filter_control_checkbox && item != data?.form_data?.filter_control_alphabetic"
+      >
+        <label for="email">{{ item }}</label>
+      </div>
+      <div
+        class="form-group"
+        *ngIf="item != data?.form_data?.filter_control_checkbox && item != data?.form_data?.filter_control_alphabetic"
+      >
+        <ng-select
+          [id]="item"
+          class="text-light"
+          [items]="data.data[item]"
+          [multiple]="true"
+          [closeOnSelect]="true"
+          [searchable]="true"
+          bindLabel="text"
+          placeholder="Select"
+          (add)="addFilter($event)"
+          (clear)="clearFilter($event)"
+          (remove)="removeFilter($event)"
+          [(ngModel)]="dataFilter[item]"
+          [ngModelOptions]="{ standalone: true }"
+        >
+        </ng-select>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!data?.form_data?.filter_alignment_horizontal">
+    <div class="row clearfix" *ngFor="let item of filterList">
+      <div
+        class="col-sm-12 form-control-label"
+        *ngIf="item != data?.form_data?.filter_control_checkbox && item != data?.form_data?.filter_control_alphabetic"
+      >
+        <label for="email">{{ item }}</label>
+      </div>
+      <div
+        class="col-sm-12"
+        *ngIf="item != data?.form_data?.filter_control_checkbox && item != data?.form_data?.filter_control_alphabetic"
+      >
+        <div class="form-group">
+          <ng-select
+            [id]="item"
+            class="text-light"
+            [items]="data.data[item]"
+            [multiple]="true"
+            [closeOnSelect]="true"
+            [searchable]="true"
+            bindLabel="text"
+            placeholder="Select"
+            (add)="addFilter($event)"
+            (clear)="clearFilter($event)"
+            (remove)="removeFilter($event)"
+            [(ngModel)]="dataFilter[item]"
+            [ngModelOptions]="{ standalone: true }"
+          >
+          </ng-select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row clearfix" *ngIf="data?.form_data?.alphabet_filter">
+    <div class="col-md-12">
+      <div class="mw-100 d-flex overflow-auto border-0 mb-4">
+        <button
+          class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini ml-0 mr-1"
+          id="AlphabethBtn-{{ filter[0] }}"
+          *ngFor="let filter of alphabetFilterList; let i = index"
+        >
+          {{ filter[1] }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row clearfix" *ngIf="data?.form_data?.filter_checkbox">
+    <div class="col">
+      <div class="form-line">
+        <div class="checkbox">
+          <input
+            id="fcb-selectAll"
+            (change)="checkUncheckAll()"
+            [(ngModel)]="isCheckedAllItem"
+            [ngModelOptions]="{ standalone: true }"
+            type="checkbox"
+          />
+          <label for="fcb-selectAll"> Select All</label>
+        </div>
+      </div>
+    </div>
+    <div class="col" *ngFor="let filter of filterCheckboxList">
+      <div class="form-line">
+        <div class="checkbox">
+          <input
+            id="{{ 'fcb-' + filter.id }}"
+            (change)="onCheckboxFilter(filter, filter.isChecked)"
+            [(ngModel)]="filter.isChecked"
+            [ngModelOptions]="{ standalone: true }"
+            type="checkbox"
+          />
+          <label for="{{ 'fcb-' + filter.id }}">{{ filter.text }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row clearfix" *ngIf="data.form_data.date_filter">
+    <div class="col-sm-12 form-control-label">
+      <label for="email">Time Column</label>
+    </div>
+    <div class="col-sm-12">
+      <div class="form-group">
+        <select
+          class="form-control show-tick ms select2"
+          data-placeholder="Select"
+          [(ngModel)]="timeColumn"
+          (change)="setTimeColumn()"
+          name="timeColumn"
+          id="timeColumn"
+        >
+          <option value="">Choose Time Column</option>
+          <option *ngFor="let row of explore?.datasource?.granularity_sqla | keyvalue" [value]="row.value[0]">
+            {{ row.value[1] }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row clearfix" *ngIf="data.form_data.date_filter">
+    <div
+      class="col"
+      *ngIf="data?.form_data?.filter_date === 'date_range_picker' && data?.form_data?.filter_date_type === 'year'"
+    >
+      <mat-form-field class="form-group w-100">
+        <mat-label>Start Year</mat-label>
+        <input matInput [matDatepicker]="sinceYearPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+        <input
+          matInput
+          [ngModel]="dataFilterSince | date: 'yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="sinceYearPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="sinceYearPicker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #sinceYearPicker
+          startView="multi-year"
+          (yearSelected)="yearPickerHandler($event, sinceYearPicker, 'since')"
+          panelClass="example-month-picker"
+        >
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div
+      class="col"
+      *ngIf="
+        (explore?.form_data?.filter_date === 'date_range_picker' ||
+          explore?.form_data?.filter_date === 'date_picker') &&
+        explore?.form_data?.filter_date_type === 'year'
+      "
+    >
+      <mat-form-field class="form-group w-100">
+        <mat-label>End Year</mat-label>
+        <input matInput [matDatepicker]="untilYearPicker" [formControl]="untilDateFC" hidden="true" readonly />
+        <input
+          matInput
+          [ngModel]="dataFilterUntil | date: 'yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="untilYearPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="untilYearPicker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #untilYearPicker
+          startView="multi-year"
+          (yearSelected)="yearPickerHandler($event, untilYearPicker, 'until')"
+          panelClass="example-month-picker"
+        >
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row clearfix" *ngIf="data.form_data.date_filter">
+    <div
+      class="col"
+      *ngIf="data?.form_data?.filter_date === 'date_range_picker' && data?.form_data?.filter_date_type === 'month'"
+    >
+      <mat-form-field class="form-group w-100">
+        <mat-label>Start Month</mat-label>
+        <input matInput [matDatepicker]="sinceMonthPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+        <input
+          matInput
+          [ngModel]="dataFilterSince | date: 'MM/yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="sinceMonthPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="sinceMonthPicker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #sinceMonthPicker
+          startView="multi-year"
+          (monthSelected)="monthPickerHandler($event, sinceMonthPicker, 'since')"
+          panelClass="example-month-picker"
+        >
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div
+      class="col"
+      *ngIf="
+        (explore?.form_data?.filter_date === 'date_range_picker' ||
+          explore?.form_data?.filter_date === 'date_picker') &&
+        explore?.form_data?.filter_date_type === 'month'
+      "
+    >
+      <mat-form-field class="form-group w-100">
+        <mat-label>End Month</mat-label>
+        <input matInput [matDatepicker]="untilMonthPicker" [formControl]="untilDateFC" hidden="true" readonly />
+        <input
+          matInput
+          [ngModel]="dataFilterUntil | date: 'MM/yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="untilMonthPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="untilMonthPicker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #untilMonthPicker
+          startView="multi-year"
+          (monthSelected)="monthPickerHandler($event, untilMonthPicker, 'until')"
+          panelClass="example-month-picker"
+        >
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row clearfix" *ngIf="data.form_data.date_filter">
+    <div
+      class="col"
+      *ngIf="data?.form_data?.filter_date === 'date_range_picker' && data?.form_data?.filter_date_type === 'date'"
+    >
+      <mat-form-field class="form-group w-100">
+        <mat-label>Start Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="sinceDayPicker"
+          [formControl]="sinceDateFC"
+          readonly
+          hidden="true"
+          (dateInput)="datePickerHandler($event.value, 'since')"
+        />
+        <input
+          matInput
+          [ngModel]="dataFilterSince | date: 'dd/MM/yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="sinceDayPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="sinceDayPicker"></mat-datepicker-toggle>
+        <mat-datepicker #sinceDayPicker startView="multi-year" panelClass="example-month-picker"> </mat-datepicker>
+      </mat-form-field>
+      <!-- <button mat-raised-button>Open</button> -->
+    </div>
+    <div
+      class="col"
+      *ngIf="
+        (explore?.form_data?.filter_date === 'date_range_picker' ||
+          explore?.form_data?.filter_date === 'date_picker') &&
+        explore?.form_data?.filter_date_type === 'date'
+      "
+    >
+      <mat-form-field class="form-group w-100">
+        <mat-label>End Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="untilDayPicker"
+          [formControl]="untilDateFC"
+          readonly
+          hidden="true"
+          (dateInput)="datePickerHandler($event.value, 'until')"
+        />
+        <input
+          matInput
+          *ngIf="explore?.form_data?.filter_date === 'date_range_picker'"
+          [ngModel]="dataFilterUntil | date: 'dd/MM/yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="untilDayPicker.open(); onClickOverlay()"
+        />
+        <input
+          matInput
+          *ngIf="explore?.form_data?.filter_date === 'date_picker'"
+          [ngModel]="dataFilterSince | date: 'dd/MM/yyyy'"
+          [ngModelOptions]="{ standalone: true }"
+          readonly
+          (click)="untilDayPicker.open(); onClickOverlay()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="untilDayPicker"></mat-datepicker-toggle>
+        <mat-datepicker #untilDayPicker startView="multi-year" panelClass="example-month-picker"> </mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="text-right" *ngIf="!data.form_data.instant_filtering">
+    <!-- <button type="submit" class="btn btn-info btn-outline btn-lg mx-0">
+			Apply
+		</button> -->
+  </div>
+</form>
+
+<div *ngIf="isTemplate && !isSearchResult" class="card">
+  <div
+    class="header"
+    [ngClass]="{
+      'header-transparent d-flex py-3': explore?.form_data?.hide_title || explore?.form_data?.hide_background
+    }"
+  >
+    <h2 class="align-self-center">
+      <!-- *ngIf="(meId$ | async)?.includes(myChartID)" -->
+      <div *ngIf="meId$?.includes(myChartID)" class="loader loader--style1" title="0">
+        <svg
+          version="1.1"
+          id="loader-1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          width="20px"
+          height="20px"
+          viewBox="0 0 40 40"
+          enable-background="new 0 0 40 40"
+          xml:space="preserve"
+        >
+          <path
+            opacity="0.2"
+            fill="#000"
+            d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+              s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+              c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+          />
+          <path
+            fill="#000"
+            d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+              C22.32,8.481,24.301,9.057,26.013,10.047z"
+          >
+            <animateTransform
+              attributeType="xml"
+              attributeName="transform"
+              type="rotate"
+              from="0 20 20"
+              to="360 20 20"
+              dur="0.5s"
+              repeatCount="indefinite"
+            />
+          </path>
+        </svg>
+      </div>
+      <div [ngClass]="{ 'd-none': explore?.form_data?.hide_title }">{{ title }}</div>
+    </h2>
+    <!-- <div class="ml-auto">
+			<button type="submit" class="btn btn-info btn-outline btn-sm pr-2 my-0 mr-2" (click)="onFilter(myChartID)" *ngIf="!instant_filtering && isView">Apply <i class="zmdi zmdi-check ml-1"></i>
+			</button> -->
+    <!-- <button class="btn btn-info btn-outline btn-sm my-0 pr-2" (click)="onReset(myChartID)" *ngIf="isView">Reset <i class="zmdi zmdi-refresh-alt ml-1"></i>
+			</button> -->
+    <!-- </div> -->
+
+    <ul
+      class="header-dropdown"
+      *ngIf="!instant_filtering || !isView"
+      [ngClass]="{ 'h-title-bg': explore?.form_data?.hide_title }"
+    >
+      <li>
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Fullscreen"
+          href="javascript:;"
+          *ngIf="!isView"
+          (click)="onFullscreen()"
+        >
+          <i class="zmdi zmdi-fullscreen"></i>
+        </a>
+      </li>
+      <li *ngIf="!isView">
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Refresh"
+          href="javascript:;"
+          (click)="onRefresh(myChartID)"
+        >
+          <i class="zmdi zmdi-refresh-alt"></i>
+        </a>
+      </li>
+      <li>
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Edit Chart"
+          href="javascript:;"
+          *ngIf="explore?.can_add && !isView"
+          (click)="onEdit(myChartID)"
+        >
+          <i class="zmdi zmdi-edit"></i>
+        </a>
+      </li>
+      <li>
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Download"
+          href="javascript:;"
+          *ngIf="explore?.can_download && !isView"
+          (click)="onDownload(myChartID)"
+        >
+          <i class="zmdi zmdi-download"></i>
+        </a>
+      </li>
+      <li class="remove">
+        <a
+          role="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Remove Chart"
+          href="javascript:;"
+          *ngIf="!isView"
+          (click)="onDelete()"
+          class="boxs-close"
+          ><i class="zmdi zmdi-delete"></i
+        ></a>
+      </li>
+      <li>
+        <button
+          type="submit"
+          class="btn btn-info btn-outline btn-sm pr-2 my-2"
+          (click)="onFilter(myChartID)"
+          *ngIf="!instant_filtering && isView"
+        >
+          Apply <i class="zmdi zmdi-check ml-1"></i>
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div
+    id="myDiv-{{ cardID }}"
+    class="body"
+    [ngClass]="{
+      'body-transparent': explore?.form_data?.hide_background,
+      roundeds: explore?.form_data?.hide_title,
+      'overflow-auto': explore?.form_data?.filter_checkbox
+    }"
+  >
+    <h2 *ngIf="isFullscreen">{{ title }}</h2>
+    <form class="form-horizontal" *ngIf="!noData">
+      <!--Filter Alignment Horizontal: false-->
+      <div *ngIf="!data?.form_data?.filter_alignment_horizontal">
+        <div class="row clearfix" *ngFor="let item of filterList">
+          <div
+            class="col-sm-12 form-control-label"
+            *ngIf="
+              item != explore?.form_data?.filter_control_checkbox &&
+              item != explore?.form_data?.filter_control_alphabetic
+            "
+          >
+            <label for="email">{{ item }}</label>
+          </div>
+          <div
+            class="col-sm-12"
+            *ngIf="
+              item != explore?.form_data?.filter_control_checkbox &&
+              item != explore?.form_data?.filter_control_alphabetic
+            "
+          >
+            <div class="form-group">
+              <ng-select
+                [id]="item"
+                class="text-light"
+                [items]="data.data[item]"
+                [multiple]="true"
+                [closeOnSelect]="true"
+                [searchable]="true"
+                bindLabel="text"
+                placeholder="Select"
+                (add)="addFilter($event)"
+                (clear)="clearFilter($event)"
+                (remove)="removeFilter($event)"
+                [(ngModel)]="dataFilter[item]"
+                [ngModelOptions]="{ standalone: true }"
+              >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Filter Alignment Horizontal: true-->
+      <div class="row clearfix" *ngIf="data?.form_data?.filter_alignment_horizontal">
+        <div class="col" *ngFor="let item of filterList">
+          <div
+            class="form-control-label"
+            *ngIf="
+              item != explore?.form_data?.filter_control_checkbox &&
+              item != explore?.form_data?.filter_control_alphabetic
+            "
+          >
+            <label for="email">{{ item }}</label>
+          </div>
+          <div
+            class="form-group"
+            *ngIf="
+              item != explore?.form_data?.filter_control_checkbox &&
+              item != explore?.form_data?.filter_control_alphabetic
+            "
+          >
+            <ng-select
+              [id]="item"
+              class="text-light"
+              [items]="data.data[item]"
+              [multiple]="true"
+              [closeOnSelect]="true"
+              [searchable]="true"
+              bindLabel="text"
+              placeholder="Select"
+              (add)="addFilter($event)"
+              (clear)="clearFilter($event)"
+              (remove)="removeFilter($event)"
+              [(ngModel)]="dataFilter[item]"
+              [ngModelOptions]="{ standalone: true }"
+            >
+            </ng-select>
+          </div>
+        </div>
+      </div>
+
+      <!--Alphabet Filter-->
+      <div class="row clearfix" *ngIf="data?.form_data?.alphabet_filter">
+        <div class="col-md-12">
+          <div class="mw-100 d-flex overflow-auto border-0 mb-4">
+            <button
+              class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini ml-0 mr-1"
+              id="AlphabethBtn-{{ filter[0] }}"
+              *ngFor="let filter of alphabetFilterList; let i = index"
+              (click)="onAlphabetFilter(filter[0])"
+            >
+              {{ filter[1] }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!--Filter Checkbox-->
+      <div class="row clearfix" *ngIf="data?.form_data?.filter_checkbox">
+        <div class="col">
+          <div class="form-line">
+            <div class="checkbox">
+              <input
+                id="fcb-selectAll"
+                (change)="checkUncheckAll()"
+                [(ngModel)]="isCheckedAllItem"
+                [ngModelOptions]="{ standalone: true }"
+                type="checkbox"
+              />
+              <label for="fcb-selectAll"> Select All</label>
+            </div>
+          </div>
+        </div>
+        <div class="col" *ngFor="let filter of filterCheckboxList">
+          <div class="form-line">
+            <div class="checkbox">
+              <input
+                id="{{ 'fcb-' + filter.id }}"
+                (change)="onCheckboxFilter(filter, filter.isChecked)"
+                [(ngModel)]="filter.isChecked"
+                [ngModelOptions]="{ standalone: true }"
+                type="checkbox"
+              />
+              <label for="{{ 'fcb-' + filter.id }}">{{ filter.text }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix" *ngIf="!isView">
+        <!-- <div class="col-sm-12 form-control-label">
+					<label for="email">Time Column</label>
+				</div>
+				<div class="col-sm-12">
+					<div class="form-group">
+						<select class="form-control show-tick ms select2" data-placeholder="Select" [(ngModel)]="timeColumn" (change)="setTimeColumn()" name="timeColumn" id="timeColumn">
+							<option value="" >Choose Time Column</option>
+							<option *ngFor=" let row of explore?.datasource?.granularity_sqla | keyvalue" [value]="row.value[0]"> {{ row.value[1] }} </option>
+						</select>
+					</div>
+				</div> -->
+      </div>
+
+      <!--Filter Date: Year-->
+      <div class="row clearfix" *ngIf="date_filter">
+        <div
+          class="col"
+          *ngIf="data?.form_data?.filter_date === 'date_range_picker' && data?.form_data?.filter_date_type === 'year'"
+        >
+          <mat-form-field class="form-group w-100">
+            <mat-label>Start Year</mat-label>
+            <input matInput [matDatepicker]="sinceYearPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+            <input
+              matInput
+              [ngModel]="dataFilterSince | date: 'yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="sinceYearPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="sinceYearPicker"></mat-datepicker-toggle>
+            <mat-datepicker
+              #sinceYearPicker
+              startView="multi-year"
+              (yearSelected)="yearPickerHandler($event, sinceYearPicker, 'since')"
+              panelClass="example-month-picker"
+            >
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div
+          class="col"
+          *ngIf="
+            (explore?.form_data?.filter_date === 'date_range_picker' ||
+              explore?.form_data?.filter_date === 'date_picker') &&
+            explore?.form_data?.filter_date_type === 'year'
+          "
+        >
+          <mat-form-field class="form-group w-100">
+            <mat-label>End Year</mat-label>
+            <input matInput [matDatepicker]="untilYearPicker" [formControl]="untilDateFC" hidden="true" readonly />
+            <input
+              matInput
+              [ngModel]="dataFilterUntil | date: 'yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="untilYearPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="untilYearPicker"></mat-datepicker-toggle>
+            <mat-datepicker
+              #untilYearPicker
+              startView="multi-year"
+              (yearSelected)="yearPickerHandler($event, untilYearPicker, 'until')"
+              panelClass="example-month-picker"
+            >
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!--Filter Date: Month-->
+      <div class="row clearfix" *ngIf="date_filter">
+        <div
+          class="col"
+          *ngIf="data?.form_data?.filter_date === 'date_range_picker' && data?.form_data?.filter_date_type === 'month'"
+        >
+          <mat-form-field class="form-group w-100">
+            <mat-label>Start Month</mat-label>
+            <input matInput [matDatepicker]="sinceMonthPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+            <input
+              matInput
+              [ngModel]="dataFilterSince | date: 'MM/yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="sinceMonthPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="sinceMonthPicker"></mat-datepicker-toggle>
+            <mat-datepicker
+              #sinceMonthPicker
+              startView="multi-year"
+              (monthSelected)="monthPickerHandler($event, sinceMonthPicker, 'since')"
+              panelClass="example-month-picker"
+            >
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div
+          class="col"
+          *ngIf="
+            (explore?.form_data?.filter_date === 'date_range_picker' ||
+              explore?.form_data?.filter_date === 'date_picker') &&
+            explore?.form_data?.filter_date_type === 'month'
+          "
+        >
+          <mat-form-field class="form-group w-100">
+            <mat-label>End Month</mat-label>
+            <input matInput [matDatepicker]="untilMonthPicker" [formControl]="untilDateFC" hidden="true" readonly />
+            <input
+              matInput
+              [ngModel]="dataFilterUntil | date: 'MM/yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="untilMonthPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="untilMonthPicker"></mat-datepicker-toggle>
+            <mat-datepicker
+              #untilMonthPicker
+              startView="multi-year"
+              (monthSelected)="monthPickerHandler($event, untilMonthPicker, 'until')"
+              panelClass="example-month-picker"
+            >
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!--Filter Date: Date-->
+      <div class="row clearfix" *ngIf="date_filter">
+        <div
+          class="col"
+          *ngIf="data?.form_data?.filter_date === 'date_range_picker' && data?.form_data?.filter_date_type === 'date'"
+        >
+          <mat-form-field class="form-group w-100">
+            <mat-label>Start Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="sinceDayPicker"
+              [formControl]="sinceDateFC"
+              readonly
+              hidden="true"
+              (dateInput)="datePickerHandler($event.value, 'since')"
+            />
+            <input
+              matInput
+              [ngModel]="dataFilterSince | date: 'dd/MM/yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="sinceDayPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="sinceDayPicker"></mat-datepicker-toggle>
+            <mat-datepicker #sinceDayPicker startView="multi-year" panelClass="example-month-picker"> </mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div
+          class="col"
+          *ngIf="
+            (explore?.form_data?.filter_date === 'date_range_picker' ||
+              explore?.form_data?.filter_date === 'date_picker') &&
+            explore?.form_data?.filter_date_type === 'date'
+          "
+        >
+          <mat-form-field class="form-group w-100">
+            <mat-label>End Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="untilDayPicker"
+              [formControl]="untilDateFC"
+              readonly
+              hidden="true"
+              (dateInput)="datePickerHandler($event.value, 'until')"
+            />
+            <input
+              matInput
+              *ngIf="explore?.form_data?.filter_date === 'date_range_picker'"
+              [ngModel]="dataFilterUntil | date: 'dd/MM/yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="untilDayPicker.open(); onClickOverlay()"
+            />
+            <input
+              matInput
+              *ngIf="explore?.form_data?.filter_date === 'date_picker'"
+              [ngModel]="dataFilterSince | date: 'dd/MM/yyyy'"
+              [ngModelOptions]="{ standalone: true }"
+              readonly
+              (click)="untilDayPicker.open(); onClickOverlay()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="untilDayPicker"></mat-datepicker-toggle>
+            <mat-datepicker #untilDayPicker startView="multi-year" panelClass="example-month-picker"> </mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+    <div *ngIf="noData">
+      <h4 style="top: 5px" align="center">No Result Data</h4>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isSearchResult" class="card info-box-2 s-results" style="height: inherit">
+  <div class="body">
+    <div class="icon col-12">
+      <div
+        id="myDiv-{{ cardID }}"
+        [ngClass]="
+          !explore?.form_data?.hide_background ? 'body overflow-unset' : 'body body-transparent overflow-unset'
+        "
+      >
+        <h2 *ngIf="isFullscreen">{{ title }}</h2>
+        <form class="form-horizontal" *ngIf="!noData">
+          <div *ngIf="!data?.form_data?.filter_alignment_horizontal">
+            <div class="row clearfix" *ngFor="let item of filterList">
+              <div
+                class="col-sm-12 form-control-label"
+                *ngIf="
+                  item != explore?.form_data?.filter_control_checkbox &&
+                  item != explore?.form_data?.filter_control_alphabetic
+                "
+              >
+                <label for="email">{{ item }}</label>
+              </div>
+              <div
+                class="col-sm-12"
+                *ngIf="
+                  item != explore?.form_data?.filter_control_checkbox &&
+                  item != explore?.form_data?.filter_control_alphabetic
+                "
+              >
+                <div class="form-group">
+                  <ng-select
+                    [id]="item"
+                    class="text-light"
+                    [items]="data.data[item]"
+                    [multiple]="true"
+                    [closeOnSelect]="true"
+                    [searchable]="true"
+                    bindLabel="text"
+                    placeholder="Select"
+                    (add)="addFilter($event)"
+                    (clear)="clearFilter($event)"
+                    (remove)="removeFilter($event)"
+                    [(ngModel)]="dataFilter[item]"
+                    [ngModelOptions]="{ standalone: true }"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix" *ngIf="data?.form_data?.filter_alignment_horizontal">
+            <div class="col" *ngFor="let item of filterList">
+              <div
+                class="form-control-label"
+                *ngIf="
+                  item != explore?.form_data?.filter_control_checkbox &&
+                  item != explore?.form_data?.filter_control_alphabetic
+                "
+              >
+                <label for="email">{{ item }}</label>
+              </div>
+              <div
+                class="form-group"
+                *ngIf="
+                  item != explore?.form_data?.filter_control_checkbox &&
+                  item != explore?.form_data?.filter_control_alphabetic
+                "
+              >
+                <ng-select
+                  [id]="item"
+                  class="text-light"
+                  [items]="data.data[item]"
+                  [multiple]="true"
+                  [closeOnSelect]="true"
+                  [searchable]="true"
+                  bindLabel="text"
+                  placeholder="Select"
+                  (add)="addFilter($event)"
+                  (clear)="clearFilter($event)"
+                  (remove)="removeFilter($event)"
+                  [(ngModel)]="dataFilter[item]"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row clearfix" *ngIf="data?.form_data?.alphabet_filter">
+            <div class="col-md-12">
+              <div class="mw-100 d-flex overflow-auto border-0 mb-4">
+                <button
+                  class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini ml-0 mr-1"
+                  id="AlphabethBtn-{{ filter[0] }}"
+                  *ngFor="let filter of alphabetFilterList; let i = index"
+                  (click)="onAlphabetFilter(filter[0])"
+                >
+                  {{ filter[1] }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row clearfix" *ngIf="data?.form_data?.filter_checkbox">
+            <div class="col">
+              <div class="form-line">
+                <div class="checkbox">
+                  <input
+                    id="fcb-selectAll"
+                    (change)="checkUncheckAll()"
+                    [(ngModel)]="isCheckedAllItem"
+                    [ngModelOptions]="{ standalone: true }"
+                    type="checkbox"
+                  />
+                  <label for="fcb-selectAll"> Select All</label>
+                </div>
+              </div>
+            </div>
+            <div class="col" *ngFor="let filter of filterCheckboxList">
+              <div class="form-line">
+                <div class="checkbox">
+                  <input
+                    id="{{ 'fcb-' + filter.id }}"
+                    (change)="onCheckboxFilter(filter, filter.isChecked)"
+                    [(ngModel)]="filter.isChecked"
+                    [ngModelOptions]="{ standalone: true }"
+                    type="checkbox"
+                  />
+                  <label for="{{ 'fcb-' + filter.id }}">{{ filter.text }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row clearfix" *ngIf="date_filter">
+            <div class="col-sm-12 form-control-label">
+              <label for="email">Time Column</label>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <select
+                  class="form-control show-tick ms select2"
+                  data-placeholder="Select"
+                  [(ngModel)]="timeColumn"
+                  (change)="setTimeColumn()"
+                  name="timeColumn"
+                  id="timeColumn"
+                >
+                  <option value="">Choose Time Column</option>
+                  <option *ngFor="let row of explore?.datasource?.granularity_sqla | keyvalue" [value]="row.value[0]">
+                    {{ row.value[1] }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row clearfix" *ngIf="date_filter">
+            <div
+              class="col"
+              *ngIf="
+                data?.form_data?.filter_date === 'date_range_picker' && data?.form_data?.filter_date_type === 'year'
+              "
+            >
+              <mat-form-field class="form-group w-100">
+                <mat-label>Start Year</mat-label>
+                <input matInput [matDatepicker]="sinceYearPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+                <input
+                  matInput
+                  [ngModel]="dataFilterSince | date: 'yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="sinceYearPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="sinceYearPicker"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #sinceYearPicker
+                  startView="multi-year"
+                  (yearSelected)="yearPickerHandler($event, sinceYearPicker, 'since')"
+                  panelClass="example-month-picker"
+                >
+                </mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div
+              class="col"
+              *ngIf="
+                (explore?.form_data?.filter_date === 'date_range_picker' ||
+                  explore?.form_data?.filter_date === 'date_picker') &&
+                explore?.form_data?.filter_date_type === 'year'
+              "
+            >
+              <mat-form-field class="form-group w-100">
+                <mat-label>End Year</mat-label>
+                <input matInput [matDatepicker]="untilYearPicker" [formControl]="untilDateFC" hidden="true" readonly />
+                <input
+                  matInput
+                  [ngModel]="dataFilterUntil | date: 'yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="untilYearPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="untilYearPicker"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #untilYearPicker
+                  startView="multi-year"
+                  (yearSelected)="yearPickerHandler($event, untilYearPicker, 'until')"
+                  panelClass="example-month-picker"
+                >
+                </mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row clearfix" *ngIf="date_filter">
+            <div
+              class="col"
+              *ngIf="
+                data?.form_data?.filter_date === 'date_range_picker' && data?.form_data?.filter_date_type === 'month'
+              "
+            >
+              <mat-form-field class="form-group w-100">
+                <mat-label>Start Month</mat-label>
+                <input matInput [matDatepicker]="sinceMonthPicker" [formControl]="sinceDateFC" hidden="true" readonly />
+                <input
+                  matInput
+                  [ngModel]="dataFilterSince | date: 'MM/yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="sinceMonthPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="sinceMonthPicker"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #sinceMonthPicker
+                  startView="multi-year"
+                  (monthSelected)="monthPickerHandler($event, sinceMonthPicker, 'since')"
+                  panelClass="example-month-picker"
+                >
+                </mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div
+              class="col"
+              *ngIf="
+                (explore?.form_data?.filter_date === 'date_range_picker' ||
+                  explore?.form_data?.filter_date === 'date_picker') &&
+                explore?.form_data?.filter_date_type === 'month'
+              "
+            >
+              <mat-form-field class="form-group w-100">
+                <mat-label>End Month</mat-label>
+                <input matInput [matDatepicker]="untilMonthPicker" [formControl]="untilDateFC" hidden="true" readonly />
+                <input
+                  matInput
+                  [ngModel]="dataFilterUntil | date: 'MM/yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="untilMonthPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="untilMonthPicker"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #untilMonthPicker
+                  startView="multi-year"
+                  (monthSelected)="monthPickerHandler($event, untilMonthPicker, 'until')"
+                  panelClass="example-month-picker"
+                >
+                </mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row clearfix" *ngIf="date_filter">
+            <div
+              class="col"
+              *ngIf="
+                data?.form_data?.filter_date === 'date_range_picker' && data?.form_data?.filter_date_type === 'date'
+              "
+            >
+              <mat-form-field class="form-group w-100">
+                <mat-label>Start Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="sinceDayPicker"
+                  [formControl]="sinceDateFC"
+                  readonly
+                  hidden="true"
+                  (dateInput)="datePickerHandler($event.value, 'since')"
+                />
+                <input
+                  matInput
+                  [ngModel]="dataFilterSince | date: 'dd/MM/yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="sinceDayPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="sinceDayPicker"></mat-datepicker-toggle>
+                <mat-datepicker
+                  #sinceDayPicker
+                  startView="multi-year"
+                  panelClass="example-month-picker"
+                ></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div
+              class="col"
+              *ngIf="
+                (explore?.form_data?.filter_date === 'date_range_picker' ||
+                  explore?.form_data?.filter_date === 'date_picker') &&
+                explore?.form_data?.filter_date_type === 'date'
+              "
+            >
+              <mat-form-field class="form-group w-100">
+                <mat-label>End Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="untilDayPicker"
+                  [formControl]="untilDateFC"
+                  readonly
+                  hidden="true"
+                  (dateInput)="datePickerHandler($event.value, 'until')"
+                />
+                <input
+                  matInput
+                  *ngIf="explore?.form_data?.filter_date === 'date_range_picker'"
+                  [ngModel]="dataFilterUntil | date: 'dd/MM/yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="untilDayPicker.open(); onClickOverlay()"
+                />
+                <input
+                  matInput
+                  *ngIf="explore?.form_data?.filter_date === 'date_picker'"
+                  [ngModel]="dataFilterSince | date: 'dd/MM/yyyy'"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                  (click)="untilDayPicker.open(); onClickOverlay()"
+                />
+                <mat-datepicker-toggle matSuffix [for]="untilDayPicker"></mat-datepicker-toggle>
+                <mat-datepicker #untilDayPicker startView="multi-year" panelClass="example-month-picker">
+                </mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="noData">
+          <h4 style="top: 5px" align="center">No Result Data</h4>
+        </div>
+      </div>
+    </div>
+    <div class="content col-12">
+      <div class="text">{{ title | uppercase }}</div>
+      <div class="flex-fill bd-highlight">
+        <span>{{ searchResultOptions.dashboard_title | uppercase }}</span>
+      </div>
+      <div class="d-flex bd-highlight mt-4">
+        <button
+          class="btn btn-info btn-outline btn-sm w-100"
+          type="button"
+          (click)="viewDetailChart(searchResultOptions.slug)"
+        >
+          View Detail<i class="zmdi zmdi-eye f-12 ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade show" id="alertDialogFilter" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row text-center justify-content-center">
+          <div class="col-auto align-self-center">
+            <div class="w_icon orange"><i class="zmdi zmdi-alert-circle-o"></i></div>
+          </div>
+          <div class="col-8 align-self-center">
+            <h5 class="f-15 m-auto" *ngFor="let msg of validate_messages">
+              {{ msg }}
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-info btn-outline btn-sm f-12 mx-auto mt-3" type="button" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

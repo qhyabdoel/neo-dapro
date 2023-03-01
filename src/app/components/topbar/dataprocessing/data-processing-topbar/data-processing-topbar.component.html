@@ -1,0 +1,198 @@
+<div class="row py-1 sub-top-nav">
+  <div class="col-12 col-sm-8">
+    <div class="row">
+      <!-- dataset file name -->
+      <div class="col-auto col-sm-4 pr-0">
+        <div class="form-group mb-0 mt-1">
+          <input
+            type="text"
+            class="form-control form-bottomline"
+            placeholder="Default"
+            [(ngModel)]="title"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+
+      <!-- buttons -->
+      <div class="col-auto pr-0">
+        <!-- save button -->
+        <button
+          (click)="buttonSave()"
+          class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini py-0 px-2"
+          matTooltip="{{ 'MODULE.DATA_PROCESSING.TOP_BAR.BUTTON_SAVE' | translate }}"
+          
+        >
+          <i class="ti-save"></i>
+        </button>
+
+        <!-- new workspace button -->
+        <button
+          (click)="buttonNew()"
+          class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini py-0 px-2"
+          matTooltip="{{ 'MODULE.DATA_PROCESSING.TOP_BAR.BUTTON_NEW' | translate }}"
+        >
+          <i class="ti-file"></i>
+        </button>
+
+        <!-- reset button -->
+        <button
+          (click)="resetCanvas()"
+          class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini py-0 px-2"
+          matTooltip="{{ 'MODULE.DATA_PROCESSING.TOP_BAR.BUTTON_RESET' | translate }}"
+        >
+          <i class="ti-reload"></i>
+        </button>
+
+        <!-- preview button -->
+        <!-- TEMPORARILY DISABLED
+        <button
+          (click)="buttonPreview()"
+          class="btn btn-info btn-outline btn-sm py-0 px-2"
+          [matMenuTriggerFor]="popoverPreview"
+          #triggerpopoverPreview="matMenuTrigger"menuEnter
+          (mouseover)="triggerpopoverPreview.openMenu(); setPopover();"
+          (mouseleave)="triggerpopoverPreview.closeMenu(); hidePopover()"
+        >
+          <div *ngIf="loadingPreview$ | async" class="loader loader--style1" title="0">
+            <svg
+              version="1.1"
+              id="loader-1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              width="15px"
+              height="15px"
+              viewBox="0 0 40 40"
+              enable-background="new 0 0 40 40"
+              xml:space="preserve"
+            >
+              <path
+                opacity="0.2"
+                fill="#000"
+                d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                          s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                          c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+              />
+              <path
+                fill="#000"
+                d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                          C22.32,8.481,24.301,9.057,26.013,10.047z"
+              >
+                <animateTransform
+                  attributeType="xml"
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 20 20"
+                  to="360 20 20"
+                  dur="0.5s"
+                  repeatCount="indefinite"
+                />
+              </path>
+            </svg>
+          </div>
+          &nbsp; {{ 'MODULE.DATA_PROCESSING.TOP_BAR.BUTTON_PREVIEW' | translate }}
+          <i class="zmdi zmdi-format-list-bulleted f-12 ml-1"></i>
+        </button>
+        <mat-menu #popoverPreview="matMenu" class="tooltips popover pds-popover">
+            <h3 class="popover-header">{{ 'MODULE.DATA_PROCESSING.TOP_BAR.BUTTON_PREVIEW' | translate }}</h3>
+            <div class="popover-body">{{ 'MODULE.DATA_PROCESSING.TOP_BAR.BUTTON_PREVIEW_TOOLTIP' | translate }}</div>
+        </mat-menu>
+        -->
+
+        <!-- run button -->
+        <button
+          (click)="buttonRun()"
+          class="btn btn-info btn-outline btn-sm py-0 px-2"
+          [matMenuTriggerFor]="showPopoverRun"
+          #triggerpopoverRun="matMenuTrigger"menuEnter
+          (mouseover)="triggerpopoverRun.openMenu(); setPopover();"
+          (mouseleave)="triggerpopoverRun.closeMenu(); hidePopover()"
+        >
+          <div *ngIf="loadingRun$ | async" class="loader loader--style1" title="0" style="pointer-events: none">
+            <svg
+              version="1.1"
+              id="loader-1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              width="15px"
+              height="15px"
+              viewBox="0 0 40 40"
+              enable-background="new 0 0 40 40"
+              xml:space="preserve"
+            >
+              <path
+                opacity="0.2"
+                fill="#000"
+                d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                          s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                          c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+              />
+              <path
+                fill="#000"
+                d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                          C22.32,8.481,24.301,9.057,26.013,10.047z"
+              >
+                <animateTransform
+                  attributeType="xml"
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 20 20"
+                  to="360 20 20"
+                  dur="0.5s"
+                  repeatCount="indefinite"
+                />
+              </path>
+            </svg>
+          </div>
+          &nbsp; {{ 'MODULE.DATA_PROCESSING.TOP_BAR.BUTTON_RUN' | translate }} <i class="zmdi zmdi-play f-12 ml-1"></i>
+        </button>
+        <mat-menu #showPopoverRun="matMenu" class="tooltips popover pds-popover">
+            <h3 class="popover-header">{{ 'MODULE.DATA_PROCESSING.TOP_BAR.BUTTON_RUN' | translate }}</h3>
+            <div class="popover-body">{{ 'MODULE.DATA_PROCESSING.TOP_BAR.BUTTON_RUN_TOOLTIP' | translate }}</div>
+        </mat-menu>
+
+        <!-- zoom in button -->
+        <button
+          *ngIf="queryCommandItems && queryCommandItems.length != 0"
+          (click)="onChangeScale(0.1, 'dec')"
+          class="btn btn-outline btn-sm"
+          matTooltip="{{ 'MODULE.DATA_PROCESSING.TOP_BAR.ZI' | translate }}"
+        >
+          <i class="zmdi zmdi-minus f-12 ml-1"></i>
+        </button>
+
+        <!-- zoom reset button -->
+        <button
+          *ngIf="queryCommandItems && queryCommandItems.length != 0"
+          (click)="resetScale()"
+          class="btn btn-outline btn-sm"
+          data-tooltip="tooltip"
+          data-placement="bottom"
+        >
+          {{ 'MODULE.DATA_PROCESSING.TOP_BAR.S' | translate }} {{ scaleValuePctg | toFixed }}%
+        </button>
+
+        <!-- zoom out button -->
+        <button
+          *ngIf="queryCommandItems && queryCommandItems.length != 0"
+          (click)="onChangeScale(0.1, 'inc')"
+          class="btn btn-outline btn-sm"
+          matTooltip="{{ 'MODULE.DATA_PROCESSING.TOP_BAR.ZO' | translate }}"
+        >
+          <i class="zmdi zmdi-plus f-12 ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- time count -->
+  <div class="col-auto ml-auto align-self-center">
+    <span class="mr-3 f-12"
+      >{{ 'MODULE.DATA_PROCESSING.TOP_BAR.PROCESS_TIME' | translate }} <strong>{{ mytime }}</strong></span
+    >
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div *ngIf="loading">
+  <mat-card class="shimmer col-lg-3 col-md-6 col-sm-12 card bg-grey" style="height: 100%; margin: 20px"></mat-card>
+</div>
+<div *ngIf="isAppPreview && !loading">
+  <img
+    [attr.src]="headerLogo"
+    width="20"
+    alt="Paques"
+    [ngStyle]="{
+      'margin-left': '60%',
+      'min-height': isAppPreview ? '30px' : '',
+      height: isAppPreview ? '20px' : '',
+      'max-width': isAppPreview && '100%',
+      width: isAppPreview && '100%'
+    }"
+  /><span class="mx-2"></span>
+</div>
+<div *ngIf="!isAppPreview && !loading">
+  <a href="javascript:void(0)" [routerLink]="['/home']"
+    ><img
+      [attr.src]="headerLogo"
+      width="20"
+      alt="Paques"
+      [ngStyle]="{
+        margin: isAppPreview ? '20%' : '',
+        'min-height': isAppPreview ? '30px' : '',
+        height: isAppPreview ? '20px' : '',
+        'max-width': isAppPreview && '100%',
+        width: isAppPreview && '100%'
+      }" /><span class="mx-2"></span
+  ></a>
+</div>

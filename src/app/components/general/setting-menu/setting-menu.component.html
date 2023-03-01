@@ -1,0 +1,46 @@
+<section class="content content-full fitArea">
+  <div class="row clearfix">
+    <div class="col-md-12">
+      <div class="block-header d-inline-box px-0 pt-0">
+        <i class="zmdi zmdi-settings align-middle mr-2"></i>
+        <h2>{{ 'MODULE.USER_MANAGEMENT.SM' | translate }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="row clearfix">
+    <div class="col-lg-3 col-md-12">
+      <div class="card mb-3">
+        <a href="javascript:void(0);" routerLink="/user-management/users">
+          <div class="body rounded py-2">
+            <div class="row setting-box">
+              <div class="col-auto align-self-center">
+                <div class="w_icon orange"><i class="zmdi zmdi-account-box"></i></div>
+              </div>
+              <div class="col-8 pl-2 align-self-center" style="text-align: left">
+                <h5 class="f-15 m-auto text-left">{{ 'MODULE.USER_MANAGEMENT.UM' | translate }}</h5>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="card mb-3">
+        <a href="javascript:void(0);" routerLink="/notifications/list">
+          <div class="body rounded py-2">
+            <div class="row setting-box">
+              <div class="col-auto align-self-center">
+                <div class="w_icon cyan"><i class="zmdi zmdi-notifications"></i></div>
+              </div>
+              <div class="col-8 pl-2 align-self-center" style="text-align: left">
+                <h5 class="f-15 m-auto text-left">{{ 'MODULE.USER_MANAGEMENT.NCS' | translate }}</h5>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-12">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>

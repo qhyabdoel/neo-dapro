@@ -1,0 +1,29 @@
+.data-source-sidebar {
+  .nav-link {
+    cursor: pointer;
+  }
+}
+
+.row-item {
+  display: flex;
+  flex-direction: row;
+
+  i.fa {
+    margin-top: 0.4rem;
+  }
+
+  label {
+    display: block;
+    margin-top: 0.2rem;
+  }
+}
+
+.row-item:active {
+  color: #fff;
+  background-color: #117a8b;
+}
+
+.row-item:hover {
+  color: #fff;
+  background-color: #117a8b;
+}

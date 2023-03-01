@@ -1,0 +1,143 @@
+<aside class="navbar-right">
+  <div class="panel-group m-0 h-100 overflow-auto" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-primary m-0">
+      <div class="panel-heading" role="tab">
+        <h4 class="panel-title">
+          <a
+            class="menu-toggle text-uppercase"
+            role="button"
+            [ngClass]="{ toggled: activeColapse.dashboardProperty == true }"
+            (click)="collapseOnClick('dashboardProperty')"
+          >
+            {{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.DP' | translate }}
+          </a>
+        </h4>
+      </div>
+      <div
+        [ngClass]="{ show: activeColapse.dashboardProperty == true }"
+        class="panel-collapse collapse in"
+        role="tabpanel"
+      >
+        <div class="panel-body">
+          <form class="form-horizontal">
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label for="last_run">Charts</label>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="form-line">
+                    <!-- 
+                       (add)="loadChartTo($event, true)"
+                      (clear)="buttonNew()" -->
+                    <ng-select
+                      class="text-light"
+                      [items]="chartList"
+                      [multiple]="true"
+                      [closeOnSelect]="true"
+                      [searchable]="true"
+                      bindLabel="name"
+                      placeholder="{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.S' | translate }} Charts"
+                      (remove)="onChartDeleteInSelect($event)"
+                      [(ngModel)]="chartSelected"
+                      [ngModelOptions]="{ standalone: true }"
+                    >
+                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                        <div class="ng-value" *ngFor="let item of items">
+                          <span class="ng-value-label"> {{ item.name }}</span>
+                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label for="email_address_2">{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.DU' | translate }}</label>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group mb-0">
+                  <input type="text" class="form-control" placeholder="url_name" />
+                </div>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <button
+                  class="btn btn-danger btn-sm w-100 m-0 mt-4 p-2 f-10 text-white"
+                  mat-raised-button
+                  matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.DD' | translate }}"
+                  [disabled]="paramEdit.id == null"
+                  (click)="delete('dashboard', paramEdit)"
+                >
+                  {{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.DD' | translate }}
+                  <i class="zmdi zmdi-delete f-12 ml-1"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-primary m-0">
+      <div class="panel-heading" role="tab">
+        <h4 class="panel-title">
+          <a
+            class="menu-toggle collapsed text-uppercase"
+            role="button"
+            [ngClass]="{ toggled: activeColapse.dashboardOptions == true }"
+            (click)="collapseOnClick('dashboardOptions')"
+          >
+            {{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.DO' | translate }}
+          </a>
+        </h4>
+      </div>
+      <div [ngClass]="{ show: activeColapse.dashboardOptions == true }" class="panel-collapse collapse" role="tabpanel">
+        <div class="panel-body">
+          <form class="form-horizontal">
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <button
+                  class="btn btn-info btn-outline btn-sm w-100 m-0 mb-3 py-0 px-2"
+                  mat-raised-button
+                  matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.RD' | translate }}"
+                  [disabled]="paramEdit.id == null"
+                  (click)="refreshDashboard(paramEdit)"
+                >
+                  {{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.RD' | translate }}
+                  <i class="zmdi zmdi-refresh-alt f-12 ml-1"></i>
+                </button>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12">
+                <label>{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.AR' | translate }} </label>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <select class="form-control show-tick ms select2" data-placeholder="Select">
+                    <option>{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.D' | translate }}</option>
+                    <option>{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.E' | translate }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hide-menu rtl-sidebar" (click)="hideAndShowRightbar()">
+    <div
+      class="btn-toggle btn-toggle-menu"
+      data-toggle="tooltip"
+      data-placement="left"
+      [attr.data-original-title]="'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.HIDE' | translate"
+    >
+      <a class="btn-menu"></a>
+    </div>
+  </div>
+</aside>

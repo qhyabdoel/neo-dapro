@@ -1,0 +1,194 @@
+{
+	"endpointDescriptionList": [
+		{
+			"endpoint": "dashboard",
+			"detail": [
+				{
+					"subendpoint": "list",
+					"description": "Load dashboard list"
+				},
+				{
+					"subendpoint": "view",
+					"description": "View dashboard"
+				},
+				{
+					"subendpoint": "getshareurl",
+					"description": "get dashboard share url"
+				},
+				{
+					"subendpoint": "getshareurls",
+					"description": "get dashboard share url"
+				},
+				{
+					"subendpoint": "create",
+					"description": "Create dashboard"
+				},
+				{
+					"subendpoint": "save",
+					"description": "Save dashboard"
+				}
+			]
+		},
+		{
+			"endpoint": "chart",
+			"detail": [
+				{
+					"subendpoint": "list",
+					"description": "Load chart list"
+				},
+				{
+					"subendpoint": "datasources",
+					"description": "get chart datasource"
+				},
+				{
+					"subendpoint": "explore",
+					"description": "load explore chart"
+				},
+				{
+					"subendpoint": "view",
+					"description": "View chart"
+				},
+				{
+					"subendpoint": "getshareurl",
+					"description": "get chart share url"
+				},
+				{
+					"subendpoint": "create",
+					"description": "Create chart"
+				},
+				{
+					"subendpoint": "save",
+					"description": "Save chart"
+				}
+			]
+		},
+		{
+			"endpoint": "logs",
+			"description": "View Log"
+		},
+		{
+			"endpoint": "explorer",
+			"detail": [
+				{
+					"subendpoint": "list",
+					"description": "Load explorer list"
+				}
+			]
+		},
+		{
+			"endpoint": "dbconfig",
+			"detail": [
+				{
+					"subendpoint": "all",
+					"description": "Load db config list"
+				}
+			]
+		},
+		{
+			"endpoint": "query",
+			"detail": [
+				{
+					"subendpoint": "list",
+					"description": "Load query list"
+				},
+				{
+					"subendpoint": "edit",
+					"description": "Edit query"
+				},
+				{
+					"subendpoint": "setdataset",
+					"description": "Set dataset query"
+				},
+				{
+					"subendpoint": "index",
+					"detail": [
+						{
+							"subendpoint": "search",
+							"description": "search index query"
+						}
+					]
+				},
+				{
+					"subendpoint": "metadata",
+					"detail": [
+						{
+							"subendpoint": "save",
+							"description": "Save metadata"
+						}
+					]
+				}
+			]
+		},
+		{
+			"endpoint": "dataset",
+			"detail": [
+				{
+					"subendpoint": "view",
+					"description": "View dataset"
+				},
+				{
+					"subendpoint": "query",
+					"description": "Query dataset"
+				}
+			]
+		},
+		{
+			"endpoint": "notification",
+			"detail": [
+				{
+					"subendpoint": "log",
+					"detail": [
+						{
+							"subendpoint": "get",
+							"description": "View notification log"
+						}
+					]
+				},
+				{
+					"subendpoint": "template",
+					"detail": [
+						{
+							"subendpoint": "get",
+							"description": "Get template notification"
+						}
+					]
+				},
+				{
+					"subendpoint": "get",
+					"description": "Get Notification List"
+				}
+			]
+		},
+		{
+			"endpoint": "settings",
+			"detail": [
+				{
+					"subendpoint": "get",
+					"description": "Get settings"
+				}
+			]
+		},
+		{
+			"endpoint": "connection",
+			"detail": [
+				{
+					"subendpoint": "apiconn",
+					"detail": [
+						{
+							"subendpoint": "all",
+							"description": "Get All connection"
+						}
+					]
+				}
+			]
+		},
+		{
+			"endpoint": "config",
+			"description": "Get configuration"
+		},
+		{
+			"endpoint": "logout",
+			"description": "Logout"
+		}
+	]
+}

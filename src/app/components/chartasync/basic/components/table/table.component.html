@@ -1,0 +1,156 @@
+<!-- section table start -->
+<div
+  class="h-100"
+  *ngIf="explore && ['table', 'preview', 'table_comparison', 'pivot_table'].includes(explore.form_data.viz_type)"
+>
+  <div class="row clearfix align-items-center" *ngIf="explore && explore.form_data.viz_type !== 'pivot_table'">
+    <div class="col-auto">
+      <div class="form-group" *ngIf="explore?.form_data?.include_search">
+        <!-- <div class="form-control-label">
+        <label for="last_run"> </label>
+      </div> -->
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control form-bottomline pr-5"
+            placeholder="Searching data on table"
+            (keyup)="$event.which == 13 ? applyFilter($event, 'search_box') : 0"
+          />
+          <div class="input-group-append form-bottomline group-bottomline">
+            <span class="input-group-text border-0 mt-3"><i class="zmdi zmdi-search"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-auto ml-auto">
+      <div class="containerList">
+        <div class="row clearfix justify-content-end align-items-center px-3">
+          <div class="col-auto">
+            <custom_date_picker_component
+              [filter_date]="exploreJson ? exploreJson.form_data.filter_date : ''"
+              [date_type]="exploreJson ? exploreJson.form_data.filter_date_type : ''"
+              (setState)="setState($event)"
+              [value1]="since ? since : ''"
+              [value2]="until ? until : ''"
+              [type]="'dynamic'"
+            >
+            </custom_date_picker_component>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- dont remove for dashboard toggle column -->
+  <div
+    class="row"
+    *ngIf="explore && ['table', 'table_comparison'].includes(explore.form_data.viz_type) && viewColumnTable"
+  >
+    <div class="col-md-12">
+      <div class="mw-100 d-flex overflow-auto border-0 pb-2">
+        <button
+          class="btn btn-info btn-outline btn-sm btn-toggle-table"
+          id="ToggleBtn-{{ col.colClass }}"
+          *ngFor="let col of tableColumnsList; let i = index"
+          (click)="handleToggleTableColumn(i, col.colName, col.colClass)"
+        >
+          {{ col.colName }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="scrolling-table" *ngIf="explore && explore.form_data.viz_type !== 'pivot_table'">
+    <div class="mat-table-container">
+      <mat-table
+        [dataSource]="dataSource"
+        matSort
+        (matSortChange)="sortData($event)"
+        *ngIf="!explore?.form_data?.table_grid_view"
+        class="chartHeight"
+        [ngClass]="{ 'chartHeightwithFilter': explore?.form_data?.include_search || exploreJson?.form_data?.filter_date && ['table', 'preview', 'table_comparison', 'pivot_table'].includes(explore.form_data.viz_type)}">
+        <ng-container *ngFor="let disCol of displayedColumns" [matColumnDef]="disCol">
+          <mat-header-cell
+            class="ellipsistxt"
+            *matHeaderCellDef
+            mat-sort-header
+            [style]="'flex: ' + chartOption?.flexStyles[disCol]"
+          >
+            <div
+              class="mat-sort-header-container"
+              data-placement="top"
+              title="{{ disCol }}"
+              [ngStyle]="chartOption?.headerStyle"
+            >
+              <span>
+                {{ setColumnName(disCol) }}
+              </span>
+            </div>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row; let i = index" [style]="'flex: ' + chartOption?.flexStyles[disCol]">
+            <div class="input-group" *ngIf="row[disCol] === 'searchInput'">
+              <input
+                *ngIf="disCol !== 'No'"
+                type="text"
+                class="form-control"
+                placeholder="search data"
+                [(ngModel)]="searchMultiCols[disCol]"
+                (keyup)="$event.which == 13 ? applyFilter($event, 'search_multi_cols') : 0"
+              />
+            </div>
+            <span
+              [ngStyle]="mergeStyle(chartOption?.cellStyle, disCol, i)"
+              *ngIf="(!['dashboard', 'dashboardview'].includes(typePage) || !explore?.form_data?.chart_on_click) && row[disCol] !== 'searchInput'"
+            >
+              {{ row[disCol] }}
+            </span>
+
+            <a
+              [ngStyle]="mergeStyle(chartOption?.cellStyle, disCol, i)"
+              *ngIf="['dashboard', 'dashboardview'].includes(typePage) && explore?.form_data?.chart_on_click && row[disCol] !== 'searchInput'"
+              href="javascript:;"
+              (click)="handleFilterByClick(row, disCol)"
+            >
+              {{ row[disCol] }}
+            </a>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <!-- other view table -->
+      <div class="row clearfix" *ngIf="explore?.form_data?.table_grid_view">
+        <!-- grid or list view -->
+        <ul class="doc-list">
+          <li
+            class="grid-v border-0"
+            *ngFor="let item of displayGrid"
+            [ngClass]="{ 'col-auto': !explore?.form_data?.gridview_list_view }"
+            [ngStyle]="explore?.form_data?.gridview_list_view ? { width: '100%' } : {}"
+          >
+            <a href="javascript:;">
+              <h6>{{ item[0] }}</h6>
+              <p>{{ item[1] }}</p>
+            </a>
+          </li>
+        </ul>
+        <!-- grid or list  view -->
+      </div>
+      <!-- mode grid view -->
+  
+      <div class="btmPaginator">
+        <pq-paginator
+          class="scrollPaginator"
+          [length]="pagelength"
+          [pageSize]="exploreJson?.form_data?.page_size"
+          [pageSizeOptions]="[5, 10, 25]"
+          (page)="onChangePage($event)"
+        >
+        </pq-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="pivot-container" [innerHtml]="myHtml" *ngIf="explore && explore.form_data.viz_type === 'pivot_table'"></div>
+</div>
+<!-- section table end -->

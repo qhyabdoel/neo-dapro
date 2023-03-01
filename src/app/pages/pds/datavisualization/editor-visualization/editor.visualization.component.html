@@ -1,0 +1,112 @@
+<!-- [ngStyle]="{ position: isSharePage ? 'static' : '' }" -->
+<div
+  class="row py-1 sub-top-nav"
+  topbar-visualization
+  [options]="topbarOptions"
+  [ngStyle]="{ position: isSharePage ? 'static' : '', display: isSharePage && typePage === 'chart' ? 'none' : '' }"
+  [isLoadData]="shareChartData ? shareChartData?.exploreJson : true"
+  (newbutton)="buttonNew($event)"
+  (savebutton)="buttonSave($event)"
+  (viewbutton)="buttonView()"
+  (title)="titleChange($event)"
+  (handleAction)="handleAction($event)"
+></div>
+
+<aside id="leftSidebar" class="sidebar" leftbar-component (itemto)="loadItem($event)" *ngIf="!previewMode"></aside>
+
+<rightbar-application (itemto)="loadItem($event)" *ngIf="!previewMode"></rightbar-application>
+
+<section *ngIf="typePage === 'application'">
+  <workspaces-application></workspaces-application>
+</section>
+
+<section *ngIf="typePage === 'chart'">
+  <section class="content" *ngIf="isLoadingContent || !shareChartData.exploreJson.form_data.datasource">
+    <div class="row clearfix" *ngIf="isLoadingContent">
+      <div class="col-md-12">
+        <mat-spinner class="mat-spinner-color" [diameter]="60" style="margin: 0 auto"></mat-spinner>
+        <h5 class="f-12 text-center mt-3">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.LC' | translate }}</h5>
+      </div>
+    </div>
+    <div class="text-center mt-3 f-12" *ngIf="!shareChartData.exploreJson.form_data.datasource && !isLoadingContent">
+      <p class="mb-0">
+        {{ 'MODULE.DATA_VISUAL.CHART.COMMON.CONTENT_LABEL' | translate }}
+      </p>
+      <p>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.CONTENT_LABEL2' | translate }}</p>
+    </div>
+  </section>
+  <pq-card
+    *ngIf="!isLoadingContent && shareChartData.exploreJson.form_data.datasource"
+    [createChildComponent]="createChart"
+    (onEventButtonClick)="handleEventButton($event)"
+    [eventButtonData]="eventButtonData"
+    [isSharedPage]="isSharePage"
+    class="chart-view"
+  >
+  </pq-card>
+</section>
+
+<section
+  *ngIf="['dashboard', 'dashboardview', 'app_preview'].includes(typePage)"
+  id="content-full"
+  [ngClass]="{ 'content-full': ['dashboardview', 'app_preview'].includes(typePage), 'dash-view': isSharePage }"
+>
+  <workspace_dashboard
+    [menu]="menu"
+    [selectedMenu]="selectedMenu"
+    (setSelectedItem)="setSelectedItem($event)"
+    (onEventButtonClick)="handleEventButton($event)"
+    [loadingFromParent]="isLoadingContent"
+  ></workspace_dashboard>
+</section>
+
+<div class="app-sidebar collapsed" style="overflow: auto" *ngIf="['app_preview'].includes(typePage)">
+  <div class="custom-menu" (click)="toggleCustomMenu()">
+    <div class="btn-toggle btn-toggle-menu">
+      <a href="javascript:void(0)" class="btn-menu"></a>
+    </div>
+  </div>
+  <div class="list-group panel">
+    <a href="javascript:" class="list-group-item top-logo">
+      <img class="logo-dark" src="assets/images/pq-logo-w.svg" alt="Paques Logo" width="85px" />
+      <img class="logo-light" src="assets/images/pq-logo-dark.svg" alt="Paques Logo" width="85px" />
+    </a>
+
+    <ng-template #tmplNode let-node="node">
+      <a class="leftbar-app node-item" [attr.data-id]="node.id" [attr.id]="'node-' + node.id">
+        <div
+          class="node-title"
+          (click)="setSelectedItem(node)"
+          [ngClass]="selectedMenu?.id == node?.id ? 'is-active' : ''"
+        >
+          <span><i *ngIf="node.options.enable_icon_default" class="{{ node.options.icon }}"></i> {{ node.title }}</span>
+        </div>
+        <!-- <a href="javascript:void(0)" mat-icon-button*ngIf="node.children.length > 0">
+          <mat-icon>
+            {{
+              node.children && node.children.length > 0
+                ? node.expanded
+                  ? 'keyboard_arrow_down'
+                  : 'keyboard_arrow_right'
+                : ''
+            }}
+          </mat-icon>
+        </a> -->
+
+        <div *ngIf="node.expanded && node.children.length" class="node-children" [id]="node.id">
+          <div *ngFor="let child of node.children">
+            <ng-container *ngTemplateOutlet="tmplNode; context: { node: child }"></ng-container>
+          </div>
+        </div>
+      </a>
+    </ng-template>
+
+    <div [id]="'main'">
+      <div *ngFor="let node of menu">
+        <ng-container *ngTemplateOutlet="tmplNode; context: { node: node }"></ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<loading-component [loading]="loadingGeneral" [isApplication]="true"></loading-component>

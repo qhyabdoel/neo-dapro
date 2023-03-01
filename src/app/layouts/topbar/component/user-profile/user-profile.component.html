@@ -1,0 +1,50 @@
+<ng-container>
+  <li class="dropdown nav-item">
+    <a
+      href="javascript:void(0);"
+      class="dropdown-toggle nav-link"
+      (click)="handleDialog()"
+      role="button"
+      #toggleButton3
+    >
+      <span style="padding-right: inherit">Hi, {{ user?.firstname }}</span>
+      <img class="rounded-circle ml-2" src="./assets/images/users/default.jpg" alt="User" width="30" />
+    </a>
+    <ul
+      [ngClass]="{
+        'dropdown-menu slideUp2': true,
+        show: isOpen
+      }"
+      #menu3
+    >
+      <li class="body">
+        <ul class="menu list-unstyled py-2">
+          <li *ngIf="user?.external_auth">
+            <a href="https://cloud.paques.id/console/" target="_self">
+              <div class=""><i class="f-20 zmdi zmdi-card-membership"></i></div>
+              <div class="menu-info">
+                <h4>{{ 'TOB_BAR.LABEL_PCC' | translate }}</h4>
+              </div>
+            </a>
+          </li>
+          <li *ngIf="!user?.external_auth && enableChangePassword">
+            <a href="javascript:;" (click)="changePassword()">
+              <div class=""><i class="f-20 zmdi zmdi-edit"></i></div>
+              <div class="menu-info">
+                <h4>{{ 'TOB_BAR.LABEL_CHANGE_PASSWORD' | translate }}</h4>
+              </div>
+            </a>
+          </li>
+          <li *ngIf="!user?.external_auth">
+            <a href="javascript:;" (click)="logout()">
+              <div class=""><i class="f-20 zmdi zmdi-power"></i></div>
+              <div class="menu-info">
+                <h4>{{ 'TOB_BAR.LABEL_LOGOUT' | translate }}</h4>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li></ng-container
+>

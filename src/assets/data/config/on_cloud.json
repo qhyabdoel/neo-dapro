@@ -1,0 +1,21 @@
+{
+    "title_home" : "Cloud Connect",
+    "global_search" : false,
+    "chat_box" : true,
+    "user_management" : true,
+    "week_implementation_change_password" : false,
+    "global_notification_template" : false,
+    "notif_configuration_manual" : false,
+    "forgot_password" : false,
+    "change_password" : false,
+    "isFirst" : {
+        "isHome": true,
+		"isDataProcessing": true,
+		"isListVisualizationChart": true,
+		"isDataVisualizationChart": true,
+		"isListVisualizationDashboard": true,
+		"isDataVisualizationDashboard": true,
+		"isConfigureApplications": true,
+		"isListApplications": true
+    }
+}

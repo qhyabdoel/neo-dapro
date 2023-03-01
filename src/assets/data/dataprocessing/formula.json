@@ -1,0 +1,135 @@
+[
+  {
+    "description": "concat(<column name>,<column joiner>)",
+    "formula": "concat()"
+  },
+  {
+    "description": "sub(<column name>,<reduce column>)",
+    "formula": "sub(<column name>,<reduce column>)"
+  },
+  {
+    "description": "add(<column name>,{value a}|{character}|<additonal column>)",
+    "formula": "add(<column name>,{value a}|{character}|<additonal column>)"
+  },
+  {
+    "description": "mul(<column name>,<multiplier column>|{value multiplier})",
+    "formula": "mul(<column name>,<multiplier column>|{value multiplier})"
+  },
+  {
+    "description": "div({<column name>,<column divider>|{value divider})",
+    "formula": "div({<column name>,<column divider>|{value divider})"
+  },
+  {
+    "description": "mod({<column name>,<column divider>|{value divider})",
+    "formula": "mod({<column name>,<column divider>|{value divider})"
+  },
+  {
+    "description": "round(<column a>,{value decimal})",
+    "formula": "round(<column a>,{value decimal})"
+  },
+  {
+    "description": "indexof(<column name>,{first occurence value})",
+    "formula": "indexof(<column name>,{first occurence value})"
+  },
+  {
+    "description": "currentweek()",
+    "formula": "currentweek()"
+  },
+  {
+    "description": "currdate()",
+    "formula": "currdate()"
+  },
+  {
+    "description": "woy()",
+    "formula": "woy()"
+  },
+
+  {
+    "description": "concat(<column name>,<column joiner>) ",
+    "formula": "concat(<column name>,<column joiner>) "
+  },
+  {
+    "description": "Substring(<column name>,{value start},{value end}) ",
+    "formula": "Substring(<column name>,{value start},{value end}) "
+  },
+  {
+    "description": "len(<column name>)",
+    "formula": "len(<column name>)"
+  },
+  {
+    "description": "ceil(<column name>)",
+    "formula": "ceil()"
+  },
+  {
+    "description": "floor(<column name>)",
+    "formula": "floor(<column name>)"
+  },
+  {
+    "description": "lowercase(<column name>)",
+    "formula": "lowercase(<column name>)"
+  },
+  {
+    "description": "uppercase(<column name>)",
+    "formula": "uppercase(<column name>)"
+  },
+  {
+    "description": "replace(<column name>,{value replaced},{substitude value}) ",
+    "formula": "replace(<column name>,{value replaced},{substitude value}) "
+  },
+  {
+    "description": "trim(<column name>)",
+    "formula": "trim(<column name>)"
+  },
+  {
+    "description": "day(<column date>)",
+    "formula": "day(<column date>)"
+  },
+  {
+    "description": "adday()",
+    "formula": "adday()"
+  },
+  {
+    "description": "tonumber(<column name>)",
+    "formula": "tonumber(<column name>)"
+  },
+  {
+    "description": "tostring(<column name>)",
+    "formula": "tostring(<column name>)"
+  },
+  {
+    "description": "Integer(<column name>)",
+    "formula": "Integer(<column name>)"
+  },
+  {
+    "description": "JSON(<column name>)",
+    "formula": "JSON(<column name>)"
+  },
+  {
+    "description": "join(<column name>)",
+    "formula": "join(<column name>)"
+  },
+  {
+    "description": "constant()",
+    "formula": "constant()"
+  },
+  {
+    "description": "lpad(<column name>, {total character after string added},{additional string})",
+    "formula": "lpad(<column name>, {total character after string added},{additional string})"
+  },
+  {
+    "description": "rpad(<column name>, {total character after string added},{additional string})",
+    "formula": "rpad(<column name>, {total character after string added},{additional string})"
+  },
+  {
+    "description": "todate(<column name>,<column name>)  todate(<column name>,<column name>)",
+    "formula": "todate(<column name>,<column name>)  todate(<column name>,<column name>)"
+  },
+  {
+    "description": "timeToDate()",
+    "formula": "timeToDate()"
+  },
+  {
+    "description": "timestamp()",
+    "formula": "timestamp()"
+  }
+]

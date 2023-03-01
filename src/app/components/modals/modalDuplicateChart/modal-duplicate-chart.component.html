@@ -1,0 +1,21 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title">Duplicate Chart Name</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span>&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input
+      type="text"
+      class="form-control form-bottomline"
+      placeholder="{{ 'MODULE.DATA_VISUAL.CHART.COMMON.SCN' | translate }}"
+      name="slice_chart_name"
+      [(ngModel)]="slice_chart_name"
+    />
+  </div>
+  <div class="modal-footer">
+    <button id="btn-danger" class="btn btn-neutral btn-simple btn-sm close px-0" (click)="closeModal()">Cancel</button>
+    <button class="btn btn-info btn-outline btn-sm f-12" type="button" (click)="duplicateChart()">Yes</button>
+  </div>
+</div>

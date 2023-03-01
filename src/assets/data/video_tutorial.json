@@ -1,0 +1,91 @@
+{
+    "root":{
+        "url": "https://www.youtube.com/embed/IAGdFILFkR8",
+        "title": "Getting Started with Paques Data Studio"
+    },
+    "child" : [
+        {
+            "id": "d-processing-tutorial",
+            "title": "DATA PROCESSING",
+            "data":[
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                },
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                },
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                },
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                },
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                },
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                }                                                                                                        
+            ]
+        },
+        {
+            "id": "d-vis-chart-tutorial",
+            "title": "DATA VISUALIZATION CHART",
+            "data":[
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                },
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                },
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                },
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                }                    
+            ]
+        },
+        {
+            "id": "d-vis-dashboard-tutorial",
+            "title": "DATA VISUALIZATION DASHBOARD",
+            "data":[
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                },
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                },
+                {
+                    "url":"https://www.youtube.com/watch?v=SoueK3xYfBY",
+                    "title":"Paques Youtube video",
+                    "image":"https://img.youtube.com/vi/SoueK3xYfBY/0.jpg"
+                }                  
+            ]                
+        }                        
+    ]
+}

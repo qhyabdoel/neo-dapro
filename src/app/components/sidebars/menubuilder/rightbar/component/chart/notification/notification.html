@@ -1,0 +1,80 @@
+<div
+  class="panel panel-primary m-0"
+  [ngClass]="['table', 'heatmap', 'dist_bar', 'horizontal_bar', 'gauge', 'big_number_total'].includes(visualType) &&
+  environtment != 'on_cloud'
+    ? ''
+    : 'd-none'
+"
+>
+  <div class="panel-heading" role="tab">
+    <h4 class="panel-title">
+      <a
+        [ngClass]="{ toggled: activeColapse.notification == true }"
+        class="menu-toggle collapsed text-uppercase"
+        role="button"
+        (click)="collapsible('notification')"
+      >
+        <i
+          class="zmdi zmdi-info"
+          [matMenuTriggerFor]="showPopover"
+          #triggerpopover="matMenuTrigger"
+          (mouseover)="triggerpopover.openMenu(); setPopover();"
+          (mouseleave)="triggerpopover.closeMenu(); hidePopover()"
+        ></i
+        >&nbsp; {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.NOTIFICATIONS' | translate }}</a
+      >
+      <mat-menu #showPopover="matMenu" class="tooltips popover pds-popover">
+          <h3 class="popover-header">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.NOTIFICATIONS' | translate }}</h3>
+          <div class="popover-body">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.NOTIFICATIONS_TOOLTIP' | translate }}</div>
+      </mat-menu>
+    </h4>
+  </div>
+  <div [ngClass]="{ show: activeColapse.notification == true }" class="panel-collapse collapse" role="tabpanel">
+    <div
+      class="panel-body"
+      *ngIf="
+      [
+        'heatmap',
+        'dist_bar',
+        'horizontal_bar',
+        'line',
+        'dual_line',
+        'bubble',
+        'predictive',
+        'gauge',
+        'big_number_total',
+        'country_map',
+        'pie',
+        'table',
+        'table_comparison'
+      ].includes(visualType)
+    "
+    >
+      <div class="row clearfix">
+        <div class="col-sm-12 form-control-label">
+          <p class="mb-2">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.SNC' | translate }}</p>
+        </div>
+      </div>
+      <div class="row clearfix">
+        <div class="col-sm-12 form-control-label">
+          <button
+            type="button"
+            [ngClass]="explore?.form_data?.slice_id > 0 && explore?.form_data?.slice_id != undefined ? '' : 'disabled'"
+            (click)="
+            explore?.form_data?.slice_id > 0 && explore?.form_data?.slice_id != undefined
+              ? openTemplate(
+                  ['table'].includes(explore?.form_data.vis_type) || ['table'].includes(visualType)
+                    ? 'formulaModalNotifications'
+                    : 'modalNotifications'
+                )
+              : ''
+          "
+            class="btn btn-info btn-outline btn-sm w-100 m-0"
+          >
+            {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.AN' | translate }} <i class="zmdi zmdi-plus f-12 ml-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

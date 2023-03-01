@@ -1,0 +1,21 @@
+<div>
+  <div class="modal-header">
+    <h5 class="title f-16">{{ functionName }}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="_onClose()" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <ngx-monaco-editor
+          class="template-editor template-editor-agg-for"
+          [options]="editorOptions"
+          [ngModel]="formulaValue"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="_onChange($event)"
+        ></ngx-monaco-editor>
+      </div>
+    </div>
+  </div>
+</div>

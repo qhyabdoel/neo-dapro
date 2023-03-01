@@ -1,0 +1,60 @@
+<!-- Modal Create User -->
+<div class="modal-open">
+  <div class="modal d-block" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" *ngIf="notification">
+          <mat-progress-bar mode="indeterminate" *ngIf="viewLoading"></mat-progress-bar>
+          <h5 class="title f-16">Form Add Recipient</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="notification">
+          <kt-alert
+            *ngIf="hasFormErrors"
+            [type]=""
+            [duration]="30000"
+            [showCloseButton]="true"
+            (close)="onAlertClose($event)"
+          >
+            {{ 'MODULE.NOTIFICATIONS.MSG_ERR' | translate }}
+          </kt-alert>
+
+          <form class="form-horizontal">
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark" for="last_run">{{ 'MODULE.NOTIFICATIONS.RECIPIENT.AEG' | translate }}</label>
+              </div>
+              <div class="col-md-12">
+                <ng-select
+                  [items]="emailList"
+                  [addTag]="addTagFn"
+                  addTagText="Add Value"
+                  [multiple]="true"
+                  [closeOnSelect]="true"
+                  [searchable]="true"
+                  [hideSelected]="true"
+                  bindLabel="val"
+                  bindValue="val"
+                  placeholder="input value"
+                  name="val[]"
+                  [(ngModel)]="emailList"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-neutral btn-simple btn-sm close px-0" type="button" (click)="onNoClick()">
+            {{ 'MODULE.NOTIFICATIONS.C' | translate }}
+          </button>
+          <button class="btn btn-info btn-outline btn-sm f-12" type="button" (click)="onSubmit()">
+            {{ 'MODULE.NOTIFICATIONS.S' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

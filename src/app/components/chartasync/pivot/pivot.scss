@@ -1,0 +1,32 @@
+.table {
+  thead {
+    th,
+    td {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      background: #e6e8ea;
+    }
+  }
+
+  th,
+  td {
+    padding: 5px 10px;
+    border-color: #dfdfdf;
+  }
+
+  &.table-striped {
+    tbody {
+      tr:nth-of-type(even) {
+        background-color: #ffffff;
+      }
+    }
+  }
+
+  // .btn-outline:hover {
+  //     background-color: rgba(255,255,255,0.15) !important;
+  // }
+
+  .btn-info:not(:disabled):not(.disabled):active {
+    border-color: transparent;
+  }
+}

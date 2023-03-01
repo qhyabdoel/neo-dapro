@@ -1,0 +1,347 @@
+<aside id="leftSidebar" class="sidebar">
+  <div class="menu">
+    <!-- Only required for left/right tabs -->
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a [ngClass]="{ 'nav-link': true, active: activeTab === 'tab1' }" (click)="tabOnClick('tab1')">
+            <span>
+              <div class="loader loader--style1" title="0" *ngIf="isLoadingDataset">
+                <svg
+                  version="1.1"
+                  id="loader-1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  x="0px"
+                  y="0px"
+                  width="20px"
+                  height="20px"
+                  viewBox="0 0 40 40"
+                  enable-background="new 0 0 40 40"
+                  xml:space="preserve"
+                >
+                  <path
+                    opacity="0.2"
+                    fill="#000"
+                    d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+								s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+								c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+                  />
+                  <path
+                    fill="#000"
+                    d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+								C22.32,8.481,24.301,9.057,26.013,10.047z"
+                  >
+                    <animateTransform
+                      attributeType="xml"
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 20 20"
+                      to="360 20 20"
+                      dur="0.5s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                </svg>
+              </div>
+              &nbsp;{{ 'MODULE.DATA_VISUAL.CHART.LEFT_BAR.DL' | translate }}
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [ngClass]="{ 'nav-link': true, active: activeTab === 'tab2' }" (click)="tabOnClick('tab2')">
+            <span>
+              <div class="loader loader--style1" title="0" *ngIf="isLoadingCharts">
+                <svg
+                  version="1.1"
+                  id="loader-1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  x="0px"
+                  y="0px"
+                  width="20px"
+                  height="20px"
+                  viewBox="0 0 40 40"
+                  enable-background="new 0 0 40 40"
+                  xml:space="preserve"
+                >
+                  <path
+                    opacity="0.2"
+                    fill="#000"
+                    d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+								s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+								c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+                  />
+                  <path
+                    fill="#000"
+                    d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+								C22.32,8.481,24.301,9.057,26.013,10.047z"
+                  >
+                    <animateTransform
+                      attributeType="xml"
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 20 20"
+                      to="360 20 20"
+                      dur="0.5s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                </svg>
+              </div>
+              &nbsp;{{ 'MODULE.DATA_VISUAL.CHART.LEFT_BAR.CL' | translate }}
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content list">
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'tab1' }" id="tab1">
+          <div class="row clearfix">
+            <div class="col-sm-10 pr-2">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ 'MODULE.DATA_VISUAL.CHART.LEFT_BAR.SD' | translate }}"
+                  [(ngModel)]="searchDatasetText"
+                  [ngModelOptions]="{ standalone: true }"
+                  (keyup)="$event.which == 13 ? searchDataset() : 0"
+                />
+                <div class="input-group-append">
+                  <a href="javascript:void(0)" class="input-group-text p-0 pt-1" (click)="searchDataset()"
+                    ><span class="input-group-addon mx-2"><i class="ti-search f-12"></i></span
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 pl-0">
+              <a
+                href="javascript:void(0)"
+                class="p-1"
+                (click)="loadDataset()"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                [attr.data-original-title]="'MODULE.DATA_VISUAL.CHART.LEFT_BAR.RDL' | translate"
+                ><i class="ti-reload"></i
+              ></a>
+            </div>
+          </div>
+
+          <div
+            class="panel-group mt-1 dv-sc dvc-sc"
+            id="accordion_1"
+            role="tablist"
+            aria-multiselectable="true"
+            *ngIf="!isLoadingDataset"
+          >
+            <div *ngIf="datasetList.length == 0" class="panel panel-primary m-0">
+              <br />
+              <img class="mb-4 mx-auto d-block" src="assets/images/no-data-found.svg" alt="" />
+              <h6 align="center">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.ND' | translate }}</h6>
+            </div>
+            <div class="panel panel-primary m-0" *ngFor="let dataset of datasetList">
+              <div class="panel-heading" role="tab" id="headingQuery1">
+                <h4 class="panel-title align-self-center">
+                  <div class="row clearfix">
+                    <div class="col-md-10 pr-0">
+                      <a role="button" data-toggle="collapse" (dblclick)="loadDatasetTo(dataset)">
+                        <p class="mb-0">
+                          {{ dataset.query }}
+                        </p>
+                        <span class="ml-0">{{ dataset.updated_on | dateformat: 'DD/MM/YYYY hh:mm:ss' }}</span>
+                        <span class="zmdi zmdi-more-vert f-8 mx-1"></span>
+                        <span class="ml-0"> {{ dataset.dataset_alias }}</span>
+                      </a>
+                    </div>
+                    <div class="col-md-1 align-self-center p-0">
+                      <div class="dropdown">
+                        <a
+                          id="listChart_{{ dataset.uid }}"
+                          href="javascript:void(0);"
+                          class="dropdown-toggle pr-2 float-right"
+                          (click)="handleSelectOption('dataset', dataset.uid)"
+                        >
+                          <i class="zmdi zmdi-more-vert d-inline"></i>
+                        </a>
+                        <ul
+                          class="dropdown-menu dropdown-menu-right"
+                          [ngClass]="{ show: selectedTypeOption === 'dataset' && selectedOptionId === dataset.uid }"
+                        >
+                          <li id="listChart{{ dataset.uid }}">
+                            <a href="javascript:void(0);" (click)="loadDatasetTo(dataset)">{{
+                              'MODULE.DATA_VISUAL.CHART.LEFT_BAR.OD' | translate
+                            }}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </h4>
+              </div>
+            </div>
+          </div>
+          <!-- </ng-template> -->
+        </div>
+
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'tab2' }" id="tab2">
+          <div class="row clearfix">
+            <div class="col-sm-10 pr-2 mb-1">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ 'MODULE.DATA_VISUAL.CHART.LEFT_BAR.SCN' | translate }}"
+                  [(ngModel)]="searchChartText"
+                  [ngModelOptions]="{ standalone: true }"
+                  (keyup)="$event.which == 13 ? searchChart() : 0"
+                />
+                <div class="input-group-append">
+                  <a href="javascript:void(0)" class="input-group-text p-0 pt-1" (click)="searchChart()"
+                    ><span class="input-group-addon mx-2"><i class="ti-search f-12"></i></span
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 pl-0">
+              <a
+                href="javascript:void(0)"
+                class="p-1"
+                (click)="loadChart()"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                [attr.data-original-title]="'MODULE.DATA_VISUAL.CHART.LEFT_BAR.RCL' | translate"
+              >
+                <i class="ti-reload"></i
+              ></a>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-10 pr-2">
+              <button
+                id="selectall"
+                type="checkbox"
+                class="btn btn-info btn-outline btn-sm w-100 mb-1 mt-1 ml-0"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                [attr.data-original-title]="'MODULE.DATA_VISUAL.CHART.LEFT_BAR.SA' | translate"
+                (click)="checkUncheckAll()"
+              >
+                {{ 'MODULE.DATA_VISUAL.CHART.LEFT_BAR.SA' | translate }} &nbsp;
+                <i class="zmdi zmdi-check-square f-12 ml-1"></i>
+              </button>
+            </div>
+            <div class="col-sm-2 pl-0 mt-1">
+              <a
+                *ngIf="selectedChartListforDelete.length > 0"
+                href="javascript:void(0)"
+                id="deletebutton"
+                class="p-1"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="{{ 'MODULE.DATA_VISUAL.CHART.LEFT_BAR.D' | translate }}"
+                (click)="multipleDelete()"
+                ><i class="ti-trash"></i
+              ></a>
+            </div>
+          </div>
+          <div
+            class="panel-group mt-1 dv-sc"
+            id="accordion_1"
+            role="tablist"
+            aria-multiselectable="true"
+            *ngIf="!isLoadingCharts"
+          >
+            <div class="panel panel-primary m-0" *ngFor="let chart of chartList">
+              <div class="panel-heading">
+                <h4 class="panel-title align-self-center">
+                  <div class="row clearfix">
+                    <div class="col-md-2 pl-4 align-self-center">
+                      <div class="checkbox simple individual">
+                        <input
+                          id="{{ 'mc-' + chart.id }}"
+                          type="checkbox"
+                          [(ngModel)]="chart.isChecked"
+                          (change)="getCheckedQuery(chart.id, chart.isChecked)"
+                        />
+                        <label for="{{ 'mc-' + chart.id }}"></label>
+                      </div>
+                    </div>
+                    <div class="col-md-8 px-0">
+                      <a
+                        [ngClass]="slice?.slice_id != 'undefined' && slice?.slice_id == chart.id ? 'is-active' : ''"
+                        role="button"
+                        data-toggle="collapse"
+                        href="javascript:void()"
+                        (dblclick)="loadChartTo(chart)"
+                      >
+                        <p class="mb-0">
+                          <span class="zmdi zmdi-chart text-center ml-0 mr-1 align-middle"></span>{{ chart.name }} |
+                          {{ chart.viz_type }}
+                        </p>
+                        <span class="ml-0">{{ chart.changed_on | dateformat: 'DD/MM/YYYY' }}</span
+                        ><br />
+
+                        <span class="ml-0">{{ chart.ds_name }}</span>
+                      </a>
+                    </div>
+                    <div class="col-md-1 align-self-center p-0">
+                      <div class="dropdown">
+                        <a
+                          href="javascript:void(0);"
+                          class="dropdown-toggle pr-2 float-right"
+                          role="button"
+                          (click)="handleSelectOption('chart', chart.id)"
+                        >
+                          <i class="zmdi zmdi-more-vert d-inline"></i>
+                        </a>
+                        <ul
+                          [ngClass]="{ show: selectedTypeOption === 'chart' && selectedOptionId === chart.id }"
+                          class="dropdown-menu dropdown-menu-right"
+                        >
+                          <li>
+                            <a href="javascript:void(0);" (click)="loadChartTo(chart)">{{
+                              'MODULE.DATA_VISUAL.CHART.LEFT_BAR.LC' | translate
+                            }}</a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);" (click)="openModalTemplateCustom(chart)">{{
+                              'MODULE.DATA_VISUAL.CHART.LEFT_BAR.DC' | translate
+                            }}</a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);" (click)="onDelete('chart', chart)">{{
+                              'MODULE.DATA_VISUAL.CHART.LEFT_BAR.D' | translate
+                            }}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </h4>
+              </div>
+            </div>
+
+            <div *ngIf="chartList.length == 0" class="panel panel-primary m-0">
+              <br />
+              <img class="mb-4 mx-auto d-block" src="assets/images/no-data-found.svg" alt="" />
+              <h6 align="center">{{ 'MODULE.DATA_VISUAL.CHART.LEFT_BAR.ND' | translate }}</h6>
+            </div>
+          </div>
+          <!-- </ng-template> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="hide-menu"
+    (click)="addRemoveBodyClass('left_icon_toggle', 'left')"
+    data-toggle="tooltip"
+    data-placement="right"
+    [attr.data-original-title]="'MODULE.DATA_VISUAL.CHART.LEFT_BAR.HIDE' | translate"
+  >
+    <div class="btn-toggle btn-toggle-menu">
+      <a href="javascript:void(0);" class="btn-menu"></a>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,20 @@
+<div class="row clearfix">
+  <div class="col-sm-12 form-control-label" *ngIf="title">
+    <label for="last_run">{{ title | translate }} <font color="red" *ngIf="required">*</font></label>
+  </div>
+  <div class="col-sm-12">
+    <div class="form-group">
+      <div class="form-line">
+        <input
+          class="form-control show-tick ms"
+          [placeholder]="placeholder ||'fill in the fields'"
+          [value]="value"
+          [name]="name"
+          [type]="type"
+          (change)="onChange($event)"
+          [disabled]="disabled"
+        />
+      </div>
+    </div>
+  </div>
+</div>

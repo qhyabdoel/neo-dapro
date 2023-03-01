@@ -1,0 +1,132 @@
+[
+{
+    "user_id": "1",
+    "common": {
+        "flash_messages": [],
+        "language_pack": {},
+        "locale": "en",
+        "conf": {}
+    },
+    "dashboard_data": {
+        "dashboard_title": "Births",
+        "dash_edit_perm": true,
+        "metadata": {},
+        "position_json": [],
+        "id": 2,
+        "slug": "births",
+        "css": null,
+        "standalone_mode": false,
+        "dash_save_perm": true,
+        "slices": [{
+            "form_data": {
+                // "metric": "sum__num",
+                // "filters": [{
+                //     "op": "in",
+                //     "val": ["girl"],
+                //     "col": "gender"
+                // }],
+                // "since": "100 years ago",
+                // "row_limit": 50,
+                // "until": "now",
+                // "where": "",
+                // "datasource": "navxwo4Yexj|view_f441ddb74__table",
+                // "compare_lag": "10",
+                // "limit": "25",
+                // "compare_suffix": "o10Y",
+                // "metrics": ["sum__num"],
+                // "slice_id": 1,
+                // "viz_type": "table",
+                // "granularity": "ds",
+                // "groupby": ["name"],
+                // "markup_type": "markdown",
+                // },
+                // "form_data": {
+                "datasource": "navxwo4Yexj|view_f441ddb74__table",
+                "viz_type": "table",
+                "slice_id": 1,
+                "groupby": [],
+                "metrics": [],
+                "all_columns": ["Manufacture", "Model", "Capacity", "Price"],
+                "order_by_cols": [],
+                "row_limit": 10000,
+                "page_length": 0,
+                "include_search": false,
+                "table_filter": false,
+                "filters": []
+            },
+            "description_markeddown": "",
+            "slice_url": "chart/explore/table/navxwo4Yexj|view_f441ddb74",
+            "slice_id": 1,
+            "edit_url": "chart/explore/table/navxwo4Yexj|view_f441ddb74",
+            "datasource": null,
+            "description": null,
+            "slice_name": "Girls"
+        }, {
+            "form_data": {
+                // "metric": "sum__num",
+                // "filters": [{
+                //     "op": "in",
+                //     "val": ["boy"],
+                //     "col": "gender"
+                // }],
+                // "since": "100 years ago",
+                // "row_limit": 50,
+                // "until": "now",
+                // "where": "",
+                // "datasource": "navxwo4Yexj|view_f441ddb74__table",
+                // "compare_lag": "10",
+                // "limit": "25",
+                // "compare_suffix": "o10Y",
+                // "metrics": ["sum__num"],
+                // "slice_id": 2,
+                // "viz_type": "table",
+                // "granularity": "ds",
+                // "groupby": ["name"],
+                // "markup_type": "markdown",
+                // },
+                // "form_data": {
+                "datasource": "navxwo4Yexj|view_f441ddb74__table",
+                "viz_type": "table",
+                "slice_id": 2,
+                "groupby": ["Manufacture"],
+                "metrics": ["sum__Price"],
+                "all_columns": [],
+                "order_by_cols": [],
+                "row_limit": 10000,
+                "page_length": 0,
+                "include_search": false,
+                "table_filter": false,
+                "filters": []
+            },
+            "description_markeddown": "",
+            "slice_url": "chart/explore/table/navxwo4Yexj|view_f441ddb74",
+            "slice_id": 2,
+            "edit_url": "chart/explore/table/navxwo4Yexj|view_f441ddb74",
+            "datasource": null,
+            "description": null,
+            "slice_name": "Boys"
+        }]
+    },
+    "datasources": {
+        "navxwo4Yexj|view_f441ddb74__table": {
+            "name": "birth_names",
+            "type": "table",
+            "id": 3,
+            "columns": [],
+            "verbose_map": {},
+            "filter_select": false,
+            "order_by_choices": [],
+            "granularity_sqla": [],
+            "database": {},
+            "all_cols": [],
+            "metrics": [],
+            "gb_cols": [],
+            "edit_url": "/tablemodelview/edit/3",
+            "metrics_combo": [],
+            "filterable_cols": [],
+            "column_formats": {},
+            "time_grain_sqla": []
+        }
+    }
+}
+]

@@ -1,0 +1,16 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.CSS' | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ngx-monaco-editor class="template-editor" [options]="editorOptions" [(ngModel)]="css"> </ngx-monaco-editor>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info btn-outline btn-sm m-0" (click)="activeModal.close(css)">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.A' | translate }}
+    </button>
+  </div>
+</div>

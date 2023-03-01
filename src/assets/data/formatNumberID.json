@@ -1,0 +1,14 @@
+{
+    "ID" : {
+        "decimal": ",",
+        "thousands": ".",
+        "grouping": [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "currency": ["Rp", ""]
+    },
+    "EN" : {
+        "decimal": ".",
+        "thousands": ",",
+        "grouping": [3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "currency": ["$", ""]
+    }
+}

@@ -1,0 +1,112 @@
+<section
+  [ngClass]="isSharedPage ? 'content content-full' : 'content'"
+  *ngIf="!['dashboard', 'dashboardview', 'app_preview'].includes(typePage)"
+  [ngStyle]="{ position: isSharedPage ? 'static' : '' }"
+>
+  <div class="row clearfix" id="workspace">
+    <!-- <pq-card-child
+      [formData]="formData"
+      [eventButtonData]="eventButtonData"
+      [hasActivity]="hasActivity"
+      [borderStyle]="borderStyle"
+      [handleEventButton]="handleEventButton"
+      [createChildComponent]="createChildComponent"
+      [title]="title"
+      [chartIndex]="chartIndex"
+    >
+    </pq-card-child> -->
+    <div class="card" style="height: inherit">
+      <div
+        class="header"
+        [ngClass]="{
+          'header-transparent': formData?.hide_title || formData?.hide_background,
+          'd-none': formData?.hide_title
+        }"
+      >
+        <h2 [ngClass]="{ 'd-none': formData?.hide_title }">{{ title }}</h2>
+
+        <!-- loop buttons -->
+        <ul class="header-dropdown" [ngClass]="{ 'd-none': !hasActivity }">
+          <li *ngFor="let item of eventButtonData">
+            <button
+              type="submit"
+              class="btn btn-info btn-outline btn-sm pr-2 my-2"
+              (click)="handleEventButton(item.type)"
+              *ngIf="item.type === 'Apply'"
+            >
+              {{ item.type }}
+              <i [class]="item.icon"></i>
+            </button>
+
+            <a role="button" (click)="handleEventButton(item.type)" *ngIf="item.type !== 'Apply'">
+              <i [class]="item.icon"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="body"
+        [ngClass]="{ 'body-transparent': formData?.hide_background, roundeds: formData?.hide_title }"
+        [ngStyle]="borderStyle"
+      >
+        <!-- inject directive chart -->
+        <ng-template appInject> </ng-template>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <pq-card-child
+  [formData]="formData"
+  [eventButtonData]="eventButtonData"
+  [hasActivity]="hasActivity"
+  [borderStyle]="borderStyle"
+  [handleEventButton]="handleEventButton"
+  [createChildComponent]="createChildComponent"
+  [chartIndex]="chartIndex"
+  [title]="title"
+  *ngIf="['dashboard', 'dashboardview'].includes(typePage)"
+>
+</pq-card-child> -->
+<div style="height: inherit" *ngIf="['dashboard', 'dashboardview', 'app_preview'].includes(typePage)">
+  <ng-template appInject> </ng-template>
+</div>
+<!-- <div class="card" style="height: inherit" *ngIf="['dashboard', 'dashboardview'].includes(typePage)">
+  <div
+    class="header"
+    [ngClass]="{
+      'header-transparent': formData?.hide_title || formData?.hide_background
+    }"
+  >
+    <h2 [ngClass]="{ 'd-none': formData?.hide_title }">{{ title }}</h2>
+
+    <ul class="header-dropdown" [ngClass]="{ 'h-title-bg': formData?.hide_title }">
+      <li *ngFor="let item of eventButtonData">
+        <button
+          type="submit"
+          class="btn btn-info btn-outline btn-sm pr-2 my-2"
+          (click)="handleEventButton(item.type)"
+          *ngIf="item.type === 'Apply' && item.typeChart.includes(typeChart)"
+        >
+          {{ item.type }}
+          <i [class]="item.icon"></i>
+        </button>
+
+        <a
+          role="button"
+          (click)="handleEventButton(item.type)"
+          *ngIf="item.type !== 'Apply' && item.typeChart.includes(typeChart)"
+        >
+          <i [class]="item.icon"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="body"
+    [ngClass]="{ 'body-transparent': formData?.hide_background, roundeds: formData?.hide_title }"
+    [ngStyle]="borderStyle"
+  >
+    <ng-template appInject> </ng-template>
+  </div>
+</div> -->

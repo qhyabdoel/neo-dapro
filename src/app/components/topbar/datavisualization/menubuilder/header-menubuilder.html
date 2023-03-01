@@ -1,0 +1,65 @@
+<ngb-progressbar
+  class="kt-loading-bar"
+  *ngIf="(loader.progress$ | async) > 0"
+  [value]="loader.progress$ | async"
+  height="3px"
+></ngb-progressbar>
+
+<div class="navbar-brand border-0 mt-0" [ngStyle]="isApplication ? { 'padding-left': '1.5em' } : {}">
+  <kt-brand></kt-brand>
+</div>
+
+<kt-menu-horizontal *ngIf="!isApplication "></kt-menu-horizontal>
+
+<div
+  class="input-group col-md-5 pl-5"
+  *ngIf="isApplication &&options?.enable_global_search && isShow_global_search"
+  style="width: 41.66666667%"
+>
+  <input
+    type="text"
+    class="form-control form-bottomline"
+    placeholder="{{ 'HEADER_BAR.GS' | translate }}"
+    [(ngModel)]="searchText"
+    [ngModelOptions]="{ standalone: true }"
+    (keyup)="$event.which == 13 ? search() : 0"
+  />
+  <div class="input-group-append form-bottomline group-bottomline">
+    <a href="javascript:;" class="input-group-text border-0" (click)="search()"
+      ><span class="input-group-addon"><i class="ti-search f-12"></i></span
+    ></a>
+  </div>
+</div>
+
+<div class="collapse navbar-collapse" *ngIf="isApplication" style="justify-content: right">
+  <ul class="navbar-nav ml-md-auto align-items-center mr-1">
+    <li class="nav-item" *ngIf="isApplication &&options?.enable_notification_center">
+      <kt-notification
+        [bgImage]="'./assets/media/misc/bg-1.jpg'"
+        [pulse]="true"
+        [skin]="'dark'"
+        [icon]="'./assets/media/icons/svg/Code/Compiling.svg'"
+        [useSVG]="true"
+      ></kt-notification>
+    </li>
+    <li class="dropdown nav-item" *ngIf="options?.enable_application_setting">
+      <!-- <pq-setting [handleOpen]="handleOpen" [open]="open" [isHideUserManagement]="true"></pq-setting> -->
+      <pq-setting [isHideUserManagement]="true"></pq-setting>
+    </li>
+
+    <li class="dropdown nav-item" *ngIf="options?.enable_information_glossary">
+      <a href="javascript:void(0);" class="nav-link" (click)="openModalTemplate()">
+        <i class="zmdi zmdi-info"></i>
+      </a>
+    </li>
+    <li class="dropdown nav-item">
+      <user-profile [isApplicattion]="isApplication" [redirect]="redirect"></user-profile>
+      <!-- <user-profile
+        [handleOpen]="handleOpen"
+        [open]="open"
+        [isApplicattion]="isApplication"
+        [redirect]="redirect"
+      ></user-profile> -->
+    </li>
+  </ul>
+</div>

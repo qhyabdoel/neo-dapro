@@ -1,0 +1,1444 @@
+{
+  "SEARCH": {
+    "properties": [
+      {
+        "name": "search_type",
+        "displayed": true,
+        "value": null,
+        "label": "Source Type",
+        "placeholder": "",
+        "dataContent": "Digunakan saat ingin memilih jenis sumber data",
+        "type": "select",
+        "valuetype": "string",
+        "dataOptions": [
+          {
+            "value": "CSV",
+            "text": "CSV"
+          },
+          {
+            "value": "FILE",
+            "text": "File"
+          },
+          {
+            "value": "FOLDER",
+            "text": "Folder"
+          }
+        ],
+        "isRequired": true,
+        "isTriggerOnSelect": true,
+        "triggeredPropValues": [
+          {
+            "triggerValue": "CSV",
+            "propValues": {
+              "is_csv": true,
+              "is_folder": false,
+              "include_header": true
+            }
+          },
+          {
+            "triggerValue": "FILE",
+            "propValues": {
+              "is_csv": false,
+              "is_folder": false,
+              "include_header": false
+            }
+          },
+          {
+            "triggerValue": "FOLDER",
+            "propValues": {
+              "is_csv": false,
+              "is_folder": true,
+              "include_header": false
+            }
+          }
+        ]
+      },
+      {
+        "name": "paths",
+        "displayed": true,
+        "label": "File Path",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Digunakan untuk memilih lokasi file",
+        "type": "text",
+        "valuetype": "array-of-string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "search_str",
+        "displayed": true,
+        "label": "Search Keyword(s)",
+        "placeholder": "Keywords to search",
+        "dataContent": "Digunakan untuk memilih nilai pada semua kolom. Apabila memiliki kondisi nilai banyak dapat menggunakan koma.",
+        "type": "text",
+        "valuetype": "single-quoted-words-separated-by-space",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "csv_separator",
+        "displayed": true,
+        "label": "Separator",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk menambahkan karakter yang menjadi pemisah antar kolom",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": ",",
+        "toggledBySelectedValue": "CSV"
+      },
+      {
+        "name": "has_limit",
+        "displayed": true,
+        "label": "Limit",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk membatasi jumlah data yang akan tertampil pada hasil",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "toggledOnCheck": "limit",
+        "reversedToggle": false,
+        "value": false
+      },
+      {
+        "name": "limit",
+        "displayed": true,
+        "label": "Number of Limit",
+        "placeholder": "Limit",
+        "dataContent": "Masukan jumlah data yang akan ditampilkan",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "1",
+        "isOnChange": true,
+        "reversedToggle": false
+      },
+      {
+        "name": "has_offset",
+        "displayed": true,
+        "label": "Offset",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk melewati baris dan menampilkan pada baris tertentu",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "toggledOnCheck": "offset",
+        "reversedToggle": false,
+        "value": false
+      },
+      {
+        "name": "offset",
+        "displayed": true,
+        "label": "Number of Offset",
+        "placeholder": "Offset",
+        "dataContent": "Masukkan angka dari baris yang menjadi baris pertama",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "0",
+        "isOnChange": true,
+        "reversedToggle": false
+      },
+      {
+        "name": "include_header",
+        "displayed": true,
+        "label": "First Row as Header",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk membuar baris pertama menjadi Heder Data",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "toggledOnCheck": "csv_columns",
+        "reversedToggle": true,
+        "value": false,
+        "toggledBySelectedValue": "CSV"
+      },
+      {
+        "name": "csv_columns",
+        "displayed": true,
+        "label": "Column(s) Name",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur nama alias sebuah kolom pada table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "",
+        "isOnChange": true,
+        "reversedToggle": true,
+        "toggledBySelectedValue": "CSV"
+      },
+      {
+        "name": "label",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      },
+      {
+        "name": "is_csv",
+        "displayed": false,
+        "label": "",
+        "placeholder": "",
+        "dataContent": "",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": false
+      },
+      {
+        "name": "is_folder",
+        "displayed": false,
+        "label": "",
+        "placeholder": "",
+        "dataContent": "",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": false
+      }
+    ]
+  },
+  "EXTRACT": {
+    "properties": [
+      {
+        "name": "extract_type",
+        "displayed": true,
+        "value": null,
+        "label": "Extract Type",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk memilih tipe ektraksi",
+        "type": "select",
+        "valuetype": "string",
+        "dataOptions": [
+          {
+            "value": "SPLIT",
+            "text": "Split"
+          },
+          {
+            "value": "JSON",
+            "text": "JSON"
+          },
+          {
+            "value": "REX",
+            "text": "Regular Expression"
+          },
+          {
+            "value": "KV",
+            "text": "Key Value Pairs"
+          },
+          {
+            "value": "FORMULA",
+            "text": "Formula"
+          }
+        ],
+        "isRequired": true,
+        "isTriggerOnSelect": true,
+        "subKeyPrefix": "extract"
+      },
+      {
+        "name": "col_target",
+        "displayed": true,
+        "value": null,
+        "label": "Column",
+        "placeholder": "",
+        "dataContent": "Sisipkan kolom tertentu",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "SPLIT|JSON|KV|REX"
+      },
+      {
+        "name": "columns",
+        "displayed": true,
+        "value": null,
+        "label": "Alias Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Use when you want set alias name on destination table",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "REX"
+      },
+      {
+        "name": "pattern",
+        "displayed": true,
+        "value": null,
+        "label": "Regex Pattern",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur pola regex yang ingin diimplementasi",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "REX"
+      },
+      {
+        "name": "field_delimiter",
+        "displayed": true,
+        "value": null,
+        "label": "Column Separator",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur pemisah antar kolom",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "KV"
+      },
+      {
+        "name": "kv_delimiter",
+        "displayed": true,
+        "value": null,
+        "label": "Key Value Separator",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur pemisah antar key value",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "KV"
+      },
+      {
+        "name": "formulas",
+        "displayed": true,
+        "value": null,
+        "label": "Formula",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur fungsi formula",
+        "type": "formula",
+        "valuetype": "array-of-string",
+        "dataOptions": ["formula", "description"],
+        "isRequired": true,
+        "toggledBySelectedValue": "FORMULA",
+        "jsonFile": "formula"
+      },
+      {
+        "name": "delimiter",
+        "displayed": true,
+        "value": ",",
+        "label": "Separator",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk menambahkan karakter yang menjadi pemisah antar kolom",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "SPLIT"
+      },
+      {
+        "name": "aliases",
+        "displayed": true,
+        "value": null,
+        "label": "Alias Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Digunakan untuk memberi nama kolom pada table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "isRequired": true,
+        "toggledBySelectedValue": "SPLIT"
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "AGGREGATE": {
+    "properties": [
+      {
+        "name": "functions",
+        "displayed": true,
+        "label": "Formula",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Digunakan untuk mengatur fungsi formula",
+        "type": "formula",
+        "valuetype": "square-bracket-value",
+        "dataOptions": ["formula", "description"],
+        "isRequired": true,
+        "value": null,
+        "jsonFile": "aggregate"
+      },
+      {
+        "name": "aliases",
+        "displayed": true,
+        "label": "Kolom alias",
+        "placeholder": "Isian nilai dengan dipisahkan koma",
+        "dataContent": "Digunakan untuk memberi nama kolom pada table tujuan",
+        "type": "text",
+        "valuetype": "square-bracket-value",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "groups",
+        "displayed": true,
+        "label": "Group By",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Digunakan untuk mengelompokan antar kolom pada suatu table",
+        "type": "text",
+        "valuetype": "array-of-string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "CONFIG": {
+    "properties": [
+      {
+        "name": "type",
+        "displayed": true,
+        "value": null,
+        "label": "Source Type",
+        "placeholder": "",
+        "dataContent": "Digunakan ketika ingin mengubah tipe sumber data",
+        "type": "select",
+        "valuetype": "string",
+        "dataOptions": [
+          {
+            "value": "CSV",
+            "text": "CSV"
+          },
+          {
+            "value": "GZ",
+            "text": "GZ"
+          }
+        ],
+        "isRequired": true
+      },
+      {
+        "name": "path",
+        "displayed": true,
+        "label": "File Path",
+        "placeholder": "File Path",
+        "dataContent": "Digunakan untuk memilih lokasi file. Contoh : /data/Result.csv",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "separator",
+        "displayed": true,
+        "value": null,
+        "label": "Separator",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk menambahkan karakter yang menjadi pemisah antar kolom",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      },
+      {
+        "name": "columns",
+        "displayed": true,
+        "value": null,
+        "label": "Alias Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Digunakan untuk memberi nama kolom pada table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "minLength": null
+      },
+      {
+        "name": "head_pos",
+        "displayed": true,
+        "label": "Header Position",
+        "placeholder": "Define Header Position",
+        "dataContent": "Digunakan untuk mengatur urutan baris sebuah header",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": 0
+      },
+      {
+        "name": "trim",
+        "displayed": true,
+        "label": "Trimspace",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk melakukan pemotongan spasi pada nilai",
+        "type": "checkbox",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": false
+      },
+      {
+        "name": "validate",
+        "displayed": true,
+        "label": "Validate",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk memvalidasi semua karakter pada seluruh nilai",
+        "type": "checkbox",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": false
+      }
+    ]
+  },
+  "COPY": {
+    "properties": [
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "CORRELATEREF": {
+    "properties": [
+      {
+        "name": "src",
+        "displayed": true,
+        "label": "Source",
+        "isValueObject": true,
+        "value": [
+          {
+            "name": "table",
+            "displayed": true,
+            "value": null,
+            "label": "Source Table",
+            "placeholder": "",
+            "dataContent": "Digunakan ketika ingin mengatur table sebagai sumber untuk menggabungkan antar table",
+            "type": "text",
+            "valuetype": "string",
+            "dataOptions": [],
+            "isRequired": true,
+            "minLength": null
+          },
+          {
+            "name": "cols",
+            "displayed": true,
+            "value": null,
+            "label": "Source Columns",
+            "placeholder": "",
+            "dataContent": "Digunakan ketika ingin mengatur sebuah kolom dari tabel sumber sebagai kunci primer",
+            "type": "text",
+            "valuetype": "string",
+            "dataOptions": [],
+            "isRequired": true,
+            "minLength": null
+          }
+        ]
+      },
+      {
+        "name": "ref",
+        "displayed": true,
+        "label": "Reference",
+        "isValueObject": true,
+        "value": [
+          {
+            "name": "table",
+            "displayed": true,
+            "value": null,
+            "label": "Reference Table",
+            "placeholder": "",
+            "dataContent": "Digunakan ketika ingin mengatur table sebagai referensi untuk menggabungkan antar table",
+            "type": "text",
+            "valuetype": "string",
+            "dataOptions": [],
+            "isRequired": true,
+            "minLength": null
+          },
+          {
+            "name": "cols",
+            "displayed": true,
+            "value": null,
+            "label": "Reference Column",
+            "placeholder": "",
+            "dataContent": "Digunakan ketika ingin mengatur sebuah kolom dari tabel referensi sebagai kunci tamu",
+            "type": "text",
+            "valuetype": "string",
+            "dataOptions": [],
+            "isRequired": true,
+            "minLength": null
+          }
+        ]
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "CREATEINDEX": {
+    "properties": [
+      {
+        "name": "cols",
+        "displayed": true,
+        "value": null,
+        "label": "Select Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Digunakan untuk memilih beberapa kolom pada sumber data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      },
+      {
+        "name": "path",
+        "displayed": true,
+        "label": "File Path",
+        "placeholder": "File Path",
+        "dataContent": "Insert file path location",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null,
+        "toggledBySelectedValue": "CSV"
+      }
+    ]
+  },
+  "DEDUP": {
+    "properties": [
+      {
+        "name": "by",
+        "displayed": true,
+        "label": "Select Column",
+        "placeholder": "Select Column",
+        "dataContent": "Digunakan untuk memilih beberapa kolom pada sumber data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "DROP": {
+    "properties": [
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      }
+    ]
+  },
+  "EXPLODE": {
+    "properties": [
+      {
+        "name": "distinct",
+        "displayed": true,
+        "label": "Distinct",
+        "placeholder": "",
+        "tooltip": "Distinct",
+        "dataContent": "Digunakan untuk mendapatkan nilai dengan nilai yang unik tanpa duplikasi",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "column",
+        "displayed": true,
+        "label": "Alias Column",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk memberi nama kolom pada table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "delimiter",
+        "displayed": true,
+        "label": "Separator",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk menambahkan karakter yang menjadi pemisah antar kolom",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "sort",
+        "displayed": true,
+        "label": "Sort",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk menyortir kolom",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "label": "From Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "value": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      }
+    ]
+  },
+  "FILTER": {
+    "properties": [
+      {
+        "name": "condition",
+        "displayed": true,
+        "label": "Formula",
+        "placeholder": "Formula",
+        "dataContent": "Digunakan untuk mengatur fungsi formula",
+        "type": "textarea",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "IMPLODE": {
+    "properties": [
+      {
+        "name": "target_col",
+        "displayed": true,
+        "label": "Select Column",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk memilih beberapa kolom pada sumber data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "by",
+        "displayed": true,
+        "label": "Group by",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengelompokan antar kolom pada suatu table",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "as",
+        "displayed": true,
+        "label": "Alias Column",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur nama alias sebuah kolom pada table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "label": "From Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "value": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "label": "Into Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      }
+    ]
+  },
+  "LIMIT": {
+    "properties": [
+      {
+        "name": "limit",
+        "displayed": true,
+        "label": "Limit",
+        "placeholder": "Limit",
+        "dataContent": "Digunakan untuk membatasi jumlah data yang akan tertampil pada hasil",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": "1"
+      },
+      {
+        "name": "has_offset",
+        "displayed": true,
+        "label": "Offset",
+        "placeholder": "",
+        "tooltip": "Has Offset?",
+        "dataContent": "Digunakan untuk melewati baris dan menampilkan pada baris tertentu",
+        "type": "checkbox",
+        "valuetype": "boolean",
+        "dataOptions": [],
+        "isRequired": false,
+        "toggledOnCheck": "offset",
+        "reversedToggle": false,
+        "value": false
+      },
+      {
+        "name": "offset",
+        "displayed": true,
+        "label": "Number of Offset",
+        "placeholder": "Number of Offset",
+        "dataContent": "Masukkan angka dari baris yang menjadi baris pertama",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "0",
+        "isOnChange": true,
+        "reversedToggle": false
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "MERGE": {
+    "properties": [
+      {
+        "name": "froms",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "SELECTDB": {
+    "properties": [
+      {
+        "name": "connection",
+        "displayed": true,
+        "label": "Connection Name",
+        "placeholder": "Connection Name",
+        "dataContent": "Digunakan untuk memilih nama koneksi database yang ingin digunakan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "select_db_clause_a",
+        "displayed": true,
+        "label": "Select Table",
+        "placeholder": "Select Table",
+        "dataContent": "Digunakan untuk memilih nama table pada database yang digunakan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "select_db_clause_b",
+        "displayed": true,
+        "label": "Select Column",
+        "placeholder": "Select Column",
+        "dataContent": "Digunakan untuk memilih beberapa kolom pada sumber data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "SELECT": {
+    "properties": [
+      {
+        "name": "from_type",
+        "displayed": true,
+        "value": null,
+        "label": "Source Type",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk memilih beberapa kolom pada sumber data",
+        "type": "select",
+        "valuetype": "string",
+        "hasPreSelectedValue": true,
+        "dataOptions": [
+          {
+            "value": "FILE",
+            "text": "File",
+            "preSelected": true
+          },
+          {
+            "value": "CSV",
+            "text": "CSV"
+          },
+          {
+            "value": "TABLE",
+            "text": "Table"
+          },
+          {
+            "value": "GZ",
+            "text": "GZ"
+          }
+        ],
+        "isRequired": true,
+        "isTriggerOnSelect": true,
+        "subKeyPrefix": "from"
+      },
+      {
+        "name": "path",
+        "displayed": true,
+        "label": "File Path",
+        "placeholder": "File Path",
+        "dataContent": "Digunakan untuk memilih lokasi filE. Contoh : /data/Result.csv",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null,
+        "toggledBySelectedValue": "FILE|CSV|GZ"
+      },
+      {
+        "name": "tables",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Use for set source table name",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null,
+        "toggledBySelectedValue": "TABLE"
+      },
+      {
+        "name": "selectors",
+        "displayed": true,
+        "label": "Select Column",
+        "placeholder": "Select Column",
+        "dataContent": "Digunakan ketika ingin mengubah tipe sumber data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": "*"
+      },
+      {
+        "name": "where",
+        "displayed": true,
+        "label": "Condition Statement",
+        "placeholder": "Condition Statement",
+        "dataContent": "Digunakan untuk menyaring table menggunakan kondisi suatu nilai pada kolom tertentu",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "alias",
+        "displayed": true,
+        "label": "Alias Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Digunakan untuk memberi nama kolom pada table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": "",
+        "toggledBySelectedValue": "FILE|CSV|TABLE|GZ"
+      },
+      {
+        "name": "order_by",
+        "displayed": true,
+        "label": "Order By",
+        "placeholder": "Order By",
+        "dataContent": "Digunakan untuk menyortir urutan suatu table berdasarkan kolom tertentu",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "has_limit",
+        "displayed": true,
+        "label": "Limit",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk membatasi jumlah data yang akan tertampil pada hasil",
+        "type": "checkbox",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "toggledOnCheck": "limit",
+        "reversedToggle": false,
+        "value": false
+      },
+      {
+        "name": "limit",
+        "displayed": true,
+        "label": "Number of Limit",
+        "placeholder": "Number of Limit",
+        "dataContent": "Masukan jumlah data yang akan ditampilkan",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "1",
+        "isOnChange": true,
+        "reversedToggle": false
+      },
+      {
+        "name": "has_offset",
+        "displayed": true,
+        "label": "Offset",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk melewati baris dan menampilkan pada baris tertentu",
+        "type": "checkbox",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "toggledOnCheck": "offset",
+        "reversedToggle": false,
+        "value": false
+      },
+      {
+        "name": "offset",
+        "displayed": true,
+        "label": "Number of Offset",
+        "placeholder": "Number of Offset",
+        "dataContent": "Masukkan angka dari baris yang menjadi baris pertama",
+        "type": "number",
+        "valuetype": "number",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": "0",
+        "isOnChange": true,
+        "reversedToggle": false
+      },
+      {
+        "name": "group_by",
+        "displayed": true,
+        "label": "Group By",
+        "placeholder": "Group By",
+        "dataContent": "Digunakan untuk mengelompokan antar kolom pada suatu table",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "SORT": {
+    "properties": [
+      {
+        "name": "order_by",
+        "displayed": true,
+        "label": "Order By",
+        "placeholder": "Order By",
+        "dataContent": "Digunakan untuk menyortir urutan suatu table berdasarkan kolom tertentu",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "STORE": {
+    "properties": [
+      {
+        "name": "sink_type",
+        "displayed": true,
+        "value": null,
+        "label": "Source Type",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk mengatur destinasi lokasi dari hasil command",
+        "type": "select",
+        "valuetype": "string",
+        "dataOptions": [
+          {
+            "value": "FILE",
+            "text": "File"
+          },
+          {
+            "value": "DB",
+            "text": "DB"
+          }
+        ],
+        "isRequired": false,
+        "minLength": null
+      },
+      {
+        "name": "connection_name",
+        "displayed": true,
+        "label": "Connection Name",
+        "placeholder": "Connection Name",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": false,
+        "value": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "",
+        "dataContent": "Digunakan untuk memilih nama koneksi database yang ingin digunakan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into File Path",
+        "placeholder": "",
+        "dataContent": "Digunakan ketika ingin mengubah tipe sumber data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  },
+  "VIEW": {
+    "properties": [
+      {
+        "name": "columns",
+        "displayed": true,
+        "value": null,
+        "label": "Select Column",
+        "placeholder": "Separate value with comma",
+        "dataContent": "Digunakan untuk memilih beberapa kolom pada sumber data",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      },
+      {
+        "name": "from",
+        "displayed": true,
+        "value": null,
+        "label": "From Table",
+        "placeholder": "From Table",
+        "dataContent": "Digunakan untuk memilih nama dari sumber table yang ingin dihubungkan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "readOnly": true,
+        "minLength": null
+      },
+      {
+        "name": "into",
+        "displayed": true,
+        "value": null,
+        "label": "Into Table",
+        "placeholder": "Into Table",
+        "dataContent": "Digunakan untuk mengatur nama dari table tujuan",
+        "type": "text",
+        "valuetype": "string",
+        "dataOptions": [],
+        "isRequired": true,
+        "minLength": null
+      }
+    ]
+  }
+}

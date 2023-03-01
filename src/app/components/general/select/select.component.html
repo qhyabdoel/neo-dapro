@@ -1,0 +1,67 @@
+<div class="form-control-label">
+  <label>{{ title | translate }} <font color="red" *ngIf="required">*</font></label>
+</div>
+<div class="form-group">
+  <div class="form-line">
+    <select
+      *ngIf="type === 'select'"
+      class="form-control show-tick ms select2"
+      [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+      [(ngModel)]="selectedValue"
+      (change)="onChange($event)"
+      [ngClass]="required && selectedValue == '' ? 'require-error is-invalid' : ''"
+      [name]="name"
+    >
+      <option *ngIf="defaultValue" [value]="''">{{ defaultValue | translate }}</option>
+      <option *ngFor="let row of options | keyvalue: originalOrder" [value]="row.value[0]">
+        {{ row.value[1] }}
+      </option>
+    </select>
+    <select
+      *ngIf="type === 'select_specific_object'"
+      class="form-control show-tick ms select2"
+      [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+      [(ngModel)]="selectedValue"
+      (change)="onChange($event)"
+      [ngClass]="required && selectedValue == '' ? 'require-error is-invalid' : ''"
+      [name]="name"
+    >
+      <option *ngIf="defaultValue" [value]="''">{{ defaultValue | translate }}</option>
+      <option *ngFor="let row of options" [value]="row[value]">
+        {{ row[label] }}
+      </option>
+    </select>
+    <ng-select
+      *ngIf="type === 'ng-select'"
+      class="text-light"
+      [items]="options"
+      [multiple]="multiple"
+      [closeOnSelect]="true"
+      [searchable]="true"
+      [hideSelected]="true"
+      [bindLabel]="bindLabel"
+      [bindValue]="bindValue"
+      placeholder="{{ placeholder | translate }}"
+      [name]="name"
+      [(ngModel)]="selectedValue"
+      [ngClass]="selectedValue == '' ? 'require-error is-invalid' : ''"
+      required
+      (add)="remappingColorpicker('', 'exploreJson')"
+      (clear)="remappingColorpicker('', 'exploreJson')"
+      (remove)="remappingColorpicker('', 'exploreJson')"
+      (change)="onChange($event)"
+    >
+      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of items | slice: 0:4">
+          <span class="ng-value-label"> {{ item[bindLabel] }}</span>
+          <span class="ng-value-icon right" (click)="clear(item)">×</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > 4">
+          <span class="ng-value-label"
+            >{{ items.length - 2 }} {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.M' | translate }}</span
+          >
+        </div>
+      </ng-template>
+    </ng-select>
+  </div>
+</div>

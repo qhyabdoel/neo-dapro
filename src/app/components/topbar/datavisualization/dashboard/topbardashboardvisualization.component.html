@@ -1,0 +1,96 @@
+<div class="row py-1 sub-top-nav">
+  <div class="col-12 col-md-5">
+    <div class="row">
+      <div class="col-5 col-lg-6 pr-0">
+        <div class="form-group mb-0">
+          <input
+            type="text"
+            class="form-control form-bottomline mt-1"
+            placeholder="{{ 'MODULE.DATA_VISUAL.DASHBOARD.TOP_BAR.BTN_DEFAULT' | translate }}"
+            [(ngModel)]="dashboardTitle"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="col-auto pr-0">
+        <button
+          class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+          mat-raised-button
+          matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.TOP_BAR.BTN_SAVE' | translate }}"
+          (click)="buttonSave()"
+        >
+          <i class="ti-save"></i>
+        </button>
+        <button
+          class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini"
+          mat-raised-button
+          matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.TOP_BAR.BTN_NEW' | translate }}"
+          (click)="buttonNew()"
+        >
+          <i class="ti-file"></i>
+        </button>
+        <button
+          class="btn btn-info btn-outline btn-sm"
+          mat-raised-button
+          matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.TOP_BAR.FP' | translate }}"
+          (click)="handlePreview()"
+        >
+          {{ 'MODULE.DATA_VISUAL.DASHBOARD.TOP_BAR.FP' | translate }} <i class="zmdi zmdi-desktop-windows ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-auto px-0 align-self-center">
+    <ul class="nav nav-tabs nav-tabs-success" role="tablist">
+      <li class="nav-item">
+        <a
+          class="nav-link mb-0 px-3"
+          data-toggle="tab"
+          href="javascript:void()"
+          [routerLink]="['../listdatavisualization']"
+        >
+          <i class="zmdi zmdi-chart"></i>
+          {{ 'MODULE.DATA_VISUAL.CHART.LIST.subTopbarOptions.title' | translate | uppercase }}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link mb-0 px-3 active"
+          data-toggle="tab"
+          href="javascript:void()"
+          [routerLink]="['../dashboardvisualization']"
+          ><i class="zmdi zmdi-view-dashboard"></i>
+          {{ 'MODULE.DATA_VISUAL.DASHBOARD.LIST.subTopbarOptions.title' | translate | uppercase }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-auto ml-auto">
+    <button
+      [ngClass]="
+        paramEdit?.id
+          ? 'btn btn-info btn-outline btn-sm py-0 px-2'
+          : 'btn btn-info btn-outline btn-sm py-0 px-2 disabled'
+      "
+      mat-raised-button
+      matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.TOP_BAR.BTN_SHARE' | translate }}"
+      (click)="handleShareUrl()"
+    >
+      {{ 'MODULE.DATA_VISUAL.DASHBOARD.TOP_BAR.BTN_SHARE' | translate }}
+      <i class="zmdi zmdi-link f-12 ml-1"></i>
+    </button>
+    <button
+      [ngClass]="
+        paramEdit?.id
+          ? 'btn btn-info btn-outline btn-sm py-0 px-2'
+          : 'btn btn-info btn-outline btn-sm py-0 px-2 disabled'
+      "
+      mat-raised-button
+      matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.TOP_BAR.BTN_SYNC' | translate }}"
+      (click)="handlePreview()"
+    >
+      {{ 'MODULE.DATA_VISUAL.DASHBOARD.TOP_BAR.BTN_SYNC' | translate }}
+      <i class="zmdi zmdi-swap f-12 ml-1"></i>
+    </button>
+  </div>
+</div>

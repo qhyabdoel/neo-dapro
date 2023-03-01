@@ -1,0 +1,77 @@
+{
+  "status": "success",
+  "code": 200,
+  "response": [
+    {
+      "name": "albert1",
+      "modified": "2020-11-18T22:29:55+07:00",
+      "isDir": true,
+      "path": "√://albert1",
+      "ext": "",
+      "id": "4oiaOi9EU1NfVEVTVA==",
+      "key": 5,
+      "hasCaret": true,
+      "icon": "folder-close",
+      "label": "albert1",
+      "secondaryLabel": "",
+      "searchMode": false
+    },
+    {
+      "name": "albert2",
+      "modified": "2020-11-18T22:29:55+07:00",
+      "isDir": true,
+      "path": "√://albert2",
+      "ext": "",
+      "id": "4oiaOi9EU1NfVEVTVA==",
+      "key": 5,
+      "hasCaret": true,
+      "icon": "folder-close",
+      "label": "albert2",
+      "secondaryLabel": "",
+      "searchMode": false
+    },
+    {
+      "name": "albert3",
+      "modified": "2020-11-18T22:29:55+07:00",
+      "isDir": true,
+      "path": "√://albert3",
+      "ext": "",
+      "id": "4oiaOi9EU1NfVEVTVA==",
+      "key": 5,
+      "hasCaret": true,
+      "icon": "folder-close",
+      "label": "albert3",
+      "secondaryLabel": "",
+      "searchMode": false
+    },
+    {
+      "name": "Book2.csv",
+      "modified": "2022-03-27T17:45:54.886762837+07:00",
+      "isDir": false,
+      "path": "√://Book2.csv",
+      "ext": ".csv",
+      "id": "4oiaOi8vXzFCcGsvQm9vazIuY3N2",
+      "key": 0,
+      "hasCaret": false,
+      "icon": "document",
+      "label": "Book2.csv",
+      "secondaryLabel": "2.1 kB",
+      "searchMode": false
+    },
+    {
+      "name": "FCR_010_New__2_.csv",
+      "modified": "2022-05-20T10:34:12.717760256+07:00",
+      "isDir": false,
+      "path": "√://FCR_010_New__2_.csv",
+      "ext": ".csv",
+      "id": "4oiaOi8vXzFCcGsvRkNSXzAxMF9OZXdfXzJfLmNzdg==",
+      "key": 1,
+      "hasCaret": false,
+      "icon": "document",
+      "label": "FCR_010_New__2_.csv",
+      "secondaryLabel": "5.7 MB",
+      "searchMode": false
+    }
+  ],
+  "message": null
+}

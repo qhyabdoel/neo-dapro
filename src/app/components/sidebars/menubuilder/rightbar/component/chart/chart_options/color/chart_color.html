@@ -1,0 +1,241 @@
+<div class="collapse-group">
+  <div
+    class="collapse-panel"
+    *ngIf="
+  [
+    'dist_bar',
+    'horizontal_bar',
+    'line',
+    'dual_line',
+    'pie',
+    'treemap',
+    'directed_force',
+    'bubble',
+    'country_map',
+    'country_map2',
+    'map',
+    'box_plot',
+    'big_number_total',
+    'histogram',
+    'sunburst',
+    'word_cloud',
+    'table'
+  ].includes(visualType)
+"
+  >
+    <input
+      class="collapse-check"
+      type="checkbox"
+      id="chck1"
+      [ngClass]="{ checked: activeColapse.chartColorGroup == true }"
+    />
+    <label class="collapse-label" (click)="collapsible('chartColorGroup')"
+      >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CC' | translate }}</label
+    >
+    <div class="collapse" [ngClass]="{ show: activeColapse.chartColorGroup == true }">
+      <div
+        class="row clearfix"
+        *ngIf="
+     
+      [
+        'dist_bar',
+        'horizontal_bar',
+        'line',
+        'dual_line',
+        'pie',
+        'treemap',
+        'directed_force',
+        'bubble',
+        'country_map',
+        'box_plot'
+      ].includes(visualType)
+    "
+      >
+        <div class="form-group">
+          <mat-radio-group
+            aria-labelledby="radio-group-label"
+            class="radio-group-choose-colorpicker radio-group mt-0 mb-0"
+            name="choose_pallete"
+            [(ngModel)]="form_data.choose_pallete"
+            required
+          >
+            <mat-radio-button class="radio-button" value="default_pallete">
+              {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.DP' | translate }}
+            </mat-radio-button>
+            <!-- <mat-radio-button
+              *ngIf="form_data.viz_type != 'directed_force'"
+              class="radio-button"
+              value="custom_pallete"
+            >
+              {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CUST_COLOR' | translate }}
+            </mat-radio-button>
+            <mat-radio-button
+              *ngIf="form_data.viz_type == 'directed_force' && form_data?.group != undefined"
+              class="radio-button"
+              value="custom_pallete"
+            >
+              {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CUST_COLOR' | translate }}
+            </mat-radio-button> -->
+          </mat-radio-group>
+        </div>
+      </div>
+      <!-- set color picker every entity  -->
+      <div
+        *ngIf="
+      form_data?.choose_pallete == 'custom_pallete' &&
+      (
+        [
+          'dist_bar',
+          'horizontal_bar',
+          'line',
+          'dual_line',
+          'pie',
+          'treemap',
+          'directed_force',
+          'bubble',
+          'country_map',
+          'box_plot'
+        ].includes(visualType))
+    "
+      >
+        <div class="row clearfix mb-3">
+          <div class="col-md-12">
+            <button
+              type="button"
+              class="btn btn-info btn-outline btn-sm w-100 m-0"
+              [ngClass]="!id ? 'disabled' : ''"
+              (click)="id? openModal('modalColorPicker'): openModal('custom_color')"
+            >
+              {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.ACC' | translate }}
+              <i class="zmdi zmdi-format-color-fill f-12 ml-1"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row clearfix mb-3"
+        *ngIf="
+      ['big_number_total', 'histogram'].includes(form_data.viz_type) &&
+      ['big_number_total', 'histogram'].includes(visualType)
+    "
+      >
+        <div class="col-md-12">
+          <button
+            type="button"
+            class="btn btn-info btn-outline btn-sm w-100 m-0"
+            [ngClass]="!id ? 'disabled' : ''"
+            (click)="
+        id
+            ? openModal('modalColorPicker')
+            : openModal('custom_color')
+        "
+          >
+            {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.ACC' | translate }}
+            <i class="zmdi zmdi-format-color-fill f-12 ml-1"></i>
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="form-horizontal"
+        *ngIf="
+      [
+        'dist_bar',
+        'horizontal_bar',
+        'line',
+        'dual_line',
+        'pie',
+        'treemap',
+        'sunburst',
+        'directed_force',
+        'bubble',
+        'country_map',
+        'country_map2',
+        'map',
+        'word_cloud',
+        'box_plot'
+      ].includes(form_data.viz_type) ||
+      [
+        'dist_bar',
+        'horizontal_bar',
+        'line',
+        'dual_line',
+        'pie',
+        'treemap',
+        'sunburst',
+        'directed_force',
+        'bubble',
+        'country_map',
+        'country_map2',
+        'map',
+        'word_cloud',
+        'box_plot'
+      ].includes(visualType)
+    "
+      >
+        <div class="row clearfix" *ngIf="form_data?.choose_pallete == 'default_pallete'">
+          <div class="col-md-12 form-group">
+            <div class="btn-group w-100">
+              <button
+                type="button"
+                class="btn btn-primary btn-block dropdown-toggle btn-color-palette"
+                data-toggle="dropdown"
+                style="width: 100%"
+                (click)="handleOpenDropdownColor()"
+              >
+                <span
+                  *ngFor="let item of colorScheme[index]"
+                  style="display: inline-block; width: 9px; height: 9px; margin-right: 3px"
+                  [ngStyle]="{
+                'background-color': item
+              }"
+                  >&nbsp;</span
+                >
+              </button>
+              <div
+                [ngClass]="{
+              'dropdown-menu': true,
+              show: openDropdownColor
+            }"
+                style="top: 100%; width: 100%"
+              >
+                <a
+                  *ngFor="let pal of colorScheme; index as j"
+                  class="dropdown-item"
+                  href="javascript:;"
+                  (click)="chooseColor('palette' + (j + 1), j)"
+                >
+                  <span
+                    *ngFor="let item of pal"
+                    style="display: inline-block; width: 9px; height: 9px; margin-right: 3px"
+                    [ngStyle]="{
+                  'background-color': item
+                }"
+                    >&nbsp;</span
+                  >
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row clearfix mt-2" *ngIf="form_data?.choose_pallete == 'default_pallete'">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div class="form-line">
+                <div class="checkbox">
+                  <input [(ngModel)]="form_data.random_color" name="random_color" id="random_color" type="checkbox" />
+                  <label for="random_color">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.RC' | translate }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div *ngIf="['table'].includes(visualType)">
+        <button class="btn btn-info btn-outline btn-sm w-100 m-0 mb-3" (click)="openModal('custom_field_color')">
+          Add Custom Field Color <i class="zmdi zmdi-plus ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

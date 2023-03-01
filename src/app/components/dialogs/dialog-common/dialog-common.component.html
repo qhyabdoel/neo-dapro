@@ -1,0 +1,14 @@
+<div class="dialog-common">
+  <div class="dialog-common-wrapper">
+    <h1 mat-dialog-title>{{ dialogData.title | translate }}</h1>
+    <div mat-dialog-content>{{ dialogData.description | translate }}</div>
+    <div mat-dialog-actions>
+      <button *ngIf="dialogData.needCancel" mat-button cdkFocusInitial (click)="btnCancel()">
+        {{ 'MODULE.DATA_PROCESSING.COMMON.CAN' | translate }}
+      </button>
+      <button mat-button (click)="btnOk()">
+        {{ 'MODULE.DATA_PROCESSING.COMMON.OK' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

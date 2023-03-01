@@ -1,0 +1,87 @@
+<div>
+  <div class="layer">
+    <div [ngClass]="isApplication ? 'content authentication' : 'content authentication signin-bgimg'">
+      <div [ngClass]="isApplication ? 'container mt-5' : 'container h-100'">
+        <div class="row mb-5 mt-5">
+          <!-- start application builder -->
+          <div
+            class="col-lg-8 col-sm-12 mt-5"
+            *ngIf="isApplication && application && application.options.login_style == 'CONST_LOGIN_STYLE_3'"
+          >
+            <div class="signin-title">
+              <h5 class="welcome">Welcome to</h5>
+              <img
+                *ngIf="isApplication"
+                [attr.src]="application.options.logo_login || '/assets/images/pq-logo-w.svg'"
+                width="125px"
+                alt="Logo Company"
+              />
+            </div>
+          </div>
+          <div
+            *ngIf="isApplication && application"
+            [ngClass]="
+              application.options.login_style == 'CONST_LOGIN_STYLE_1' ||
+              application.options.login_style == 'CONST_LOGIN_STYLE_3'
+                ? 'col-lg-4 col-sm-12'
+                : application.options.login_style == 'CONST_LOGIN_STYLE_2'
+                ? 'col-lg-4 offset-lg-4 col-sm-12'
+                : 'col-lg-4 col-sm-12'
+            "
+          >
+            <login-form (submitAction)="submitAction($event)" [isApplication]="isApplication"></login-form>
+          </div>
+
+          <div
+            class="col-lg-4 offset-lg-3 col-sm-12 mt-5"
+            *ngIf="isApplication && application && application.options.login_style == 'CONST_LOGIN_STYLE_1'"
+          >
+            <div class="signin-title">
+              <h5 class="welcome">Welcome to</h5>
+              <img
+                *ngIf="isApplication && application"
+                [attr.src]="application.options.logo_login || '/assets/images/pq-logo-w.svg'"
+                width="125px"
+                alt="Logo Company"
+              />
+            </div>
+          </div>
+          <!-- end application builder -->
+
+          <!-- start login auth pds -->
+          <div class="col-md-12 mb-4" *ngIf="!isApplication">
+            <img [ngClass]="classHeaderBrandLogo" [attr.src]="headerBrandLogo" alt="Sign In" width="125px" />
+          </div>
+          <div class="col-lg-8 col-sm-12" *ngIf="!isApplication">
+            <div class="signin-title">
+              <h5 class="welcome">{{ 'AUTH.LOGIN.WELCOME_TO' | translate }}</h5>
+              <h1 class="pqs">{{ 'AUTH.LOGIN.TITTLE' | translate }}</h1>
+              <h3 class="desc mt-1">{{ 'AUTH.LOGIN.DESC' | translate }}</h3>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-12" *ngIf="!isApplication">
+            <login-form (submitAction)="submitAction($event)"></login-form>
+          </div>
+          <!-- end login auth pds -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid fixed-footer bg-overlay" *ngIf="!isApplication">
+  <div class="row mb-5">
+    <div class="col-12 pt-3 text-center">
+      <small>{{ 'AUTH.LOGIN.DESC_FOOTER' | translate }}</small>
+    </div>
+  </div>
+</div>
+<ngb-alert
+  *ngIf="!staticAlertClosed"
+  [dismissible]="true"
+  [type]="alertType"
+  (close)="closeAlert()"
+  class="alert-custom bg-red"
+  >{{ alertMessage }}</ngb-alert
+>
+
+<loading-component [loading]="loading" [isApplication]="true"></loading-component>

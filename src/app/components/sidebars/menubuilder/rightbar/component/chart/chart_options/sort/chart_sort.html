@@ -1,0 +1,44 @@
+<div class="collapse-group">
+  <div class="collapse-panel" *ngIf="['horizontal_bar', 'dist_bar'].includes(visualType)">
+    <input class="collapse-check" type="checkbox" id="chck3" [ngClass]="{ checked: activeColapse.chartSortGroup == true }" />
+    <label class="collapse-label" (click)="collapsible('chartSortGroup')"
+      >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CS' | translate }}</label
+    >
+    <!-- Bar -->
+    <div
+      *ngIf="['horizontal_bar', 'dist_bar'].includes(visualType)"
+      class="collapse"
+      [ngClass]="{ show: activeColapse.chartSortGroup == true }"
+    >
+      <custom_select_component
+        (onChangeValue)="handleChange($event)"
+        [selectedValue]="form_data.dist_bar_sorter || 'value'"
+        [name]="'dist_bar_sorter'"
+        [options]="list_dist_bar_sorter"
+        [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.CH'"
+        [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.SORT_BY'"
+        [type]="'select'"
+      ></custom_select_component>
+      <custom_checkbox
+        [value]="form_data.order_desc"
+        [name]="'order_desc'"
+        [title]=" 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SBD'"
+        (onChangeValue)="handleChange($event)"
+      ></custom_checkbox>
+      <custom_checkbox
+        *ngIf="['pie'].includes(visualType)"
+        [value]="form_data.pie_sort_asc"
+        [name]="'pie_sort_asc'"
+        [title]=" 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SBA'"
+        (onChangeValue)="handleChange($event)"
+      ></custom_checkbox>
+      <custom_checkbox
+        *ngIf="form_data.dist_bar_sorter === 'x_axis'"
+        [value]="form_data.x_as_date"
+        [name]="'x_as_date'"
+        [title]="'X Axis as Date'"
+        (onChangeValue)="handleChange($event)"
+      ></custom_checkbox>
+    </div>
+  </div>
+</div>

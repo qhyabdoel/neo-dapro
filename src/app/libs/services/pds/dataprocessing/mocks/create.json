@@ -1,0 +1,21 @@
+{
+  "status": "success",
+  "code": 200,
+  "response": [
+    {
+      "name": "tmp",
+      "modified": "2020-11-18T22:29:55+07:00",
+      "isDir": true,
+      "path": "√://albert1/tmp",
+      "ext": "",
+      "id": "4oiaOi9EU1NfVEVTVA==",
+      "key": 5,
+      "hasCaret": true,
+      "icon": "folder-close",
+      "label": "albert1",
+      "secondaryLabel": "",
+      "searchMode": false
+    }
+  ],
+  "message": null
+}

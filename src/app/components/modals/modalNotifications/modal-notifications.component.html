@@ -1,0 +1,219 @@
+<div>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.ANC' | translate }}</h5>
+    <button type="button" class="close" (click)="closeFormula()" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <b>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.LNC' | translate }}</b>
+    <div class="row clearfix">
+      <div class="col-md-3 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.LABELNAME' | translate }}</label>
+      </div>
+      <div class="col-md-3 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.COND' | translate }}</label>
+      </div>
+      <div class="col-md-4 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.AV' | translate }}</label>
+      </div>
+      <div class="col-md-2 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.REMOVE' | translate }}</label>
+      </div>
+    </div>
+    <div id="functionListComparison" *ngFor="let item of form_data?.notifications; let i = index">
+      <div id="functionListRowComparison1" class="row clearfix">
+        <div
+          class="col-md-3"
+          *ngIf="
+            ['heatmap', 'dist_bar', 'horizontal_bar', 'line', 'dual_line', 'bubble', 'predictive'].includes(
+              form_data.viz_type
+            ) ||
+            ['heatmap', 'dist_bar', 'horizontal_bar', 'line', 'dual_line', 'bubble', 'predictive'].includes(visualType)
+          "
+        >
+          <div class="form-group">
+            {{ 'MODULE.DATA_VISUAL.CHART.COMMON.YOC' | translate }}
+          </div>
+        </div>
+        <div
+          class="col-md-3"
+          *ngIf="
+            ['gauge', 'big_number_total', 'country_map', 'pie'].includes(form_data.viz_type) ||
+            ['gauge', 'big_number_total', 'country_map', 'pie'].includes(visualType)
+          "
+        >
+          <div class="form-group">
+            <label>{{ form_data?.metric }}</label>
+          </div>
+        </div>
+        <div class="col-md-3" *ngIf="['table'].includes(form_data.viz_type) || ['table'].includes(visualType)">
+          <div class="form-group">
+            <select
+              *ngIf="chartLinks"
+              class="form-control show-tick ms select2"
+              [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SC' | translate"
+              name="columns[]"
+              [(ngModel)]="form_data.notifications[i].col"
+            >
+              <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CC' | translate }}</option>
+              <option *ngFor="let row of form_data?.all_columns" [value]="row.metric_name">
+                {{ row.verbose_name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- table comparison -->
+        <div
+          class="col-md-3"
+          *ngIf="['table_comparison'].includes(form_data.viz_type) || ['table_comparison'].includes(visualType)"
+        >
+          <div class="form-group">
+            <select
+              *ngIf="chartLinks"
+              class="form-control show-tick ms select2"
+              [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SC' | translate"
+              name="columns[]"
+              [(ngModel)]="form_data.notifications[i].col"
+            >
+              <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CC' | translate }}</option>
+              <option *ngFor="let row of form_data?.comparison" [value]="row.id">
+                {{ row.id }} - formula({{ row.formula }})
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="form-line">
+              <select
+                *ngIf="chartLinks"
+                class="form-control show-tick ms select2"
+                [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SC' | translate"
+                name="op[i]"
+                [(ngModel)]="form_data.notifications[i].op"
+              >
+                <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CO' | translate }}</option>
+                <option *ngFor="let row of list_cols_notification | keyvals" [value]="row.value">
+                  {{ row.value }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="form-line" *ngIf="['in', 'not in'].includes(form_data.notifications[i].op)">
+              <ng-select
+                [items]="form_data.notifications[i].val"
+                [addTag]="addTagFn"
+                addTagText="Add Value"
+                [multiple]="true"
+                [closeOnSelect]="true"
+                [searchable]="true"
+                [hideSelected]="true"
+                bindLabel="val"
+                bindValue="val"
+                placeholder="input value"
+                name="val[i]"
+                [(ngModel)]="form_data.notifications[i].val"
+              >
+              </ng-select>
+            </div>
+            <div class="form-line" *ngIf="!['in', 'not in'].includes(form_data.notifications[i].op)">
+              <input
+                class="form-control"
+                placeholder="input value"
+                name="val[i]"
+                [(ngModel)]="form_data.notifications[i].val"
+                inputNumber
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group" *ngIf="i > 0">
+            <a class="p-1" (click)="onDelNotifications(i)" href="javascript:void(0)"
+              ><i id="functionListRowComparison1" class="ti-trash text-danger"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="addFunctionComparison" (click)="onAddNotifications()" class="btn btn-info btn-outline btn-sm mx-0">
+      Add Notification Conditions <i class="zmdi zmdi-plus ml-1"></i>
+    </button>
+    <hr />
+    <!-- map & pie by groupby -->
+    <div
+      id="functionListComparison"
+      *ngIf="['country_map', 'pie'].includes(form_data.viz_type) || ['country_map', 'pie'].includes(visualType)"
+    >
+      <b>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.LNGC' | translate }}</b>
+      <div
+        id="functionListRowComparison1"
+        class="row clearfix"
+        *ngFor="let item of form_data?.notifications2; let i = index"
+      >
+        <div class="col-md-4">
+          <div class="form-group">
+            <select
+              *ngIf="chartLinks"
+              class="form-control show-tick ms select2"
+              [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SC' | translate"
+              [(ngModel)]="form_data.notifications2[i].col"
+              name="column"
+            >
+              <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CG' | translate }}</option>
+              <option *ngFor="let row of chartLinks?.datasource?.filterable_cols | keyvalue" [value]="row.value[0]">
+                {{ row.value[1] }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="form-line">
+              <select
+                *ngIf="chartLinks"
+                class="form-control show-tick ms select2"
+                [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SO' | translate"
+                name="op[i]"
+                [(ngModel)]="form_data.notifications2[i].op"
+              >
+                <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CO' | translate }}</option>
+                <option *ngFor="let row of list_cols | keyvals" [value]="row.value">
+                  {{ row.value }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div class="form-group">
+            <div class="form-line">
+              <input
+                type="text"
+                *ngIf="chartLinks"
+                class="form-control show-tick ms"
+                data-placeholder="{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.IAV' | translate }}"
+                [(ngModel)]="form_data.notifications2[i].val"
+                name="filter_date_type[]"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-neutral btn-simple btn-sm f-10" (click)="closeFormula()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.CL' | translate }}
+    </button>
+    <button class="btn btn-info btn-outline btn-sm" type="button" data-dismiss="modal" (click)="saveNotifications()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.S' | translate }}
+    </button>
+  </div>
+</div>

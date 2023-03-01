@@ -1,0 +1,86 @@
+[
+	{
+		"key": "arima",
+		"text": "ARIMA",
+		"imgPath": "./assets/images/model-library/arima-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "decisionTree",
+		"text": "Decision Tree",
+		"imgPath": "./assets/images/model-library/decision-tree-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "leastSquareTree",
+		"text": "Least Square Reg.",
+		"imgPath": "./assets/images/model-library/least-square-reg-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "linierRegresssion",
+		"text": "Linear Regression",
+		"imgPath": "./assets/images/model-library/linear-reg-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "LogisticRegression",
+		"text": "Logistic Reg.",
+		"imgPath": "./assets/images/model-library/logistic-reg-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "randomForest",
+		"text": "Random Forest",
+		"imgPath": "./assets/images/model-library/random-forest-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "Ridge",
+		"text": "Ridge",
+		"imgPath": "./assets/images/model-library/ridge-lasso-reg-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "rnn",
+		"text": "RNN",
+		"imgPath": "./assets/images/model-library/rnn-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "svm",
+		"text": "SVM",
+		"imgPath": "./assets/images/model-library/svm-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "NeuralNetwork",
+		"text": "Neural Network",
+		"imgPath": "./assets/images/model-library/xgboost-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "Lasso",
+		"text": "Lasso",
+		"imgPath": "./assets/images/model-library/xgboost-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "kmeans",
+		"text": "K-Means",
+		"imgPath": "./assets/images/model-library/kmeans-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "AffinityPrograg",
+		"text": "Affinity Proprag",
+		"imgPath": "./assets/images/model-library/affinitypro-icon.svg",
+		"isChecked": false
+	},
+	{
+		"key": "Bayes",
+		"text": "Bayes",
+		"imgPath": "./assets/images/model-library/bayes-icon.svg",
+		"isChecked": false
+	}
+]

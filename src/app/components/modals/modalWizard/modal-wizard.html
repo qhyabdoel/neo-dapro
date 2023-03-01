@@ -1,0 +1,123 @@
+<div>
+  <div class="modal-header"></div>
+  <div class="modal-body">
+    <div class="row text-center">
+      <div class="col-12">
+        <h2 class="mb-3">{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.STARTED.TITLE' | translate }}</h2>
+        <p class="mb-4">{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.STARTED.SUBTITLE' | translate }}</p>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-12">
+        <h6 class="mb-3">{{ 'TOB_BAR.LABEL_SETTING_THEME' | translate }}</h6>
+      </div>
+    </div>
+    <div class="row mb-5">
+      <div class="col-6 col-lg-3 btn-group mx-auto">
+        <button
+          class="btn btn-info btn-outline btn-sm px-2 py-1 m-0 text-uppercase"
+          [ngClass]="{'active': model.login.self.skin == 'dark'}"
+          (click)="changeSkin('dark')"
+        >
+          <i class="zmdi zmdi-brightness-2 mr-1 align-baseline"></i> {{'TOB_BAR.LABEL_SETTING_THEME_DARK' | translate }}
+        </button>
+        <button
+          class="btn btn-info btn-outline btn-sm px-2 py-1 m-0 text-uppercase"
+          [ngClass]="{'active': model.login.self.skin == 'light'}"
+          (click)="changeSkin('light')"
+        >
+          <i class="zmdi zmdi-brightness-5 mr-1 align-baseline"></i> {{'TOB_BAR.LABEL_SETTING_THEME_LIGHT' | translate
+          }}
+        </button>
+      </div>
+    </div>
+    <div class="content file_manager">
+      <div class="row text-center justify-content-center">
+        <div class="col-lg-2 col-md-6 col-sm-12">
+          <div class="card">
+            <div class="file">
+              <a data-dismiss="modal" (click)="uploadFileInit()">
+                <div class="file-name2 border-b-10 border-red px-3 py-5">
+                  <span><i class="zmdi zmdi-cloud-upload f-55 mb-2"></i></span>
+                  <br />
+                  <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.STARTED.BTN1' | translate }}</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+          <div class="card">
+            <div class="file">
+              <a data-dismiss="modal" (click)="closeModal()">
+                <div class="file-name2 border-b-10 border-yellow px-3 py-5">
+                  <span><i class="zmdi zmdi-file-plus f-55 mb-2"></i></span>
+                  <br />
+                  <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.STARTED.BTN2' | translate }}</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+          <div class="card">
+            <div class="file">
+              <a data-dismiss="modal" (click)="handleDirectLink('/pds/listdatavisualization')">
+                <div class="file-name2 border-b-10 border-blue px-3 py-5">
+                  <span><i class="zmdi zmdi-chart f-55 mb-2"></i></span>
+                  <br />
+                  <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.STARTED.BTN3' | translate }}</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+          <div class="card">
+            <div class="file">
+              <a data-dismiss="modal" (click)="handleDirectLink('/pds/dashboardvisualization')">
+                <div class="file-name2 border-b-10 border-green px-3 py-5">
+                  <span><i class="zmdi zmdi-view-dashboard f-55 mb-2"></i></span>
+                  <br />
+                  <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.STARTED.BTN4' | translate }}</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+          <div class="card">
+            <div class="file">
+              <a data-dismiss="modal" (click)="handleDirectLink('/pds/applicationlist')">
+                <div class="file-name2 border-b-10 border-purple px-3 py-5">
+                  <span><i class="zmdi zmdi-desktop-mac f-55 mb-2"></i></span>
+                  <br />
+                  <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.STARTED.BTN5' | translate }}</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      class="btn btn-neutral btn-simple btn-sm close btn-lg m-auto"
+      type="button"
+      data-dismiss="modal"
+      (click)="closeModal()"
+    >
+      {{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.STARTED.CLOSE' | translate }}
+    </button>
+  </div>
+  <input
+    type="file"
+    id="upload_file"
+    accept=".csv, text/csv, text/html, .json"
+    #file
+    (change)="onChange(file)"
+    style="display: none"
+    multiple
+  />
+</div>

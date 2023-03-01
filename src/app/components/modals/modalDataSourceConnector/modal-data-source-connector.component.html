@@ -1,0 +1,102 @@
+<div>
+  <div class="modal-header">
+    <h5 class="title f-16">
+      {{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.DSC' | translate }}
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="_close()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="mx-5">
+      <div class="content file_manager">
+        <div class="row clearfix text-center">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card">
+              <div class="file">
+                <a href="javascript:void(0);" (click)="_addDbConnection()">
+                  <div class="file-name2">
+                    <img class="mb-2" src="assets/images/database-icon.svg" alt="" /><br />
+                    <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.DB' | translate }}</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-12 col-md-6 col-lg-4">
+            <div class="card">
+              <div class="file">
+                <a href="javascript:void(0);" (click)="_addAPIConnection()">
+                  <div class="file-name2">
+                    <img class="mb-2" src="assets/images/crawler-icon.svg" alt="" /><br />
+                    <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.CRAWLER' | translate }}</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div> -->
+          <div class="col-12 col-md-6 col-lg-4" (click)="_addHadoopConnection()">
+            <div class="card">
+              <div class="file">
+                <a href="javascript:void(0);">
+                  <div class="file-name2">
+                    <img class="mb-2" src="assets/images/hadoop-icon.svg" alt="" /><br />
+                    <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.HDFS' | translate }}</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card isDisabled">
+              <div class="file">
+                <a href="javascript:void(0);">
+                  <div class="file-name2">
+                    <img class="mb-2" src="assets/images/markup-icon.svg" alt="" /><br />
+                    <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.API' | translate }}</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card isDisabled">
+              <div class="file">
+                <a href="javascript:void(0);">
+                  <div class="file-name2">
+                    <img class="mb-2" src="assets/images/gsheet-icon.svg" alt="" /><br />
+                    <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.GS' | translate }}</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card isDisabled">
+              <div class="file">
+                <a href="javascript:void(0);">
+                  <div class="file-name2">
+                    <img class="mb-2" src="assets/images/gdrive-icon.svg" alt="" /><br />
+                    <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.GD' | translate }}</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card isDisabled">
+              <div class="file">
+                <a href="javascript:void(0);">
+                  <div class="file-name2">
+                    <img class="mb-2" src="assets/images/ftp-icon.svg" alt="" /><br />
+                    <span>{{ 'MODULE.DATA_PROCESSING.COMMON.MODAL.FTP' | translate }}</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

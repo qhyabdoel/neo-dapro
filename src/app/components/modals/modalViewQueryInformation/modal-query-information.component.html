@@ -1,0 +1,74 @@
+<div>
+    <div class="modal-header">
+        <h5 class="title f-16">{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY_INFO' | translate }}</h5>
+        <button type="button" class="close" aria-label="Close" (click)="_onClose()" style="position: unset">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="f-14 fw-bold">Query Explanation</span>
+                <mat-card *ngIf="loading" class="shimmer bg-grey" style="height: 13em"></mat-card>
+                <mat-table *ngIf="!loading" [dataSource]="dataSource"
+                    class="table-striped table-hover js-basic-example dataTable table-dark mb-4 f-12" style="width: 100%">
+                    <ng-container matColumnDef="no">
+                        <mat-header-cell class="number-cell" *matHeaderCellDef>
+                            No
+                        </mat-header-cell>
+                        <mat-cell class="number-cell" *matCellDef="let row">
+                            {{ row.no }}.
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="statement">
+                        <mat-header-cell *matHeaderCellDef>
+                            Statement
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            {{ row.statement }}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="input">
+                        <mat-header-cell *matHeaderCellDef>
+                            Data Input
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <ul class="pl-0 mb-0 f-12">
+                                <li class="w-full" *ngFor="let data of row.input | keyvalue" >
+                                    {{data.key}}: {{data.value}} rows
+                                </li>
+                            </ul>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="output">
+                        <mat-header-cell *matHeaderCellDef>
+                            Data Output
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <ul class="pl-0 mb-0 f-12">
+                                <li class="w-full" *ngFor="let data of row.output| keyvalue" >
+                                    {{data.key}}: {{data.value}} rows
+                                </li>
+                            </ul>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="columnToDisplay; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnToDisplay"></mat-row>
+                </mat-table>
+                <div *ngIf="!!summary">
+                    <span class="f-14 fw-bold">Summary Result</span>
+                    <ul class="dd">
+                        <li class="w-full" *ngFor="let data of summary| keyvalue" >
+                            {{data.key}} : {{data.value}} rows
+                        </li>
+                    </ul>
+                </div>
+                <!--  -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<!-- section big number start -->
+<div
+  class="row overflow-hidden demo-chart"
+  [id]="myChartID"
+  *ngIf="
+    explore && ['big_number_total'].includes(explore.form_data.viz_type) && !exploreJson?.form_data?.initial_chart_blank
+  "
+  [ngStyle]="chartOption?.borderStyle"
+  (click)="handleFilter()"
+  [ngStyle]="{ cursor: explore.form_data.chart_on_click ? 'pointer' : '' }"
+>
+  <span *ngIf="chartOption?.label === ''" class="big-number align-self-center" [ngStyle]="chartOption?.textStyle">
+    {{ chartOption?.title }}
+  </span>
+
+  <div *ngIf="chartOption?.label !== ''" class="row overflow-hidden demo-chart">
+    <div [ngClass]="chartOption?.divClass" *ngIf="chartOption?.labelFirst">
+      <span [ngClass]="chartOption?.labelClass" [ngStyle]="chartOption?.labelStyle">
+        {{ chartOption?.label }}
+      </span>
+    </div>
+    <div [ngClass]="chartOption?.divClass">
+      <span [ngClass]="chartOption?.titleClass" [ngStyle]="chartOption?.textStyle">
+        {{ chartOption?.title }}
+      </span>
+    </div>
+    <div [ngClass]="chartOption?.divClass" *ngIf="!chartOption?.labelFirst">
+      <span [ngClass]="chartOption?.labelClass" [ngStyle]="chartOption?.labelStyle">
+        {{ chartOption?.label }}
+      </span>
+    </div>
+  </div>
+</div>
+<!-- section big number end -->

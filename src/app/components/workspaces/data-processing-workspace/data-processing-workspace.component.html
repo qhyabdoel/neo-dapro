@@ -1,0 +1,102 @@
+<section
+  class="content"
+  id="mycontent"
+  [ngClass]="{ 'content-full content-query': workspacesItem && workspacesItem.length != 0 }"
+  (contextmenu)="(false)"
+>
+  <div class="text-center mt-3 f-12" *ngIf="!workspacesItem || (workspacesItem && workspacesItem.length === 0)">
+    <p class="mb-0">{{ 'MODULE.DATA_PROCESSING.COMMON.TEXT' | translate }}</p>
+    <p>{{ 'MODULE.DATA_PROCESSING.COMMON.TEXT2' | translate }}</p>
+  </div>
+  <pan-zoom [config]="panZoomConfig">
+    <div
+      *ngIf="workspacesItem && workspacesItem.length > 0"
+      id="mydiv"
+      style="position: relative; transform-origin: 0 0"
+      [style.transform]="'scale(' + scaleValue + ')'"
+    >
+      <div class="base-qry-cmd" cdkDragBoundary=".boundary" cdkDrag *ngFor="let queryCommandItem of workspacesItem">
+        <div
+          *ngIf="queryCommandItem"
+          title="{{ queryCommandItem.title }}"
+          class="query-command-item btn btn-icon btn-45 {{ queryCommandItem.buttonClass }}"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          style="position: fixed; z-index: 10"
+          cdkDragBoundary=".content"
+          cdkDrag
+          [attr.data-original-title]="queryCommandItem.title"
+          [id]="queryCommandItem.name"
+          [attr.data-alias]="queryCommandItem.alias"
+        >
+          <i
+            *ngIf="queryCommandItem.in"
+            [ngClass]="{
+              zmdi: true,
+              'zmdi-square-o': queryCommandItem.in,
+              'alt-pds-i': true,
+              'zmdi-check-square': queryCommandItem.in,
+              'pds-i-active': queryCommandItem.in
+            }"
+            style="position: absolute; left: -2px; cursor: pointer"
+            [id]="'in-' + queryCommandItem.id"
+            [ngStyle]="{ top: queryCommandItem.multiIn ? '13px' : null }"
+          ></i>
+
+          <i
+            *ngIf="queryCommandItem.multiIn"
+            [ngClass]="{
+              zmdi: true,
+              'zmdi-square-o': queryCommandItem.multiIn,
+              'alt-pds-i': true,
+              'zmdi-check-square': queryCommandItem.multiIn,
+              'pds-i-active': queryCommandItem.multiIn
+            }"
+            style="position: absolute; left: -2px; cursor: pointer"
+            [id]="'multiIn-' + queryCommandItem.id"
+            [ngStyle]="{ bottom: queryCommandItem.multiIn ? '13px' : null }"
+          ></i>
+          <div class="qry-cmd-item-title">
+            <img [src]="'/assets/images/command_query/new/' + queryCommandItem.image" />
+            <span>{{ queryCommandItem.alias | titlecase }}</span>
+          </div>
+          <i
+            *ngIf="queryCommandItem.out"
+            [ngClass]="{
+              zmdi: true,
+              'zmdi-square-o': queryCommandItem.out,
+              'pds-i': true,
+              'zmdi-check-square': queryCommandItem.out,
+              'pds-i-active': queryCommandItem.out
+            }"
+            style="position: absolute; right: -2px; cursor: pointer"
+            [ngStyle]="{
+              top: queryCommandItem.branch ? (queryCommandItem.multiOut ? '8px' : '13px') : null
+            }"
+            [id]="'out-' + queryCommandItem.id"
+            [attr.data-toggle]="'tooltip'"
+            [attr.data-placement]="'top'"
+            [title]="queryCommandItem.tooltip"
+          ></i>
+        </div>
+
+        <!-- <i style="position: absolute; left: -2px; cursor: pointer"></i>
+
+        <i style="position: absolute; left: -2px; cursor: pointer"></i>
+
+        <i style="position: absolute; right: -2px; cursor: pointer"></i>
+
+        <i style="position: absolute; right: -2px; cursor: pointer"></i>
+
+        <i style="position: absolute; right: -2px; cursor: pointer"></i> -->
+      </div>
+      <!-- <query-command-item
+        *ngFor="let queryCommandItem of workspacesItem"
+        [item]="queryCommandItem"
+      ></query-command-item>
+
+      <div #tempSlot id="tempSlot" style="position: absolute; width: 10px; height: 10px"></div> -->
+      <!-- <span *ngFor="let queryCommandItem of workspacesItem"> {{ queryCommandItem.name }}</span> -->
+    </div>
+  </pan-zoom>
+</section>

@@ -1,0 +1,575 @@
+<div class="content authentication home-bgimg">
+  <div class="container mt-5 pt-5">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-title">
+          <h5 class="welcome">{{ 'MODULE.HOME.WELCOME_TO' | translate }}</h5>
+          <h1 class="pqs">
+            PAQUES <span class="desc">{{ title }}</span>
+          </h1>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <!-- Only Pds  -->
+      <div class="row col-12" *ngIf="settingLayouts.PDS && !settingLayouts.Pamedi && !settingLayouts.TrueAI">
+        <div class="card card-home">
+          <div class="header">
+            <h5>Paques</h5>
+            <h3 class="text-cyan">Data Studio</h3>
+            <hr class="mb-0" />
+          </div>
+          <div class="home-step1 body">
+            <p>{{ 'MODULE.HOME.DESC' | translate }}</p>
+            <a
+              href="javascript:void(0)"
+              [routerLink]="['../pds/dataprocessing']"
+              class="btn btn-primary btn-block waves-effect waves-light bg-cyan rounded-0"
+              style="width: 100%"
+              >{{ 'MODULE.HOME.START' | translate }}</a
+            >
+          </div>
+
+          <div class="footer">
+            <span>What’s New?</span>
+            <hr class="mt-0" />
+            <strong class="f-14">Version %PQS_VERSION_PLACEHOLDER%</strong>
+            <br />
+            <label>
+              <a href="https://cloud.paques.id/resources-support" rel="noopener noreferrer" target="_blank"
+                >View details</a
+              >
+            </label>
+            <br />
+
+            <div class="row">
+              <div class="col-lg-9 m-auto">
+                <div id="new-feature" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item my-3 active">
+                      <div class="media media-middle" style="display: inline-flex">
+                        <div class="media-left width-30">
+                          <a href="javascript:void(0);">
+                            <img
+                              alt=""
+                              class="media-object rounded"
+                              src="assets/images/img_slide_01.svg"
+                              width="165"
+                              height="125"
+                            />
+                          </a>
+                        </div>
+                        <div class="home-step2 media-body">
+                          <h4 class="media-heading f-16 pb-3"><strong>Paques Data Studio Features</strong></h4>
+                          <ul class="f-12">
+                            <li>
+                              <strong>Fast Ingestion for Massive Data Set</strong> – The ability to ingest data as is,
+                              without pre-processing, cleansing, or reformatting allows Paques to lower the barrier to
+                              entry for data analytics and decrease your time to market.
+                            </li>
+                            <li>
+                              <strong>Interactive Data Exploration</strong> – Paques allows you to interact with your
+                              data starting from browsing, previewing, extracting, manipulating and all the way to
+                              visualizing your data in the same place.
+                            </li>
+                            <li>
+                              <strong>Self-Service Analytics</strong> – With rich tool set, intuitive design, and
+                              powerful query engine, Paques makes it possible to perform analytics without depending to
+                              IT department. Makes it a truly self-service analytics platform.
+                            </li>
+                            <li>
+                              <strong>Chart Creator</strong> – Visualize data into many forms of visualization using
+                              point-and-click interface to reveal the insight you’ve been missing.
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- PDS && Pamedi -->
+      <div class="row col-12" *ngIf="settingLayouts.PDS && settingLayouts.Pamedi && !settingLayouts.TrueAI">
+        <div class="col-lg-6 col-sm-12">
+          <div class="card card-home">
+            <div class="header">
+              <h5>Paques</h5>
+              <h3 class="text-cyan">Data Studio</h3>
+              <hr class="mb-0" />
+            </div>
+            <div class="home-step1 body">
+              <p>{{ 'MODULE.HOME.DESC' | translate }}</p>
+              <a
+                href="javascript:void(0)"
+                [routerLink]="['../pds/dataprocessing']"
+                style="width: 100%"
+                class="btn btn-primary btn-block waves-effect waves-light bg-cyan rounded-0"
+                >{{ 'MODULE.HOME.START' | translate }}</a
+              >
+            </div>
+
+            <div class="footer">
+              <span>What’s New?</span>
+              <hr class="mt-0" />
+              <strong class="f-14">Version %PQS_VERSION_PLACEHOLDER%</strong>
+              <br />
+              <label>
+                <a href="https://cloud.paques.id/resources-support" rel="noopener noreferrer" target="_blank"
+                  >View details</a
+                >
+              </label>
+              <br />
+
+              <div class="row">
+                <div class="col-lg-12 m-auto">
+                  <div id="new-feature" class="carousel slide pointer-event" data-ride="carousel">
+                    <!-- <ul class="carousel-indicators mb-2">
+                    <li data-target="#new-feature" data-slide-to="0" class="active"></li>
+                    <li data-target="#new-feature" data-slide-to="1" class=""></li>
+                    <li data-target="#new-feature" data-slide-to="2" class=""></li>
+                  </ul> -->
+
+                    <div class="carousel-inner">
+                      <div class="carousel-item my-3 active">
+                        <div class="media media-middle flex-column mb-0">
+                          <div class="media-left mb-3">
+                            <a href="javascript:void(0);">
+                              <img
+                                alt=""
+                                class="media-object rounded"
+                                src="assets/images/product/pds-img.png"
+                                width="165"
+                                height="165"
+                              />
+                            </a>
+                          </div>
+                          <div class="home-step2 media-body">
+                            <h4 class="media-heading f-16 pb-3"><strong>Paques Data Studio Features</strong></h4>
+                            <ul class="f-12">
+                              <li>
+                                <strong>Fast Ingestion for Massive Data Set</strong> – The ability to ingest data as is,
+                                without pre-processing, cleansing, or reformatting allows Paques to lower the barrier to
+                                entry for data analytics and decrease your time to market.
+                              </li>
+                              <li>
+                                <strong>Interactive Data Exploration</strong> – Paques allows you to interact with your
+                                data starting from browsing, previewing, extracting, manipulating and all the way to
+                                visualizing your data in the same place.
+                              </li>
+                              <li>
+                                <strong>Self-Service Analytics</strong> – With rich tool set, intuitive design, and
+                                powerful query engine, Paques makes it possible to perform analytics without depending
+                                to IT department. Makes it a truly self-service analytics platform.
+                              </li>
+                              <li>
+                                <strong>Chart Creator</strong> – Visualize data into many forms of visualization using
+                                point-and-click interface to reveal the insight you’ve been missing.
+                              </li>
+                            </ul>
+                            <!-- <p class="f-12">
+                            The ability to ingest data as is, without pre-processing, cleansing, or reformatting allows Paques to lower the barrier to entry for data analytics and decrease your time to market.
+                            <br>
+                            Paques allows you to interact with your data starting from browsing, previewing, extracting, manipulating and all the way to visualizing your data in the same place.
+                          </p> -->
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="carousel-item my-3">
+                      <div class="media media-middle">
+                        <div class="media-left"> <a href="javascript:void(0);"> <img alt="" class="media-object rounded" src="assets/images/lg/avatar2.jpg" width="165" height="125"> </a> </div>
+                        <div class="media-body">
+                          <h4 class="media-heading f-14"><strong>New Chart Visualisation:</strong> mini app allow user to create free form chart based on html or markdown</h4>
+                          <p class="f-12"> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
+                            commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                            Fusce condimentum nunc ac nisi vulputate fringilla.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="carousel-item my-3">
+                      <div class="media media-middle">
+                        <div class="media-left"> <a href="javascript:void(0);"> <img alt="" class="media-object rounded" src="assets/images/lg/avatar2.jpg" width="165" height="125"> </a> </div>
+                        <div class="media-body">
+                          <h4 class="media-heading f-14"><strong>Map Chart:</strong> Detailed to Kabupaten</h4>
+                          <p class="f-12"> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
+                            commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                            Fusce condimentum nunc ac nisi vulputate fringilla.</p>
+                        </div>
+                      </div>
+                    </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <div class="card card-home">
+            <div class="header">
+              <h5>Paques</h5>
+              <h3 class="text-blue">Media Intelligence</h3>
+              <hr class="mb-0" />
+            </div>
+            <div class="body">
+              <p>
+                Robust online media crawler for extracting almost all kinds of data you need on the websites. It’s an
+                intelligent tool for data scraping & crawling.
+              </p>
+              <a
+                href="javascript:void(0)"
+                [routerLink]="['../pamedi/media-intelligence/quick-search']"
+                class="btn btn-primary btn-block waves-effect waves-light bg-blue rounded-0"
+                >{{ 'MODULE.HOME.START' | translate }}</a
+              >
+            </div>
+
+            <div class="footer">
+              <span>What’s New?</span>
+              <hr class="mt-0" />
+              <strong class="f-14">Version 2.0.18</strong>
+              <br />
+              <label>
+                <a href="http://studio.paques.id:8081/static/help/version/" rel="noopener noreferrer" target="_blank"
+                  >View details</a
+                >
+              </label>
+              <br />
+              <!-- <span class="f-12">Update Features:</span class="f-14"> -->
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="carousel slide pointer-event">
+                    <div class="carousel-inner">
+                      <div class="carousel-item mt-3 active">
+                        <div class="media media-middle flex-column mb-0">
+                          <div class="media-left mb-3">
+                            <a href="javascript:void(0);">
+                              <img
+                                alt=""
+                                class="media-object rounded"
+                                src="assets/images/product/pamedi-img.png"
+                                width="165"
+                                height="165"
+                              />
+                            </a>
+                          </div>
+                          <div class="home-step2 media-body">
+                            <h4 class="media-heading f-16 pb-3">
+                              <strong>Paques Media Intelligence Features</strong>
+                            </h4>
+                            <ul class="f-12">
+                              <li>
+                                <strong>Text Analytics Feature with NLP</strong>
+                                – Converting text into features and applying machine learning and deep learning model on
+                                it. And harnessing the power of Natural Language Processing (NLP); named entity
+                                recognition, sentiment analysis, social interaction/ network analytics, text
+                                classifications, issues and profiling classifications.
+                              </li>
+                              <li>
+                                <strong>Interactive Exploration</strong>
+                                – This tools was developed for non-coders to accommodate complicated social media
+                                scraping, crawling and analyzing jobs until visualizing.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- PDS && Pamedi && TrueAI -->
+      <div class="row col-12" *ngIf="settingLayouts.PDS && settingLayouts.Pamedi && settingLayouts.TrueAI">
+        <div class="col-lg-4 col-sm-12">
+          <div class="card card-home">
+            <div class="header">
+              <h5>Paques</h5>
+              <h3 class="text-cyan">Data Studio</h3>
+              <hr class="mb-0" />
+            </div>
+            <div class="home-step1 body">
+              <p>{{ 'MODULE.HOME.DESC' | translate }}</p>
+              <a
+                href="javascript:void(0)"
+                style="width: 100%"
+                [routerLink]="['../pds/dataprocessing']"
+                class="btn btn-primary btn-block waves-effect waves-light bg-cyan rounded-0"
+                >{{ 'MODULE.HOME.START' | translate }}</a
+              >
+            </div>
+
+            <div class="footer">
+              <span>What’s New?</span>
+              <hr class="mt-0" />
+              <strong class="f-14">Version %PQS_VERSION_PLACEHOLDER%</strong>
+              <br />
+              <label>
+                <a href="https://cloud.paques.id/resources-support" rel="noopener noreferrer" target="_blank"
+                  >View details</a
+                >
+              </label>
+              <br />
+
+              <div class="row">
+                <div class="col-lg-12 m-auto">
+                  <div id="new-feature" class="carousel slide pointer-event" data-ride="carousel">
+                    <!-- <ul class="carousel-indicators mb-2">
+                    <li data-target="#new-feature" data-slide-to="0" class="active"></li>
+                    <li data-target="#new-feature" data-slide-to="1" class=""></li>
+                    <li data-target="#new-feature" data-slide-to="2" class=""></li>
+                  </ul> -->
+
+                    <div class="carousel-inner">
+                      <div class="carousel-item my-3 active">
+                        <div class="media media-middle flex-column mb-0">
+                          <div class="media-left mb-3">
+                            <a href="javascript:void(0);">
+                              <img
+                                alt=""
+                                class="media-object rounded"
+                                src="assets/images/product/pds-img.png"
+                                width="150"
+                                height="165"
+                              />
+                            </a>
+                          </div>
+                          <div class="home-step2 media-body">
+                            <h4 class="media-heading f-16 pb-3"><strong>Paques Data Studio Features</strong></h4>
+                            <ul class="f-12">
+                              <li>
+                                <strong>Fast Ingestion for Massive Data Set</strong> – The ability to ingest data as is,
+                                without pre-processing, cleansing, or reformatting allows Paques to lower the barrier to
+                                entry for data analytics and decrease your time to market.
+                              </li>
+                              <li>
+                                <strong>Interactive Data Exploration</strong> – Paques allows you to interact with your
+                                data starting from browsing, previewing, extracting, manipulating and all the way to
+                                visualizing your data in the same place.
+                              </li>
+                              <li>
+                                <strong>Self-Service Analytics</strong> – With rich tool set, intuitive design, and
+                                powerful query engine, Paques makes it possible to perform analytics without depending
+                                to IT department. Makes it a truly self-service analytics platform.
+                              </li>
+                              <li>
+                                <strong>Chart Creator</strong> – Visualize data into many forms of visualization using
+                                point-and-click interface to reveal the insight you’ve been missing.
+                              </li>
+                            </ul>
+                            <!-- <p class="f-12">
+                            The ability to ingest data as is, without pre-processing, cleansing, or reformatting allows Paques to lower the barrier to entry for data analytics and decrease your time to market.
+                            <br>
+                            Paques allows you to interact with your data starting from browsing, previewing, extracting, manipulating and all the way to visualizing your data in the same place.
+                          </p> -->
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="carousel-item my-3">
+                      <div class="media media-middle">
+                        <div class="media-left"> <a href="javascript:void(0);"> <img alt="" class="media-object rounded" src="assets/images/lg/avatar2.jpg" width="165" height="125"> </a> </div>
+                        <div class="media-body">
+                          <h4 class="media-heading f-14"><strong>New Chart Visualisation:</strong> mini app allow user to create free form chart based on html or markdown</h4>
+                          <p class="f-12"> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
+                            commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                            Fusce condimentum nunc ac nisi vulputate fringilla.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="carousel-item my-3">
+                      <div class="media media-middle">
+                        <div class="media-left"> <a href="javascript:void(0);"> <img alt="" class="media-object rounded" src="assets/images/lg/avatar2.jpg" width="165" height="125"> </a> </div>
+                        <div class="media-body">
+                          <h4 class="media-heading f-14"><strong>Map Chart:</strong> Detailed to Kabupaten</h4>
+                          <p class="f-12"> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
+                            commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                            Fusce condimentum nunc ac nisi vulputate fringilla.</p>
+                        </div>
+                      </div>
+                    </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <div class="card card-home">
+            <div class="header">
+              <h5>Paques</h5>
+              <h3 class="text-orange">TrueAI</h3>
+              <hr class="mb-0" />
+            </div>
+            <div class="body">
+              <p>
+                Using the legitimate Technology of TrueAI to Build Machine Learning Models and use it to predicting the
+                future.
+              </p>
+              <a
+                href="javascript:void(0)"
+                [routerLink]="['../trueai/modeling']"
+                class="btn btn-primary btn-block waves-effect waves-light bg-orange rounded-0"
+                >{{ 'MODULE.HOME.START' | translate }}</a
+              >
+            </div>
+
+            <div class="footer">
+              <span>What’s New?</span>
+              <hr class="mt-0" />
+              <strong class="f-14">Version 1.0.20</strong>
+              <br />
+              <label>
+                <a href="http://studio.paques.id:8081/static/help/version/" rel="noopener noreferrer" target="_blank"
+                  >View details</a
+                >
+              </label>
+              <br />
+              <!-- <span class="f-12">Update Features:</span class="f-14"> -->
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="carousel slide pointer-event">
+                    <div class="carousel-inner">
+                      <div class="carousel-item mt-3 active">
+                        <div class="media media-middle flex-column mb-0">
+                          <div class="media-left mb-3">
+                            <a href="javascript:void(0);">
+                              <img
+                                alt=""
+                                class="media-object rounded"
+                                src="assets/images/product/trueai-img.png"
+                                width="150"
+                              />
+                            </a>
+                          </div>
+                          <div class="home-step2 media-body">
+                            <h4 class="media-heading f-16 pb-3">
+                              <strong>Paques TrueAI Features</strong>
+                            </h4>
+                            <ul class="f-12">
+                              <li>
+                                <strong>Highly Flexible Interface</strong>
+                                – Whether you prefer work with data as simple in a point-and-click or coding in
+                                configuring your data science projects. Paques TrueAI won’t make all preparation work
+                                disappear, but it’ll make it easier.
+                              </li>
+                              <li>
+                                <strong>Leverage Cutting-edge Machine Learning Libraries</strong>
+                                – With machine learning predictive modeling, Paques TrueAI powered by several different
+                                models and algorithms that can be applied to wide range of use cases.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+          <div class="card card-home">
+            <div class="header">
+              <h5>Paques</h5>
+              <h3 class="text-blue">Media Intelligence</h3>
+              <hr class="mb-0" />
+            </div>
+            <div class="body">
+              <p>
+                Robust online media crawler for extracting almost all kinds of data you need on the websites. It’s an
+                intelligent tool for data scraping & crawling.
+              </p>
+              <a
+                href="javascript:void(0)"
+                [routerLink]="['../pamedi/media-intelligence/quick-search']"
+                class="btn btn-primary btn-block waves-effect waves-light bg-blue rounded-0"
+                >{{ 'MODULE.HOME.START' | translate }}</a
+              >
+            </div>
+
+            <div class="footer">
+              <span>What’s New?</span>
+              <hr class="mt-0" />
+              <strong class="f-14">Version 2.0.18</strong>
+              <br />
+              <label>
+                <a href="http://studio.paques.id:8081/static/help/version/" rel="noopener noreferrer" target="_blank"
+                  >View details</a
+                >
+              </label>
+              <br />
+              <!-- <span class="f-12">Update Features:</span class="f-14"> -->
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="carousel slide pointer-event">
+                    <div class="carousel-inner">
+                      <div class="carousel-item mt-3 active">
+                        <div class="media media-middle flex-column mb-0">
+                          <div class="media-left mb-3">
+                            <a href="javascript:void(0);">
+                              <img
+                                alt=""
+                                class="media-object rounded"
+                                src="assets/images/product/pamedi-img.png"
+                                width="150"
+                                height="165"
+                              />
+                            </a>
+                          </div>
+                          <div class="home-step2 media-body">
+                            <h4 class="media-heading f-16 pb-3">
+                              <strong>Paques Media Intelligence Features</strong>
+                            </h4>
+                            <ul class="f-12">
+                              <li>
+                                <strong>Text Analytics Feature with NLP</strong>
+                                – Converting text into features and applying machine learning and deep learning model on
+                                it. And harnessing the power of Natural Language Processing (NLP); named entity
+                                recognition, sentiment analysis, social interaction/ network analytics, text
+                                classifications, issues and profiling classifications.
+                              </li>
+                              <li>
+                                <strong>Interactive Exploration</strong>
+                                – This tools was developed for non-coders to accommodate complicated social media
+                                scraping, crawling and analyzing jobs until visualizing.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mb-4">
+        <div class="copyright text-center">
+          Powered by
+          <a class="ml-1" href="https://paques.id/" target="_blank">
+            <img class="logo-dark" src="assets/images/pq-logo-w.svg" alt="Paques Logo" width="65px" />
+            <img class="logo-light" src="assets/images/pq-logo-dark.svg" alt="Paques Logo" width="65px" />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-5">
+      <div class="col-12 text-center">
+        <small>{{ 'MODULE.HOME.DESC_FOOTER' | translate }}</small>
+      </div>
+    </div>
+  </div>
+</div>

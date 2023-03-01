@@ -1,0 +1,113 @@
+section.content {
+  overflow: hidden;
+}
+
+.custom-menu {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  white-space: nowrap;
+  font-family: sans-serif;
+  background: #fff;
+  color: #333;
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+/* Style the active class, and buttons on mouse-over */
+.pds-i-active,
+.alt-pds-i:hover,
+.pds-i:hover {
+  background: transparent !important;
+  color: gray !important;
+  // border: 5px solid;
+}
+
+.btn.btn-outline-active {
+  border-color: rgb(7, 243, 7) !important;
+}
+
+.ulme {
+  display: inline-block;
+  width: 50px;
+  margin-right: 100px;
+}
+
+.red {
+  background: red;
+}
+
+.mapped {
+  background: yellow;
+}
+
+.mapped-and-selected {
+  background: purple;
+}
+
+.pointer-active,
+g.leader-line-plugs-face {
+  cursor: pointer;
+}
+
+.round-pointer-right {
+  position: absolute;
+  background-color: #ccc;
+  cursor: pointer;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  right: 0px;
+  top: 14px;
+  margin-right: -20px;
+}
+
+.round-pointer-left {
+  position: absolute;
+  background-color: #ccc;
+  cursor: pointer;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  left: 0px;
+  top: 14px;
+  margin-left: -20px;
+}
+
+.squareini {
+  border: 5px solid red;
+  text-align: center;
+  vertical-align: middle;
+  width: 25vw;
+  height: 25vw;
+}
+
+.contentini {
+  margin: auto;
+  padding: 50% 0;
+  text-align: right;
+}
+
+.mat-menu-item {
+  line-height: 25px !important;
+  height: 25px !important;
+}
+
+.btn-4 {
+  height: 4rem;
+  min-width: 4rem;
+  width: 4rem;
+}
+
+.row-item:hover {
+  color: white;
+  background-color: #117a8b;
+}
+
+.row-item:active {
+  color: white;
+  background-color: #117a8b;
+}

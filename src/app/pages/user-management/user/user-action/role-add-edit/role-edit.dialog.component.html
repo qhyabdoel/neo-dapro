@@ -1,0 +1,200 @@
+<div class="modal-open">
+  <div class="modal d-block" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" *ngIf="role">
+          <h5 class="modal-title" id="exampleModalLabel">
+            <loading-component [loading]="loading"></loading-component>
+            {{ getTitle() }}
+          </h5>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="role && !loading">
+          <kt-alert *ngIf="hasFormErrors" [type]="" [showCloseButton]="true" (close)="onAlertClose()">
+            {{ errorMessage }}
+          </kt-alert>
+
+          <form [formGroup]="roleForm" class="form-horizontal">
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark"
+                  >{{ 'MODULE.USER_MANAGEMENT.RN' | translate }}&nbsp;<span class="text-red">*</span>
+                </label>
+              </div>
+              <div class="col-sm-12">
+                <mat-form-field class="mat-form-field-fluid">
+                  <input matInput type="text" id="rolename" class="form-control" formControlName="rolename" />
+                  <mat-error>{{ 'MODULE.USER_MANAGEMENT.RNR' | translate }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark"
+                  >{{ 'MODULE.USER_MANAGEMENT.RD' | translate }}&nbsp;<span class="text-red">*</span>
+                </label>
+              </div>
+              <div class="col-sm-12">
+                <mat-form-field class="mat-form-field-fluid">
+                  <input matInput type="text" id="roledesc" class="form-control" formControlName="roledesc" />
+                  <mat-error>{{ 'MODULE.USER_MANAGEMENT.RDR' | translate }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark"
+                  >{{ 'MODULE.USER_MANAGEMENT.PS' | translate }}&nbsp;<span class="text-red">*</span>
+                </label>
+              </div>
+              <div class="col-md-12">
+                <!-- <div class="checkbox mb-0" *ngFor="let scope of scopeList">
+									<input id="checkbox-{{scope.uuid}}" type="radio" [(ngModel)]="scope.isChecked" [ngModelOptions]="{standalone: true}" (change)="getCheckedScope(scope.uuid, scope.isChecked)">
+									<label class="text-dark" for="checkbox-{{scope.uuid}}">
+										{{scope.name}}
+									</label>
+								</div> -->
+                <div class="form-group">
+                  <div class="radio inlineblock m-r-20" *ngFor="let scope of scopeList">
+                    <input
+                      [checked]=""
+                      value="{{ scope.name }}"
+                      id="checkbox-{{ scope.uuid }}"
+                      type="radio"
+                      class="with-gap"
+                      [ngClass]="scope?.isChecked ? 'checked' : ''"
+                      [(ngModel)]="scope.isChecked"
+                      [ngModelOptions]="{ standalone: true }"
+                      (change)="getCheckedScope(scope.uuid, scope.isChecked)"
+                    />
+                    <label class="text-dark" for="checkbox-{{ scope.uuid }}">
+                      {{ scope.name }}
+                    </label>
+                  </div>
+                  <mat-error class="f-11" *ngIf="!isScopeCheckedValidation"
+                    >{{ 'MODULE.USER_MANAGEMENT.PCS' | translate }}
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="form-horizontal">
+            <div class="row clearfix">
+              <div class="col-md-12 form-control-label">
+                <label class="text-dark">{{ 'MODULE.USER_MANAGEMENT.AS' | translate }}</label>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <select
+                    #menuOption
+                    class="form-control show-tick ms select2"
+                    data-placeholder="Select"
+                    name="row_limit"
+                    [(ngModel)]="applicationId"
+                    (change)="selectAppMenu(menuOption.value, data?.role?.application_id)"
+                  >
+                    <option value="">{{ 'MODULE.USER_MANAGEMENT.CAS' | translate }}</option>
+                    <option *ngFor="let app of applicationList" [value]="app.__application_id">
+                      {{ app.title }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div class="row clearfix">
+              <div class="polri box">
+                <ul class="list-unstyled">
+                  <li>
+                    <div class="checkbox mb-0">
+                      <input
+                        type="checkbox"
+                        name="tall"
+                        id="checkAll"
+                        [(ngModel)]="checkAllMenu"
+                        (change)="onCheckAllApplication(checkAllMenu, appMenuList)"
+                      />
+                      <label class="text-dark" for="checkAll">{{ 'MODULE.USER_MANAGEMENT.CA' | translate }}</label>
+                    </div>
+                  </li>
+                  <li *ngFor="let menu of appMenuList">
+                    <div class="checkbox mb-0">
+                      <input
+                        type="checkbox"
+                        name="tall"
+                        id="{{ menu.id }}"
+                        [(ngModel)]="menu.allowed"
+                        (change)="onCheckedApplication(menu.allowed, 'parent', menu.menu_id, null, null)"
+                      />
+                      <label class="text-dark" for="{{ menu.id }}">{{ menu.title }}</label>
+                    </div>
+                    <ul class="list-unstyled pl-4" *ngIf="menu.children !== undefined && menu.children.length > 0">
+                      <li *ngFor="let children of menu.children">
+                        <div class="checkbox mb-0">
+                          <input
+                            type="checkbox"
+                            name="tall-1"
+                            id="{{ children.menu_id }}"
+                            [(ngModel)]="children.allowed"
+                            (change)="
+                              onCheckedApplication(
+                                children.allowed,
+                                'children',
+                                children.parent_id,
+                                children.menu_id,
+                                null
+                              )
+                            "
+                          />
+                          <label class="text-dark" for="{{ children.menu_id }}">{{ children.title }}</label>
+                        </div>
+                        <ul
+                          class="list-unstyled pl-4"
+                          *ngIf="children.children !== undefined && children.children.length > 0"
+                        >
+                          <li *ngFor="let grandChildren of children.children">
+                            <div class="checkbox mb-0">
+                              <input
+                                type="checkbox"
+                                name="tall-1"
+                                id="{{ grandChildren.menu_id }}"
+                                [(ngModel)]="grandChildren.allowed"
+                                (change)="
+                                  onCheckedApplication(
+                                    grandChildren.allowed,
+                                    'grandchildren',
+                                    children.parent_id,
+                                    grandChildren.parent_id,
+                                    grandChildren.menu_id
+                                  )
+                                "
+                              />
+                              <label class="text-dark" for="{{ grandChildren.menu_id }}">{{
+                                grandChildren.title
+                              }}</label>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" *ngIf="role">
+          <button class="btn btn-neutral btn-simple btn-sm close px-0" type="button" (click)="onNoClick()">
+            {{ 'MODULE.USER_MANAGEMENT.C' | translate }}
+          </button>
+          <button class="btn btn-info btn-outline btn-sm f-12" type="button" (click)="onSubmit()">
+            {{ 'MODULE.USER_MANAGEMENT.S' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

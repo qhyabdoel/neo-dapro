@@ -1,0 +1,118 @@
+<li class="dropdown nav-item">
+  <a
+    role="button"
+    href="javascript:void(0);"
+    class="dropdown-toggle nav-link"
+    (click)="handleDialog()"
+    matTooltip="{{ 'TOB_BAR.LABEL_HELP' | translate }}"
+    #toggleButton4
+  >
+    <i class="zmdi zmdi-help"></i>
+    <div class="notify"></div>
+  </a>
+  <ul
+    [ngClass]="{
+      'dropdown-menu slideUp2': true,
+      show: isOpen
+    }"
+    #menu4
+  >
+    <li class="body">
+      <ul class="menu list-unstyled py-2">
+        <li>
+          <a href="https://cloud.paques.id/resources-support" target="_blank">
+            <div class=""><i class="f-20 zmdi zmdi-help"></i></div>
+            <div class="menu-info">
+              <h4>{{ 'TOB_BAR.LABEL_HELP' | translate }}</h4>
+            </div>
+          </a>
+        </li>
+
+        <li>
+          <a href="javascript:void(0);" (click)="openModalTemplate(videotutorialTemplate)">
+            <div class="">
+              <i class="f-20 zmdi zmdi-play-circle"></i>
+            </div>
+            <div class="menu-info">
+              <h4>{{ 'TOB_BAR.LABEL_VIDEO_TUTORIAL' | translate }}</h4>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0);" (click)="openModalTemplate(creditTemplates)">
+            <div class="">
+              <i class="f-20 zmdi zmdi-assignment"></i>
+            </div>
+            <div class="menu-info">
+              <h4>{{ 'TOB_BAR.LABEL_TEAM_CREDITS' | translate }}</h4>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+
+<ng-template #creditTemplate let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="title f-16" id="defaultModalLabel">{{ 'TOB_BAR.LABEL_TEAM_CREDITS' | translate }}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-10">
+        <strong class="f-14">{{ 'TOB_BAR.V' | translate }} %PQS_VERSION_PLACEHOLDER%</strong>
+        <p class="f-12">
+          <a href="https://cloud.paques.id/resources-support" rel="noopener noreferrer" target="_blank">{{
+            'TOB_BAR.VD' | translate
+          }}</a>
+        </p>
+      </div>
+      <div class="col-lg-2">
+        <img class="logo-dark" src="assets/images/pq-logo-w.svg" alt="Paques Logo" width="100px" />
+        <img class="logo-light" src="assets/images/pq-logo-dark.svg" alt="Paques Logo" width="100px" />
+      </div>
+    </div>
+
+    <table class="table-sm table-striped table-hover f-10">
+      <tbody>
+        <tr *ngFor="let row of listTeam[0].team_credits">
+          <th width="200px">
+            <strong>{{ row.role }}</strong>
+          </th>
+          <td>{{ row.people }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="copyright text-center my-2 f-10">
+      {{ 'TOB_BAR.C' | translate }} &copy;
+      <script>
+        document.write(new Date().getFullYear());
+      </script>
+      <a href="https://paques.id/" target="_blank">PT Informatika Solusi Bisnis</a>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #videotutorialTemplate let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="title f-16">Video Tutorial</h5>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" style="position: unset">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <iframe
+      width="560"
+      height="315"
+      [src]="urlLoad(dataRoot.url)"
+      frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+    <p class="mb-5 f-14 text-center">{{ dataRoot.title }}</p>
+  </div>
+</ng-template>

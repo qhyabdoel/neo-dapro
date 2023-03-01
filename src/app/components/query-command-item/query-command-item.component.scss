@@ -1,0 +1,240 @@
+// /* REFACTORED */
+// .qry-cmd-item-title {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+
+//   img {
+//     width: 24px;
+//     margin-bottom: 3px;
+//   }
+// }
+
+// .btn.btn-outline-search {
+//   color: rgb(231, 63, 91) !important;
+//   border-color: rgb(231, 63, 91) !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid rgb(231, 63, 91) !important;
+//   }
+// }
+
+// .btn.btn-outline-select {
+//   color: rgb(231, 63, 91) !important;
+//   border-color: rgb(231, 63, 91) !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid rgb(231, 63, 91) !important;
+//   }
+// }
+
+// .btn.btn-outline-extract {
+//   color: #d7c100 !important;
+//   border-color: #d7c100 !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid #d7c100 !important;
+//   }
+// }
+
+// .btn.btn-outline-cfg {
+//   color: rgb(231, 63, 91) !important;
+//   border-color: rgb(231, 63, 91) !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid rgb(231, 63, 91) !important;
+//   }
+// }
+
+// .btn.btn-outline-aggr {
+//   color: deepskyblue;
+//   border-color: deepskyblue !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid deepskyblue !important;
+//   }
+// }
+
+// .btn-45 {
+//   height: 4.5rem !important;
+//   min-width: 4.5rem !important;
+//   width: 4.5rem !important;
+//   border-radius: 12px !important;
+// }
+
+// /* EXISTING */
+
+// .btn.btn-outline-source {
+//   color: rgb(231, 63, 91) !important;
+//   border-color: rgb(231, 63, 91) !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid rgb(231, 63, 91) !important;
+//   }
+// }
+
+// .btn.btn-outline-success {
+//   color: #0abb87 !important;
+//   border-color: #0abb87 !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid #0abb87 !important;
+//   }
+// }
+
+// .btn.btn-outline-warning {
+//   color: #ffb822 !important;
+//   border-color: #ffb822 !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid #ffb822 !important;
+//   }
+// }
+
+// .btn.btn-outline-yellow {
+//   color: #d7c100 !important;
+//   border-color: #d7c100 !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid #d7c100 !important;
+//   }
+// }
+
+// .btn.btn-outline-corelate {
+//   color: rgb(210, 107, 45) !important;
+//   border-color: rgb(210, 107, 45) !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid rgb(210, 107, 45) !important;
+//   }
+// }
+
+// .btn.btn-outline-filter {
+//   color: rgb(222, 99, 237) !important;
+//   border-color: rgb(222, 99, 237) !important;
+//   background: #fff !important;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid rgb(222, 99, 237) !important;
+//   }
+// }
+
+// .btn.btn-outline-dedup {
+//   color: rgb(212, 78, 141) !important;
+//   border-color: rgb(212, 78, 141) !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid rgb(212, 78, 141) !important;
+//   }
+// }
+
+// .btn.btn-outline-transpose {
+//   color: #9ed600 !important;
+//   border-color: #9ed600 !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid #9ed600 !important;
+//   }
+// }
+
+// .btn.btn-outline-drop {
+//   color: rgb(235, 92, 98) !important;
+//   border-color: rgb(235, 92, 98) !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid rgb(235, 92, 98) !important;
+//   }
+// }
+
+// .btn.btn-outline-store {
+//   color: rgb(111, 203, 222) !important;
+//   border-color: rgb(111, 203, 222) !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid rgb(111, 203, 222) !important;
+//   }
+// }
+
+// .btn.btn-outline-limit {
+//   color: #fdaa08 !important;
+//   border-color: #fdaa08 !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid #fdaa08 !important;
+//   }
+// }
+
+// .btn.btn-outline-copy {
+//   color: #a4be00 !important;
+//   border-color: #a4be00 !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid #a4be00 !important;
+//   }
+// }
+
+// .btn.btn-outline-implode {
+//   color: rgb(133, 202, 250) !important;
+//   border-color: rgb(133, 202, 250) !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid rgb(133, 202, 250) !important;
+//   }
+// }
+
+// .btn.btn-outline-merge {
+//   color: #0094ff !important;
+//   border-color: #0094ff !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid #0094ff !important;
+//   }
+// }
+
+// .btn.btn-outline-view {
+//   color: #00d4ae !important;
+//   border-color: #00d4ae !important;
+//   background: #fff;
+//   border: 2px solid !important;
+
+//   &:after {
+//     border-bottom: 5px solid #00d4ae !important;
+//   }
+// }

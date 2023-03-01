@@ -1,0 +1,579 @@
+{
+  "SEARCH": {
+    "properties": {
+      "search_str": {
+        "field_type": "string",
+        "required": false
+      },
+      "paths": {
+        "field_type": "string[]",
+        "required": true
+      },
+      "has_limit": {
+        "field_type": "boolean",
+        "required": true
+      },
+      "has_offset": {
+        "field_type": "boolean",
+        "required": true
+      },
+      "limit": {
+        "field_type": "integer",
+        "required": false
+      },
+      "offset": {
+        "field_type": "integer",
+        "required": false
+      },
+      "is_csv": {
+        "field_type": "boolean",
+        "required": true
+      },
+      "is_folder": {
+        "field_type": "boolean",
+        "required": true
+      },
+      "include_header": {
+        "field_type": "boolean",
+        "required": true
+      },
+      "csv_separator": {
+        "field_type": "string",
+        "required": false
+      },
+      "csv_columns": {
+        "field_type": "string",
+        "required": false
+      },
+      "label": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "SELECT": {
+    "properties": {
+      "selectors": {
+        "field_type": "string",
+        "required": false
+      },
+      "from_type": {
+        "field_type": "string",
+        "required": true,
+        "values": ["CSV", "GZ", "TABLE", "FILE"]
+      },
+      "from_table": {
+        "field_type": "object",
+        "required": false,
+        "properties": {
+          "tables": {
+            "field_type": "string",
+            "required": true
+          }
+        }
+      },
+      "from_csv": {
+        "field_type": "object",
+        "required": false,
+        "properties": {
+          "path": {
+            "field_type": "string",
+            "required": true
+          },
+          "alias": {
+            "field_type": "string",
+            "required": false
+          }
+        }
+      },
+      "from_gz": {
+        "field_type": "object",
+        "required": false,
+        "properties": {
+          "path": {
+            "field_type": "string",
+            "required": true
+          },
+          "alias": {
+            "field_type": "string",
+            "required": false
+          }
+        }
+      },
+      "from_file": {
+        "field_type": "object",
+        "required": false,
+        "properties": {
+          "path": {
+            "field_type": "string",
+            "required": true
+          }
+        }
+      },
+      "join": {
+        "field_type": "object[]",
+        "required": false,
+        "properties": {
+          "type": {
+            "field_type": "string",
+            "required": true,
+            "values": ["FULL OUTER JOIN", "LEFT OUTER JOIN", "RIGHT OUTER JOIN", "INNER JOIN"]
+          },
+          "target": {
+            "field_type": "string",
+            "required": true
+          },
+          "expressions": {
+            "field_type": "string",
+            "required": true
+          }
+        }
+      },
+      "where": {
+        "field_type": "string",
+        "required": false
+      },
+      "order_by": {
+        "field_type": "string",
+        "required": false
+      },
+      "has_limit": {
+        "field_type": "boolean",
+        "required": true
+      },
+      "has_offset": {
+        "field_type": "boolean",
+        "required": true
+      },
+      "limit": {
+        "field_type": "integer",
+        "required": false
+      },
+      "offset": {
+        "field_type": "integer",
+        "required": false
+      },
+      "group_by": {
+        "field_type": "string",
+        "required": false
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "SELECTDB": {
+    "properties": {
+      "connection": {
+        "field_type": "string",
+        "required": true
+      },
+      "select_db_clause_a": {
+        "field_type": "string",
+        "required": true
+      },
+      "select_db_clause_b": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "VIEW": {
+    "properties": {
+      "columns": {
+        "field_type": "string",
+        "required": true
+      },
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "EXTRACT": {
+    "properties": {
+      "extract_split": {
+        "field_type": "object",
+        "required": false,
+        "properties": {
+          "col_target": {
+            "field_type": "string",
+            "required": true
+          },
+          "delimiter": {
+            "field_type": "string",
+            "required": true
+          },
+          "aliases": {
+            "field_type": "string",
+            "required": true
+          }
+        }
+      },
+      "extract_json": {
+        "field_type": "object",
+        "required": false,
+        "properties": {
+          "col_target": {
+            "field_type": "string",
+            "required": true
+          },
+          "columns": {
+            "field_type": "string",
+            "required": false
+          }
+        }
+      },
+      "extract_kv": {
+        "field_type": "object",
+        "required": false,
+        "properties": {
+          "col_target": {
+            "field_type": "string",
+            "required": true
+          },
+          "field_delimiter": {
+            "field_type": "string",
+            "required": true
+          },
+          "kv_delimiter": {
+            "field_type": "string",
+            "required": true
+          }
+        }
+      },
+      "extract_formula": {
+        "field_type": "object",
+        "required": false,
+        "properties": {
+          "formulas": {
+            "field_type": "string[]",
+            "required": true
+          }
+        }
+      },
+      "extract_rex": {
+        "field_type": "object",
+        "required": false,
+        "properties": {
+          "col_target": {
+            "field_type": "string",
+            "required": true
+          },
+          "pattern": {
+            "field_type": "string",
+            "required": true
+          },
+          "columns": {
+            "field_type": "string",
+            "required": false
+          }
+        }
+      },
+      "extract_type": {
+        "field_type": "string",
+        "required": true,
+        "values": ["SPLIT", "JSON", "REX", "KV", "FORMULA"]
+      },
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "AGGREGATE": {
+    "properties": {
+      "groups": {
+        "field_type": "string[]",
+        "required": false
+      },
+      "aliases": {
+        "field_type": "string[]",
+        "required": true
+      },
+      "functions": {
+        "field_type": "string[]",
+        "required": true
+      },
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "FILTER": {
+    "properties": {
+      "condition": {
+        "field_type": "string",
+        "required": true
+      },
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "SORT": {
+    "properties": {
+      "order_by": {
+        "field_type": "string",
+        "required": true
+      },
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "LIMIT": {
+    "properties": {
+      "limit": {
+        "field_type": "integer",
+        "required": true
+      },
+      "offset": {
+        "field_type": "integer",
+        "required": false
+      },
+      "has_offset": {
+        "field_type": "boolean",
+        "required": true
+      },
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "COPY": {
+    "properties": {
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "CREATEINDEX": {
+    "properties": {
+      "cols": {
+        "field_type": "string[]",
+        "required": true
+      },
+      "path": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "CORRELATEREF": {
+    "properties": {
+      "src": {
+        "field_type": "object",
+        "required": true,
+        "properties": {
+          "table": {
+            "field_type": "string",
+            "required": true
+          },
+          "cols": {
+            "field_type": "string",
+            "required": true
+          }
+        }
+      },
+      "ref": {
+        "field_type": "object",
+        "required": true,
+        "properties": {
+          "table": {
+            "field_type": "string",
+            "required": true
+          },
+          "cols": {
+            "field_type": "string",
+            "required": true
+          }
+        }
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "DEDUP": {
+    "properties": {
+      "by": {
+        "field_type": "string",
+        "required": true
+      },
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "EXPLODE": {
+    "properties": {
+      "distinct": {
+        "field_type": "boolean",
+        "required": true
+      },
+      "column": {
+        "field_type": "string",
+        "required": true
+      },
+      "delimiter": {
+        "field_type": "string",
+        "required": true
+      },
+      "sort": {
+        "field_type": "string",
+        "required": false
+      },
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "IMPLODE": {
+    "properties": {
+      "target_col": {
+        "field_type": "string",
+        "required": true
+      },
+      "by": {
+        "field_type": "string",
+        "required": true
+      },
+      "as": {
+        "field_type": "string",
+        "required": true
+      },
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "MERGE": {
+    "properties": {
+      "froms": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "STORE": {
+    "properties": {
+      "connection_name": {
+        "field_type": "string",
+        "required": false
+      },
+      "sink_type": {
+        "field_type": "string",
+        "required": true,
+        "values": ["FILE", "DB"]
+      },
+      "from": {
+        "field_type": "string",
+        "required": true
+      },
+      "into": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "DROP": {
+    "properties": {
+      "from": {
+        "field_type": "string",
+        "required": true
+      }
+    }
+  },
+  "CONFIG": {
+    "properties": {
+      "type": {
+        "field_type": "string",
+        "required": true,
+        "values": ["CSV", "GZ"]
+      },
+      "path": {
+        "field_type": "string",
+        "required": true
+      },
+      "separator": {
+        "field_type": "string",
+        "required": true
+      },
+      "columns": {
+        "field_type": "string",
+        "required": false
+      },
+      "head_pos": {
+        "field_type": "integer",
+        "required": false
+      },
+      "trim": {
+        "field_type": "boolean",
+        "required": false
+      },
+      "validate": {
+        "field_type": "boolean",
+        "required": false
+      }
+    }
+  }
+}

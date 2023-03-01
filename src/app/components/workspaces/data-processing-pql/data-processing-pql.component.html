@@ -1,0 +1,51 @@
+<div class="panel-group pql_accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-primary">
+    <div class="panel-heading" role="tab" id="heading_collapse_result">
+      <h4 class="panel-title text-center">
+        <a
+          id="pqlHeader"
+          class="menu-toggle text-uppercase waves-effect waves-block"
+          [ngClass]="{ toggled: isPqlExpanded }"
+          role="button"
+          data-toggle="collapse"
+          data-parent="#accordion_1"
+          aria-expanded="true"
+          aria-controls="body_collapse_pql"
+          (click)="togglePql()"
+        >
+          <span class="pql-mr3">PQL</span>
+        </a>
+      </h4>
+    </div>
+    <div
+      id="body_collapse_pql"
+      class="panel-collapse collapse in"
+      role="tabpanel"
+      aria-labelledby="heading_collapse_pql"
+      [ngClass]="{ show: isPqlExpanded }"
+    >
+      <div class="panel-body pql_body">
+        <ngx-monaco-editor
+          class="template-editor"
+          [options]="editorOptions"
+          [ngModel]="pqlString"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="onCodeChange($event)"
+        ></ngx-monaco-editor>
+
+        <div class="footer text-center py-3">
+          <button
+            class="btn btn-sm"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            data-html="true"
+            title="{{ 'MODULE.DATA_PROCESSING.COMMON.PQL.VALIDATE' | translate }}"
+            (click)="validate()"
+          >
+            <i class="ti-check align-middle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

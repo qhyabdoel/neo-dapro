@@ -1,0 +1,804 @@
+<div class="panel panel-primary m-0">
+  <div class="panel-heading" role="tab" id="headingTwo_1">
+    <h4 class="panel-title">
+      <a
+        [ngClass]="{ toggled: activeColapse.query == true }"
+        class="menu-toggle collapsed text-uppercase"
+        role="button"
+        (click)="collapsible('query')"
+        ><i
+          class="zmdi zmdi-info"
+          [matMenuTriggerFor]="showPopover"
+          #triggerpopover="matMenuTrigger"
+          (mouseover)="triggerpopover.openMenu(); setPopover();"
+          (mouseleave)="triggerpopover.closeMenu(); hidePopover()"
+        ></i
+        >&nbsp; {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.LABEL' | translate }}
+      </a>
+      <mat-menu #showPopover="matMenu" class="tooltips popover pds-popover">
+        <h3 class="popover-header">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.LABEL' | translate }}</h3>
+        <div class="popover-body">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.LABEL_TOOLTIP' | translate }}</div>
+      </mat-menu>
+    </h4>
+  </div>
+  <div [ngClass]="{ show: activeColapse.query == true }" class="panel-collapse collapse">
+    <div class="panel-body">
+      <div class="form-horizontal" *ngIf="form_data?.viz_type">
+        <div
+          class="row clearfix"
+          *ngIf="['horizontal_bar', 'dist_bar','line', 'map', 'country_map', 'country_map2','table', 'pivot_table','dual_line'].includes(visualType)"
+        >
+          <div class="col-lg-12 col-md-12 col-sm-6 form-control-label">
+            <label>
+              {{ (['horizontal_bar', 'dist_bar'].includes(visualType) ? 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.TBC' :
+              ['map', 'country_map', 'country_map2'].includes(visualType) ?
+              'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SMT' : ['table', 'pivot_table'].includes(visualType) ?
+              'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.TT' :'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.TC') | translate
+              }}<font color="red"></font
+            ></label>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-6">
+            <div class="form-group">
+              <select
+                name="viz_type"
+                [(ngModel)]="form_data.viz_type"
+                class="form-control show-tick ms select2"
+                [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SMT' | translate"
+                [ngClass]="form_data.viz_type == '' ? 'require-error is-invalid' : ''"
+                required
+                (change)="onchange($event,'viz_type', 'select')"
+              >
+                <option *ngFor="let item of typeChartQuery" [value]="item.value">{{ item.label | translate }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix" class="" *ngIf="['table'].includes(visualType)">
+          <div class="col-auto px-0 align-self-center">
+            <ul class="nav nav-tabs nav-tabs-success" role="tablist">
+              <li class="nav-item" *ngFor="let button of toggleTable">
+                <a
+                  id="{{ button.value }}"
+                  class="nav-link mb-0 px-3"
+                  [ngClass]="{ active: active ===  button.value }"
+                  data-toggle="tab"
+                  href="javascript:void()"
+                  (click)="handleActiveTab(button.value)"
+                >
+                  {{ button.label }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="row clearfix"
+          *ngIf="['horizontal_bar', 'heatmap', 'dist_bar','pie', 'line', 'treemap','big_number_total', 'histogram','directed_force','gauge', 'map', 'country_map', 'country_map2','sunburst','word_cloud','table', 'pivot_table','filter_box'].includes(visualType) && active === 'group'"
+        >
+          <custom_select_component
+            *ngIf="['histogram'].includes(visualType)"
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.column_target"
+            [name]="'column_target'"
+            [options]="explore?.datasource?.columns"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.V'"
+            [type]="'ng-select'"
+            [multiple]="false"
+            [bindLabel]="'column_name'"
+            [bindValue]="'column_name'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SM'"
+            [visualType]="visualType"
+            [required]="true"
+          ></custom_select_component>
+          <custom_select_component
+            *ngIf="['heatmap'].includes(visualType) "
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.heat_map.metric_heat_map"
+            [name]="'metric_heat_map'"
+            [options]="explore?.datasource?.metrics"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.V'"
+            [type]="'ng-select'"
+            [multiple]=" false"
+            [bindLabel]="'verbose_name'"
+            [bindValue]="'metric_name'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SM'"
+            [visualType]="visualType"
+            [required]="true"
+          ></custom_select_component>
+          <custom_select_component
+            *ngIf="['horizontal_bar', 'dist_bar','line', 'treemap','sunburst','table', 'pivot_table'].includes(visualType) "
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.metrics"
+            [name]="'metrics'"
+            [options]="explore?.datasource?.metrics"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.V'"
+            [type]="'ng-select'"
+            [multiple]=" true"
+            [bindLabel]="'verbose_name'"
+            [bindValue]="'metric_name'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SM'"
+            [visualType]="visualType"
+            [required]="true"
+          ></custom_select_component>
+          <custom_select_component
+            *ngIf="[ 'big_number_total','directed_force','gauge','map', 'country_map', 'country_map2','word_cloud','filter_box'].includes(visualType) "
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.metric"
+            [name]="'metric'"
+            [options]="explore?.datasource?.metrics"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.V'"
+            [type]="'ng-select'"
+            [multiple]="false"
+            [bindLabel]="'verbose_name'"
+            [bindValue]="'metric_name'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SM'"
+            [visualType]="visualType"
+            [required]="true"
+          ></custom_select_component>
+
+          <custom_select_component
+            *ngIf="['pie'].includes(visualType) "
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.metrics[0]"
+            [name]="'metrics'"
+            [options]="explore?.datasource?.metrics"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.V'"
+            [type]="'ng-select'"
+            [multiple]="false"
+            [bindLabel]="'verbose_name'"
+            [bindValue]="'metric_name'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SM'"
+            [visualType]="visualType"
+            [required]="true"
+          ></custom_select_component>
+
+          <div class="form-group" *ngIf="!['histogram'].includes(visualType)">
+            <button
+              *ngIf="explore"
+              [ngStyle]="{ width: '100%' }"
+              type="button"
+              class="btn btn-info btn-outline"
+              (click)="openModal('formulaModal')"
+            >
+              {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.BF' | translate }}
+              <i class="zmdi zmdi-plus f-12 ml-1"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row clearfix" *ngIf="['line'].includes(visualType)">
+          <custom_checkbox
+            [value]="form_data.order_desc"
+            [name]="'order_desc'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SBD'"
+            (onChangeValue)="handleSelect($event)"
+          >
+          </custom_checkbox>
+        </div>
+        <div
+          class="row clearfix"
+          *ngIf="['horizontal_bar', 'dist_bar','line','treemap','directed_force', 'sunburst','word_cloud','pie','table', 'pivot_table','filter_box','table_comparison'].includes(visualType) && active === 'group' && form_data"
+        >
+          <!-- khusus line ketika memilih value lebih dari 1 maka akan disable  -->
+          <custom_select_component
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.groupby"
+            [name]="visualType === 'word_cloud'? 'series' :'groupby'"
+            [options]="(['filter_box'].includes(visualType) ? explore?.datasource?.filterable_cols :  explore?.datasource?.gb_cols) | keyvals"
+            [title]="(['horizontal_bar', 'dist_bar','line','treemap','sunburst','word_cloud', 'pie','table', 'pivot_table', 'table_comparison'].includes(visualType) ? 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.G' :
+        ['filter_box'].includes(visualType) ? 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.FC' :
+        'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SOT')"
+            [type]="'ng-select'"
+            [multiple]="visualType === 'word_cloud'? false :true"
+            [bindLabel]="'value'"
+            [bindValue]="'value'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SG'"
+            [visualType]="visualType"
+            [required]="true"
+          ></custom_select_component>
+        </div>
+        <div class="row clearfix" *ngIf="['filter_box'].includes(visualType)  && form_data">
+          <custom_checkbox
+            [value]="form_data.filter_alignment_horizontal"
+            [name]="'filter_alignment_horizontal'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.FAH'"
+            (onChangeValue)="handleSelect($event)"
+          >
+          </custom_checkbox>
+          <custom_checkbox
+            [value]="form_data.date_filter"
+            [name]="'date_filter'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.DF'"
+            (onChangeValue)="handleSelect($event)"
+          >
+          </custom_checkbox>
+          <div *ngIf="form_data.date_filter">
+            <custom_select_component
+              (onChangeValue)="handleSelect($event)"
+              [selectedValue]="form_data.filter_date"
+              [name]="'filter_date'"
+              [options]="filterDateList"
+              [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CD'"
+              [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.DF'"
+              [type]="'select'"
+            ></custom_select_component>
+            <custom_select_component
+              (onChangeValue)="handleSelect($event)"
+              [selectedValue]="form_data.filter_date_type"
+              [name]="'filter_date_type'"
+              [options]="filterDateTypeList"
+              [defaultValue]="'MODULE.DATA_VISUAL.CHART.VALIDATOR.SDFT'"
+              [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.DFT'"
+              [type]="'select'"
+            ></custom_select_component>
+            <custom_select_component
+              (onChangeValue)="handleSelect($event)"
+              [selectedValue]="form_data.granularity_sqla"
+              [name]="'granularity_sqla'"
+              [options]="explore?.datasource?.granularity_sqla"
+              [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CTC'"
+              [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.TIME_COL'"
+              [type]="'select'"
+            ></custom_select_component>
+            <custom_select_component
+              (onChangeValue)="handleSelect($event)"
+              [selectedValue]="form_data.time_grain_sqla"
+              [name]="'time_grain_sqla'"
+              [options]="list_time_grain_sqla"
+              [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.CTG'"
+              [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.TG'"
+              [type]="'select'"
+            ></custom_select_component>
+            <custom_select_component
+              *ngIf="exploreJson?.form_data?.granularity_sqla"
+              (onChangeValue)="handleSelect($event)"
+              [selectedValue]="form_data.initial_date_filter"
+              [name]="'initial_date_filter'"
+              [options]="initialFilterDateList"
+              [defaultValue]="'Default'"
+              [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.IDF'"
+              [type]="'select'"
+            ></custom_select_component>
+
+            <div class="row clearfix" *ngIf="form_data.initial_date_filter === 'custom_date'">
+              <custom_date_picker_component
+                [date_type]="'date'"
+                [name]="'since'"
+                [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.S'"
+                [type]="'single'"
+                [value1]="form_data.since"
+                (setState)="handleSelect($event)"
+              >
+              </custom_date_picker_component>
+
+              <custom_date_picker_component
+                [date_type]="'date'"
+                [name]="'until'"
+                [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.U'"
+                [type]="'single'"
+                [value1]="form_data.until"
+                (setState)="handleSelect($event)"
+              >
+              </custom_date_picker_component>
+            </div>
+          </div>
+
+          <custom_checkbox
+            [value]="form_data.instant_filtering"
+            [name]="'instant_filtering'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.IF'"
+            (onChangeValue)="handleSelect($event)"
+          >
+          </custom_checkbox>
+          <custom_checkbox
+            [value]="form_data.filter_checkbox"
+            [name]="'filter_checkbox'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SFC'"
+            (onChangeValue)="handleSelect($event)"
+          >
+          </custom_checkbox>
+
+          <custom_select_component
+            *ngIf="form_data.filter_checkbox"
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.filter_control_checkbox"
+            [name]="'filter_control_checkbox'"
+            [options]="form_data.filter_checkbox_columns | keyvals"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.FCC'"
+            [type]="'ng-select'"
+            [multiple]="false"
+            [bindLabel]="'value'"
+            [bindValue]="'value'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S'"
+            [visualType]="visualType"
+          ></custom_select_component>
+
+          <custom_checkbox
+            [value]="form_data.alphabet_filter"
+            [name]="'alphabet_filter'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SAF'"
+            (onChangeValue)="handleSelect($event)"
+          >
+          </custom_checkbox>
+          <custom_select_component
+            *ngIf="form_data.alphabet_filter"
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.filter_control_alphabetic"
+            [name]="'filter_control_alphabetic'"
+            [options]="form_data.filter_checkbox_columns | keyvals"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.FCAF'"
+            [type]="'ng-select'"
+            [multiple]="false"
+            [bindLabel]="'value'"
+            [bindValue]="'value'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S'"
+            [visualType]="visualType"
+          ></custom_select_component>
+        </div>
+        <div *ngIf="['table'].includes(visualType) && active === 'group'">
+          <div class="col-sm-12 form-control-label">
+            <label>{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.SORT_BY' | translate }}</label>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-12">
+              <div class="form-line">
+                <div class="pl-2">
+                  <mat-radio-group
+                    aria-labelledby="radio-group-label"
+                    class="radio-group-choose-colorpicker radio-group mt-0 mb-0"
+                    name="sort_aggregate_column"
+                    [(ngModel)]="form_data.sort_aggregate_column"
+                    required
+                    (change)="onchange($event,'sort_aggregate_column','radio')"
+                  >
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <mat-radio-button class="radio-button" value="option1"> Aggregate </mat-radio-button>
+                      </div>
+                      <div class="col-lg-12">
+                        <mat-radio-button class="radio-button" value="option2"> Column </mat-radio-button>
+                      </div>
+                    </div>
+                  </mat-radio-group>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix" *ngIf="['table'].includes(visualType) && active === 'not_group'">
+          <custom_select_component
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.all_columns"
+            [name]="'all_columns'"
+            [options]="explore?.datasource?.columns"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.NGBC'"
+            [type]="'ng-select'"
+            [multiple]="true"
+            [bindLabel]="'column_name'"
+            [bindValue]="'column_name'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S'"
+            [visualType]="visualType"
+            [required]="true"
+          ></custom_select_component>
+        </div>
+        <div *ngIf="['table'].includes(visualType)">
+          <div *ngIf="form_data.sort_aggregate_column == 'option1' && active === 'group'" class="row clearfix">
+            <div class="col-sm-12 form-control-label">
+              <label for="last_run"> {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SBA' | translate }}</label>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="form-line">
+                  <select
+                    *ngIf="explore"
+                    class="form-control show-tick ms select2"
+                    [attr.placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+                    name="timeseries_limit_metric"
+                    [(ngModel)]="form_data.timeseries_limit_metric"
+                    (change)="onchange($event,'timeseries_limit_metric', 'select')"
+                  >
+                    <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CD' | translate }}</option>
+                    <option *ngFor="let row of explore?.datasource?.metrics_combo | keyvals" [value]="row.value">
+                      {{ row.value }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <custom_checkbox
+              [value]="form_data.order_desc"
+              [name]="'order_desc'"
+              [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SBD'"
+              (onChangeValue)="handleSelect($event)"
+            >
+            </custom_checkbox>
+          </div>
+
+          <div *ngIf="form_data.sort_aggregate_column == 'option2'" class="row clearfix">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="last_run"> {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SBC' | translate }}</label>
+                <div class="form-line">
+                  <select
+                    *ngIf="explore"
+                    class="form-control show-tick ms select2"
+                    [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+                    [(ngModel)]="form_data.table_filter_column"
+                    (change)="onchange($event,'table_filter_column', 'select')"
+                  >
+                    <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CD' | translate }}</option>
+                    <option *ngFor="let row of explore?.datasource?.columns" [value]="row.column_name">
+                      {{ row.column_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <custom_checkbox
+                [value]="form_data.table_sort_desc"
+                [name]="'table_sort_desc'"
+                [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SBD'"
+                (onChangeValue)="handleSelect($event)"
+              >
+              </custom_checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix" *ngIf="['horizontal_bar', 'dist_bar', 'pivot_table'].includes(visualType)">
+          <custom_select_component
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.columns"
+            [name]="'columns'"
+            [options]="([ 'pivot_table'].includes(visualType) ? explore?.datasource?.gb_cols :
+          explore?.datasource?.filterable_cols) | keyvals"
+            [title]="([ 'pivot_table'].includes(visualType) ? 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.COL' :
+          'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SUBG')"
+            [type]="'ng-select'"
+            [multiple]="true"
+            [bindLabel]="'value'"
+            [bindValue]="'key'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S'"
+            [visualType]="visualType"
+            [required]="([ 'pivot_table'].includes(visualType) ? 'true' : '')"
+          ></custom_select_component>
+        </div>
+        <div class="row clearfix" *ngIf="['pie','line'].includes(visualType)">
+          <custom_select_component
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.limit"
+            [name]="'limit'"
+            [options]="list_row_limit"
+            [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CL'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.RL'"
+            [type]="'select'"
+          ></custom_select_component>
+        </div>
+        <div
+          class="row clearfix"
+          *ngIf="['horizontal_bar', 'dist_bar', 'directed_force','word_cloud'].includes(visualType)"
+        >
+          <custom_select_component
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.row_limit"
+            [name]="'row_limit'"
+            [options]="list_row_limit"
+            [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CL'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.RL'"
+            [type]="'select'"
+          ></custom_select_component>
+        </div>
+        <!-- Map -->
+        <div class="row clearfix" *ngIf="['map', 'country_map', 'country_map2'].includes(visualType)">
+          <custom_select_component
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.entity"
+            [name]="'entity'"
+            [options]="explore?.datasource?.filterable_cols"
+            [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CR'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.ISO'"
+            [type]="'select'"
+            [required]="true"
+          ></custom_select_component>
+        </div>
+
+        <div
+          class="row clearfix"
+          *ngIf="['horizontal_bar', 'dist_bar', 'pie','map', 'country_map', 'country_map2'].includes(visualType)"
+        >
+          <custom_select_component
+            *ngIf="['horizontal_bar', 'dist_bar','pie', 'line', 'treemap','big_number_total','directed_force','gauge','map', 'country_map', 'country_map2','sunburst','word_cloud','table', 'pivot_table','filter_box'].includes(visualType) "
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.tooltips"
+            [name]="'tooltips'"
+            [options]="explore?.datasource?.metrics"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.TOOLTIP'"
+            [type]="'ng-select'"
+            [multiple]="true"
+            [bindLabel]="'verbose_name'"
+            [bindValue]="'metric_name'"
+            [placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S'"
+            [visualType]="visualType"
+          ></custom_select_component>
+        </div>
+        <!-- BAR LINE  -->
+        <div *ngIf="['horizontal_bar', 'dist_bar'].includes(visualType)">
+          <div *ngIf="form_data?.viz_type == 'dist_bar'" class="row clearfix">
+            <custom_checkbox
+              [value]="form_data.with_line"
+              [name]="'with_line'"
+              [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.WLC'"
+              (onChangeValue)="handleSelect($event)"
+            >
+            </custom_checkbox>
+          </div>
+          <div class="row clearfix" *ngIf="form_data?.with_line">
+            <div class="col-sm-12 form-control-label">
+              <label for="last_run">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.LM' | translate }}</label>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="form-line">
+                  <select
+                    *ngIf="explore"
+                    class="form-control show-tick ms select2"
+                    [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+                    [(ngModel)]="form_data.line_metric"
+                    name="line_metric"
+                    required
+                    (change)="onchange($event,'line_metric','select')"
+                  >
+                    <option [value]="''">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CV' | translate }}</option>
+                    <option *ngFor="let row of explore?.datasource?.metrics" [value]="row.metric_name">
+                      {{ row.verbose_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix" *ngIf="form_data?.with_line">
+            <div class="col-sm-12 form-control-label">
+              <label for="last_run">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.LC' | translate }} </label>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="form-line">
+                  <input
+                    *ngIf="explore"
+                    class="form-control show-tick ms"
+                    [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.IN_NC' | translate"
+                    [(ngModel)]="form_data.line_const"
+                    name="line_const"
+                    inputNumber
+                    (ngModelChange)="onchange($event,'line_const','input')"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- BUBBLE  AND PREDICTIVE-->
+        <div *ngIf="['bubble','scatter'].includes(visualType)">
+          <div class="row clearfix" *ngFor="let item of intial_form_select">
+            <custom_select_component
+              (onChangeValue)="handleSelect($event)"
+              [selectedValue]="item.model"
+              [name]="item.name"
+              [options]="item.options"
+              [required]="true"
+              [defaultValue]="item.placeholder"
+              [title]="item.label"
+              [type]="'select'"
+            ></custom_select_component>
+          </div>
+        </div>
+
+        <!-- DIRECTED FORCE -->
+        <div class="row clearfix" *ngIf="['directed_force'].includes(visualType)">
+          <custom_select_component
+            (onChangeValue)="handleSelect($event)"
+            [selectedValue]="form_data.group"
+            [name]="'group'"
+            [options]="explore?.datasource?.gb_cols"
+            [defaultValue]="'Choose'"
+            [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.GC'"
+            [type]="'select'"
+          ></custom_select_component>
+        </div>
+        <!-- LINE TIME GRAINT AND COLUMN -->
+        <div *ngIf="['line', 'dual_line'].includes(visualType) && form_data && explore" class="row clearfix">
+          <div class="col-lg-12">
+            <div class="row clearfix" *ngIf="['dual_line'].includes(visualType)">
+              <div class="col-sm-12 form-control-label">
+                <div class="form-group">
+                  <label for="last_run"
+                    >Y Axis 1 Value
+                    <font color="red">*</font>
+                  </label>
+                  <div class="form-line">
+                    <!-- [ngClass]="form_data.metric == '' ? 'require-error is-invalid' : ''" -->
+
+                    <select
+                      *ngIf="explore"
+                      class="form-control show-tick ms select2"
+                      [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+                      [(ngModel)]="form_data.metric"
+                      name="metric"
+                      required
+                      (change)="onchange($event,'metric','select')"
+                    >
+                      <option *ngFor="let row of explore?.datasource?.metrics" [value]="row.metric_name">
+                        {{ row.verbose_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row clearfix" *ngIf="['dual_line'].includes(visualType)">
+              <div class="col-sm-12 form-control-label">
+                <div class="form-group">
+                  <label for="last_run"
+                    >Y Axis 2 Value
+                    <font color="red">*</font>
+                  </label>
+                  <!-- [ngClass]="form_data.metric_2 == '' ? 'require-error is-invalid' : ''" -->
+                  <div class="form-line">
+                    <select
+                      *ngIf="explore"
+                      class="form-control show-tick ms select2"
+                      [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+                      [(ngModel)]="form_data.metric_2"
+                      name="metric_2"
+                      required
+                      (change)="onchange($event,'metric_2','select')"
+                    >
+                      <option *ngFor="let row of explore?.datasource?.metrics" [value]="row.metric_name">
+                        {{ row.verbose_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <custom_select_component
+              *ngIf="['dual_line','line'].includes(visualType)"
+              (onChangeValue)="handleSelect($event)"
+              [selectedValue]="form_data.granularity_sqla"
+              [name]="'granularity_sqla'"
+              [options]="list_granularity_sqla"
+              [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.CTC'"
+              [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.TC'"
+              [type]="'select'"
+              [required]="true"
+            ></custom_select_component>
+
+            <custom_select_component
+              *ngIf="['dual_line','line'].includes(visualType)"
+              (onChangeValue)="handleSelect($event)"
+              [selectedValue]="form_data.time_grain_sqla"
+              [name]="'time_grain_sqla'"
+              [options]="list_time_grain_sqla"
+              [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.CTG'"
+              [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.TIME.TG'"
+              [type]="'select'"
+              [required]="true"
+            ></custom_select_component>
+          </div>
+        </div>
+        <!-- Markup Editor (Type, Code, CSS) -->
+        <div *ngIf="['markup'].includes(visualType)">
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <button
+                type="button"
+                class="btn btn-info btn-outline btn-sm w-100 m-0"
+                (click)="openModal('modalAddValue')"
+              >
+                {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.AV' | translate }}
+                <i class="zmdi zmdi-plus f-12 ml-1"></i>
+              </button>
+            </div>
+          </div>
+          <div class="row clearfix mt-3">
+            <div class="col-sm-12">
+              <div class="form-control-label">
+                <label for="last_run">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.MT' | translate }}</label>
+              </div>
+              <div class="form-group">
+                <div class="form-line">
+                  <select
+                    class="form-control show-tick ms select2"
+                    [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+                    [(ngModel)]="form_data.markup_type"
+                    name="markup_type"
+                    (change)="onchange($event,'markup_type','select')"
+                  >
+                    <option value="markdown">Markdown</option>
+                    <option value="html">Html</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix" *ngIf="['html', 'markdown'].includes(form_data.markup_type)">
+            <div class="col-md-12">
+              <div class="form-control-label">
+                <label for="last_run"
+                  >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.MC' | translate }}
+                  <font color="red">*</font>
+                </label>
+              </div>
+              <button type="button" class="btn btn-info btn-outline btn-sm w-100 m-0" (click)="openModal('codeModal')">
+                {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.E' | translate }} {{ form_data.markup_type }} {{
+                'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.C' | translate }}
+                <i class="zmdi zmdi-edit f-12 ml-1"></i>
+              </button>
+            </div>
+          </div>
+          <div class="row clearfix mt-3" *ngIf="form_data.markup_type == 'html'">
+            <div class="col-sm-12">
+              <div class="form-control-label">
+                <label for="last_run">CSS</label>
+              </div>
+              <button type="button" class="btn btn-info btn-outline btn-sm w-100 m-0" (click)="openModal('cssModal')">
+                {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.E' | translate }} CSS {{
+                'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.C' | translate }}
+                <i class="zmdi zmdi-edit f-12 ml-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix" *ngIf="['heatmap'].includes(visualType)">
+          <div *ngFor="let item of heatmap_intial_form">
+            <custom_checkbox
+              *ngIf="item.field === 'checkbox' "
+              [value]="item.model"
+              [name]="item.name"
+              [title]="item.label"
+              (onChangeValue)="handleSelect($event)"
+            ></custom_checkbox>
+            <custom_select_component
+              *ngIf="item.field === 'ng-select'  || item.field === 'select' "
+              (onChangeValue)="handleSelect($event)"
+              [selectedValue]="item.model"
+              [name]="item.name"
+              [options]="item.field === 'select'? item.options : item.options | keyvals"
+              [defaultValue]="'Default'"
+              [title]="item.label"
+              [type]="item.field"
+              [multiple]="false"
+              [bindLabel]="item.field === 'ng-select'? 'value': ''"
+              [bindValue]="item.field === 'ng-select'? 'value': ''"
+              [required]="item.required"
+            ></custom_select_component>
+          </div>
+        </div>
+        <custom_input
+          *ngIf="['gauge'].includes(visualType)"
+          [value]="form_data.max_value"
+          [name]="'max_value'"
+          [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.MVG'"
+          [type]="'number'"
+          (onChangeValue)="handleSelect($event)"
+          [required]="true"
+        >
+        </custom_input>
+        <div class="row clearfix" *ngIf="['table_comparison'].includes(visualType)">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <button
+                type="button"
+                class="btn btn-info btn-outline btn-sm w-100 m-0"
+                (click)="openModal('modalComparison')"
+              >
+                {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.AD' | translate }}
+                <i class="zmdi zmdi-plus f-12 ml-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

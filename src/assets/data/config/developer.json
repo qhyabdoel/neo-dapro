@@ -1,0 +1,21 @@
+{
+    "title_home" : "Data Enterprise & Cloud Connect",
+    "global_search" : true,
+    "chat_box" : true,
+    "user_management" : true,
+    "week_implementation_change_password" : true,
+    "global_notification_template" : true,
+    "notif_configuration_manual" : true,
+    "forgot_password" : true,
+    "change_password" : true,
+    "isFirst" : {
+        "isHome": true,
+		"isDataProcessing": true,
+		"isListVisualizationChart": true,
+		"isDataVisualizationChart": true,
+		"isListVisualizationDashboard": true,
+		"isDataVisualizationDashboard": true,
+		"isConfigureApplications": true,
+		"isListApplications": true
+    }
+}

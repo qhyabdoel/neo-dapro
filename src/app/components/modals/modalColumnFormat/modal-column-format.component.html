@@ -1,0 +1,104 @@
+<div>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.CF' | translate }}</h5>
+    <button
+      id="btn-danger"
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="closeFormula()"
+      style="position: unset"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row clearfix">
+      <div class="col-md-3 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.COL_N' | translate }}</label>
+      </div>
+      <div class="col-md-3 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.FT' | translate }}</label>
+      </div>
+      <div class="col-md-4 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.F' | translate }}</label>
+      </div>
+      <div class="col-md-1 form-control-label">
+        <label>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.R' | translate }}</label>
+      </div>
+    </div>
+    <div class="row clearfix" *ngFor="let item of form_data?.custom_column_format_arr; let i = index">
+      <div class="col-md-3">
+        <div class="form-group">
+          <select
+            class="form-control show-tick ms select2"
+            [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.SC' | translate"
+            [(ngModel)]="form_data.custom_column_format_arr[i].column"
+            (change)="onChange(i, $event, 'column')"
+          >
+            <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CC' | translate }}</option>
+            <option *ngFor="let col of table_selected_column | keyvalue" [value]="col.value[0]">
+              {{ col.value[1] }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <select
+            class="form-control show-tick ms select2"
+            [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+            [(ngModel)]="form_data.custom_column_format_arr[i].format_type"
+            (change)="onChange(i, $event, 'format_type')"
+          >
+            <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CFT' | translate }}</option>
+            <option option *ngFor="let format of columnFormatList | keyvalue" [value]="format.value[0]">
+              {{ format.value[1] }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <select
+            *ngIf="form_data?.custom_column_format_arr[i].format_type === 'date'"
+            class="form-control show-tick ms select2"
+            [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+            [(ngModel)]="form_data.custom_column_format_arr[i].format"
+            (change)="onChange(i, $event, 'format')"
+          >
+            <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CTF' | translate }}</option>
+            <option *ngFor="let row of list_table_timestamp_format | keyvalue" [value]="row.value[0]">
+              {{ row.value[1] }}
+            </option>
+          </select>
+          <select
+            *ngIf="form_data?.custom_column_format_arr[i].format_type === 'number'"
+            class="form-control show-tick ms select2"
+            [attr.data-placeholder]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S' | translate"
+            [(ngModel)]="form_data.custom_column_format_arr[i].format"
+            (change)="onChange(i, $event, 'format')"
+          >
+            <option [value]="null">{{ 'MODULE.DATA_VISUAL.CHART.VALIDATOR.CFO' | translate }}</option>
+            <option *ngFor="let row of list_y_axis_format | keyvalue" [value]="row.value[0]">{{ row.value[1] }}</option>
+          </select>
+        </div>
+      </div>
+      <!-- for deleteting -->
+      <div class="col-md-1" *ngIf="i < 1"></div>
+      <div class="col-md-1" *ngIf="i >= 1">
+        <a type="button" class="p-1" (click)="onDelColumnFormat(i)"><i class="ti-trash text-danger"></i> </a>
+      </div>
+    </div>
+    <button type="button" class="btn btn-info btn-outline btn-sm mx-0" (click)="onAddColumnFormat()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.ACF' | translate }}
+      <i class="zmdi zmdi-plus f-12 ml-1"></i>
+    </button>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-info btn-outline btn-sm" type="button" data-dismiss="modal" (click)="saveAndRunQuery()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.A' | translate }}
+    </button>
+  </div>
+</div>

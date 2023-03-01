@@ -1,0 +1,300 @@
+[
+  {
+    "visual_type": [
+      {
+        "value": "dist_bar",
+        "label": "Bar Chart",
+        "image": "./assets/images/visualization_type_icon/bar.svg",
+        "display": "block"
+	    },
+      {
+        "value": "histogram",
+        "label": "Histogram",
+        "image": "./assets/images/visualization_type_icon/histogram.svg",
+        "display": "block"
+      },
+      {
+        "value": "box_plot",
+        "label": "Box Plot",
+        "image": "./assets/images/visualization_type_icon/box.svg",
+        "display": "none"
+      },
+      {
+        "value": "bubble",
+        "label": "Bubble Chart",
+        "image": "./assets/images/visualization_type_icon/bubble.svg",
+        "display": "block"
+      },
+      {
+        "value": "line",
+        "label": "Line Chart",
+        "image": "./assets/images/visualization_type_icon/dualline.svg",
+        "display": "block"
+      },
+      {
+        "value": "filter_box",
+        "label": "Filter Box",
+        "image": "./assets/images/visualization_type_icon/filter.svg",
+        "display": "block"
+      },
+      {
+        "value": "directed_force",
+        "label": "Force-Directed Graph",
+        "image": "./assets/images/visualization_type_icon/graph.svg",
+        "display": "block"
+      },
+      {
+        "value": "time_table",
+        "label": "Time Series Table",
+        "image": "./assets/images/visualization_type_icon/linetable.svg",
+        "display": "none"
+      },
+	  {
+        "value": "country_map",
+        "label": "Country Map",
+        "image": "/assets/images/visualization_type_icon/map.svg",
+        "display": "block"
+      },
+      {
+        "value": "osmmap",
+        "label": "Geo Map",
+        "image": "./assets/images/visualization_type_icon/map-longitude.svg",
+        "display": "block"
+      },
+      {
+        "value": "markup",
+        "label": "Markup",
+        "image": "./assets/images/visualization_type_icon/markup.svg",
+        "display": "block",
+        "imageLg": "/assets/images/visualization_type_lg/markup_lg.svg"
+      },
+      {
+        "value": "mix",
+        "label": "Mix Chart",
+        "image": "./assets/images/visualization_type_icon/mix.svg",
+        "display": "none"
+	  },
+      {
+        "value": "gauge",
+        "label": "Gauge Chart",
+        "image": "./assets/images/visualization_type_icon/gauge.svg",
+        "display": "display"
+      },
+      {
+        "value": "big_number_total",
+        "label": "Big Number",
+        "image": "./assets/images/visualization_type_icon/number.svg",
+        "display": "block"
+      },
+      {
+        "value": "pie",
+        "label": "Pie Chart",
+        "image": "./assets/images/visualization_type_icon/pie.svg",
+        "display": "block"
+      },
+      {
+        "value": "scatter",
+        "label": "Scatter Plot",
+        "image": "./assets/images/visualization_type_icon/scatter.svg",
+        "display": "none"
+      },
+      {
+        "value": "predictive",
+        "label": "Predictive Area",
+        "image": "./assets/images/visualization_type_icon/area.svg",
+        "display": "block"
+      },
+      {
+        "value": "area",
+        "label": "Area",
+        "image": "./assets/images/visualization_type_icon/area.svg",
+        "display": "none"
+      },
+      {
+        "value": "heatmap",
+        "label": "Heatmap",
+        "image": "./assets/images/visualization_type_icon/heatmap.svg",
+        "display": "block"
+      },
+      {
+        "value": "treemap",
+        "label": "Treemap",
+        "image": "./assets/images/visualization_type_icon/treemap.svg",
+        "display": "block"
+	  },
+	  {
+        "value": "sunburst",
+        "label": "Sunburst",
+        "image": "./assets/images/visualization_type_icon/sunburst.svg",
+        "display": "block"
+      },
+      {
+        "value": "table",
+        "label": "Table",
+        "image": "./assets/images/visualization_type_icon/table.svg",
+        "display": "block"
+      },
+      {
+        "value": "word_cloud",
+        "label": "Word Cloud",
+        "image": "./assets/images/visualization_type_icon/word.svg",
+        "display": "block",
+        "imageLg": "/assets/images/visualization_type_lg/word_lg.svg"
+      },
+      {
+        "value": "table_comparison",
+        "label": "Comparison Table",
+        "image": "./assets/images/visualization_type_icon/table-comparison.svg",
+		"display": "block"
+	  }
+    ],
+    "visual_type_chart_list": [
+      {
+        "value": "dist_bar",
+        "label": "Bar Chart",
+        "imageLg": "/assets/images/visualization_type_lg/bar_lg.svg"
+	  },
+
+	  {
+        "value": "sunburst",
+        "label": "Sunburst",
+        "imageLg": "./assets/images/visualization_type_lg/sunburst.svg"
+      },
+      {
+        "value": "histogram",
+        "label": "Histogram",
+        "imageLg": "/assets/images/visualization_type_lg/histogram_lg.svg"
+      },
+      {
+        "value": "horizontal_bar",
+        "label": "Horizontal Bar Chart",
+        "imageLg": "/assets/images/visualization_type_lg/bar_lg.svg"
+      },
+      {
+        "value": "box_plot",
+        "label": "Box Plot",
+        "imageLg": "/assets/images/visualization_type_lg/box_lg.svg"
+      },
+      {
+        "value": "bubble",
+        "label": "Bubble Chart",
+        "imageLg": "/assets/images/visualization_type_lg/bubble_lg.svg"
+      },
+      {
+        "value": "dual_line",
+        "label": "Dual Line Chart",
+        "imageLg": "/assets/images/visualization_type_lg/dualline_lg.svg"
+      },
+      {
+        "value": "line",
+        "label": "Line Chart",
+        "imageLg": "/assets/images/visualization_type_lg/dualline_lg.svg"
+      },
+      {
+        "value": "filter_box",
+        "label": "Filter Box",
+        "imageLg": "/assets/images/visualization_type_lg/filter_lg.svg"
+      },
+      {
+        "value": "directed_force",
+        "label": "Force-Directed Graph",
+        "imageLg": "/assets/images/visualization_type_lg/graph_lg.svg"
+      },
+      {
+        "value": "map",
+        "label": "Map ",
+        "imageLg": "/assets/images/visualization_type_lg/map_lg.svg"
+      },
+      {
+        "value": "country_map",
+        "label": "Country Map",
+        "imageLg": "/assets/images/visualization_type_lg/map_lg.svg"
+      },
+	{
+		"value": "osmmap",
+		"label": "OSM Map",
+		"imageLg": "/assets/images/visualization_type_lg/map_lg.svg"
+	},
+      {
+        "value": "country_map2",
+        "label": "Overlay Map",
+        "imageLg": "/assets/images/visualization_type_lg/map_lg.svg"
+      },
+      {
+        "value": "markup",
+        "label": "Markup",
+        "imageLg": "/assets/images/visualization_type_lg/markup_lg.svg"
+      },
+      {
+        "value": "gauge",
+        "label": "Gauge Chart",
+        "imageLg": "/assets/images/visualization_type_lg/gauge_lg.svg"
+	  },
+      {
+        "value": "mix",
+        "label": "Mix Chart",
+        "imageLg": "/assets/images/visualization_type_lg/mix_lg.svg"
+      },
+      {
+        "value": "big_number_total",
+        "label": "Big Number",
+        "imageLg": "/assets/images/visualization_type_lg/number_lg.svg"
+      },
+      {
+        "value": "pie",
+        "label": "Pie Chart",
+        "imageLg": "/assets/images/visualization_type_lg/pie_lg.svg"
+      },
+      {
+        "value": "scatter",
+        "label": "Scatter Plot",
+        "imageLg": "/assets/images/visualization_type_lg/area_lg.svg"
+      },
+      {
+        "value": "predictive",
+        "label": "Predictive Area",
+        "imageLg": "/assets/images/visualization_type_lg/area_lg.svg"
+      },
+      {
+        "value": "area",
+        "label": "Area",
+        "imageLg": "/assets/images/visualization_type_lg/area_lg.svg"
+      },
+      {
+        "value": "heatmap",
+        "label": "Heatmap",
+        "imageLg": "/assets/images/visualization_type_lg/heatmap_lg.svg"
+      },
+      {
+        "value": "treemap",
+        "label": "Treemap",
+        "imageLg": "/assets/images/visualization_type_lg/treemap_lg.svg"
+      },
+      {
+        "value": "table",
+        "label": "Table",
+        "imageLg": "/assets/images/visualization_type_lg/table_lg.svg"
+      },
+      {
+        "value": "pivot_table",
+        "label": "Pivot Table",
+        "imageLg": "/assets/images/visualization_type_lg/table_lg.svg"
+      },
+      {
+        "value": "time_table",
+        "label": "Time Series Table",
+        "imageLg": "/assets/images/visualization_type_lg/linetable_lg.svg"
+      },
+      {
+        "value": "word_cloud",
+        "label": "Word Cloud",
+        "imageLg": "/assets/images/visualization_type_lg/word_lg.svg"
+	  },
+      {
+        "value": "table_comparison",
+        "label": "Comparison Table",
+        "imageLg": "./assets/images/visualization_type_icon/table-comparison.svg"
+	  }
+    ]
+  }
+]

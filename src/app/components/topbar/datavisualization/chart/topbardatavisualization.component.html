@@ -1,0 +1,121 @@
+<div class="row py-1 sub-top-nav">
+  <div class="col-6 col-md-5">
+    <div class="row">
+      <div class="col-7 col-lg-6 pr-0">
+        <div class="form-group mb-0 mt-1">
+          <input
+            class="form-control form-bottomline mt-1"
+            [ngClass]="stateloadDataset ? '' : ' disabled'"
+            [readonly]="!stateloadDataset"
+            type="text"
+            placeholder="{{ 'MODULE.DATA_VISUAL.CHART.TOP_BAR.D' | translate }}"
+            [(ngModel)]="datasourceTitle"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+      </div>
+      <div class="col-auto pr-0">
+        <button
+          [ngClass]="
+            stateloadDataset
+              ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini'
+              : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini disabled'
+          "
+          class="btn btn-info btn-outline btn-sm"
+          mat-raised-button
+          matTooltip="{{ 'MODULE.DATA_VISUAL.CHART.TOP_BAR.S' | translate }}"
+          (click)="openModalTemplateCustom()"
+        >
+          <i class="ti-save"></i>
+        </button>
+        <button
+          [ngClass]="
+            stateloadDataset
+              ? 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini'
+              : 'btn btn-info btn-outline btn-icon btn-sm btn-outline-mini disabled'
+          "
+          mat-raised-button
+          matTooltip="{{ 'MODULE.DATA_VISUAL.CHART.TOP_BAR.N' | translate }}"
+          (click)="buttonNew()"
+        >
+          <i class="ti-file"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-auto px-0 align-self-center">
+    <ul class="nav nav-tabs nav-tabs-success" role="tablist">
+      <li class="nav-item">
+        <a
+          class="nav-link mb-0 px-3 active"
+          data-toggle="tab"
+          href="javascript:void()"
+          [routerLink]="['../listdatavisualization']"
+        >
+          <i class="zmdi zmdi-chart"></i>
+          {{ 'MODULE.DATA_VISUAL.CHART.LIST.subTopbarOptions.title' | translate | uppercase }}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link mb-0 px-3"
+          data-toggle="tab"
+          href="javascript:void()"
+          [routerLink]="['../dashboardvisualization']"
+          ><i class="zmdi zmdi-view-dashboard"></i>
+          {{ 'MODULE.DATA_VISUAL.DASHBOARD.LIST.subTopbarOptions.title' | translate | uppercase }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-auto ml-auto">
+    <button
+      [ngClass]="{
+        'disabled d-inline': !(slice?.slice_id > 0 && slice?.slice_id != 'undefined'),
+        'd-none': visualType == 'filter_box'
+      }"
+      class="btn btn-info btn-outline btn-sm"
+      mat-raised-button
+      matTooltip="{{ 'MODULE.DATA_VISUAL.CHART.TOP_BAR.DC' | translate }}"
+      (click)="onChartDownload(slice?.slice_id)"
+    >
+      <i class="zmdi zmdi-download f-12 ml-1"></i>
+    </button>
+    <button
+      [ngClass]="
+        slice?.slice_id > 0 && slice?.slice_id != 'undefined'
+          ? 'btn btn-info btn-outline btn-sm'
+          : 'btn btn-info btn-outline btn-sm disabled'
+      "
+      mat-raised-button
+      matTooltip="{{ 'MODULE.DATA_VISUAL.CHART.TOP_BAR.SC' | translate }}"
+      (click)="copyUrl(slice?.slice_id)"
+    >
+      <i class="zmdi zmdi-chart f-12 ml-1"></i>
+    </button>
+    <button
+      [ngClass]="
+        slice?.slice_id > 0 && slice?.slice_id != 'undefined'
+          ? 'btn btn-info btn-outline btn-sm'
+          : 'btn btn-info btn-outline btn-sm disabled'
+      "
+      mat-raised-button
+      matTooltip="{{ 'MODULE.DATA_VISUAL.CHART.TOP_BAR.SA' | translate }}"
+      (click)="getShareApi(slice?.slice_id)"
+    >
+      <i class="zmdi zmdi-link f-12 ml-1"></i>
+    </button>
+    <button
+      [ngClass]="
+        slice?.slice_id > 0 && slice?.slice_id != 'undefined'
+          ? 'btn btn-info btn-outline btn-sm'
+          : 'btn btn-info btn-outline btn-sm disabled'
+      "
+      mat-raised-button
+      matTooltip="{{ 'MODULE.DATA_VISUAL.CHART.TOP_BAR.EC' | translate }}"
+      (click)="getShareEmbed(slice?.slice_id)"
+    >
+      <i class="zmdi zmdi-code f-12 ml-1"></i>
+    </button>
+  </div>
+</div>

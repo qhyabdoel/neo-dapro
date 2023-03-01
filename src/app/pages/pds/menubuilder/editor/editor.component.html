@@ -1,0 +1,21 @@
+<!-- ide nya adalah menggambungkan semua leftbar, rightbar, topbar and workspaces di 1 halaman ini -->
+
+<!-- topbar -->
+<div
+  class="row py-1 sub-top-nav"
+  topbar-visualization
+  [options]="topbarOptions"
+  (newbutton)="buttonNew()"
+  (savebutton)="buttonSave($event)"
+  (viewbutton)="buttonView()"
+  (title)="titleChange($event)"
+></div>
+
+<!-- leftbar -->
+<aside id="leftSidebar" class="sidebar" leftbar-component (itemto)="loadApplicationTo($event)"></aside>
+
+<!-- rightbar -->
+<rightbar-application></rightbar-application>
+
+<!-- main container/ workspaces -->
+<workspaces-application></workspaces-application>

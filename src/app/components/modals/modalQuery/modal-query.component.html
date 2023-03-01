@@ -1,0 +1,44 @@
+<div>
+  <div class="modal-header">
+    <h5 class="title f-16">{{ 'MODULE.DATA_VISUAL.CHART.COMMON.FML' | translate }}</h5>
+    <button type="button" class="close" style="position: unset" (click)="closeFormula()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ngx-monaco-editor class="template-editor" [options]="editorOptions" [(ngModel)]="formulaValue">
+    </ngx-monaco-editor>
+    <div class="d-none col-md-12">
+      <h5>Replace attribute column_name.</h5>
+      <div class="viztype-selector-container">
+        <table class="table table-striped table-hover dataTable">
+          <thead>
+            <tr>
+              <th>Expression Formula</th>
+              <th>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.MN' | translate }}</th>
+              <th>{{ 'MODULE.DATA_VISUAL.CHART.COMMON.VN' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input class="form-control" type="text" name="expression" [(ngModel)]="listFormula['expression']" />
+              </td>
+              <td>
+                <input class="form-control" type="text" name="metric_name" [(ngModel)]="listFormula['metric_name']" />
+              </td>
+              <td>
+                <input class="form-control" type="text" name="verbose_name" [(ngModel)]="listFormula['verbose_name']" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info btn-outline btn-sm m-0" (click)="applyFormula()">
+      {{ 'MODULE.DATA_VISUAL.CHART.COMMON.A' | translate }}
+    </button>
+  </div>
+</div>

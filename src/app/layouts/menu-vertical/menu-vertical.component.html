@@ -1,0 +1,35 @@
+<!-- Menu Sidebar -->
+<aside id="menuLeftFloat" class="right-sidebar" (click)="handleAsideClick($event)">
+  <div class="tab-content">
+      <div class="tab-pane active" id="setting">
+          <div class="slim_scroll">
+              <div class="card m-0">
+                  <h5 class="mt-0">Data Studio</h5>
+                  <ul class="sidebar-menu">
+                      <li class="side-item active"><a href="javascript:;" [routerLink]="['/pds/dataprocessing']" class="side-link">Data Processing</a></li>
+                      <li class="side-item"><a href="javascript:;" [routerLink]="['/pds/listdatavisualization']" class="side-link">Data Visualization</a></li>
+                      <li class="side-item"><a href="javascript:;" [routerLink]="['/pds/applicationslist']" class="side-link">Application</a></li>
+
+                  </ul>
+              </div>
+              <div class="card m-0">
+                  <h5 class="mt-0">Data Modeler</h5>
+                  <ul class="sidebar-menu">
+                      <li class="side-item"><a href="javascript:;" class="side-link disabled" aria-disabled="true">Coming Soon</a></li>
+                  </ul>
+                  <!-- <ul class="sidebar-menu">
+                      <li class="side-item"><a href="javascript:;" class="side-link">Preprocessing</a></li>
+                      <li class="side-item"><a href="javascript:;" class="side-link">Modeling</a></li>
+                      <li class="side-item"><a href="javascript:;" class="side-link">Deploy</a></li>
+                  </ul> -->
+              </div>
+              <!-- <div class="card m-0">
+                  <h5 class="mt-0">Data Lake</h5>
+                  <ul class="sidebar-menu">
+                      <li class="side-item"><a href="javascript:;" class="side-link disabled" aria-disabled="true">Coming Soon</a></li>
+                  </ul>
+              </div>   -->
+          </div>                
+      </div>     
+  </div>
+</aside>

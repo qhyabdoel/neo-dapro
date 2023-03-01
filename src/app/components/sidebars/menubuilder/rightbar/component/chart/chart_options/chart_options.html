@@ -1,0 +1,96 @@
+<div class="panel panel-primary m-0">
+  <div class="panel-heading" role="tab" id="headingThree_1">
+    <h4 class="panel-title">
+      <a
+        [ngClass]="{ toggled: activeColapse.chartOption == true }"
+        class="menu-toggle collapsed text-uppercase"
+        role="button"
+        (click)="collapsible('chartOption')"
+        ><i
+          class="zmdi zmdi-info"
+          [matMenuTriggerFor]="showPopover"
+          #triggerpopover="matMenuTrigger"
+          (mouseover)="triggerpopover.openMenu(); setPopover();"
+          (mouseleave)="triggerpopover.closeMenu(); hidePopover()"
+        ></i
+        >&nbsp; {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LABEL' | translate }}
+      </a>
+      <mat-menu #showPopover="matMenu" class="tooltips popover pds-popover">
+        <h3 class="popover-header">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LABEL' | translate }}</h3>
+        <div class="popover-body">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.LABEL_TOOLTIP' | translate }}</div>
+      </mat-menu>
+    </h4>
+  </div>
+  <div [ngClass]="{ show: activeColapse.chartOption == true }" class="panel-collapse collapse" role="tabpanel">
+    <div class="panel-body" style="padding: 15px">
+      <chart_general
+        (collapseOnClick)="collapsible($event)"
+        [activeColapse]="activeColapse"
+        (onChange)="onChange($event)"
+        [form_data]="form_data"
+        [visualType]="visualType"
+        [explore]="explore"
+        (applyQuery)="applyQuery()"
+      ></chart_general>
+      <chart_format
+        (collapseOnClick)="collapsible($event)"
+        [activeColapse]="activeColapse"
+        (onChange)="onChange($event)"
+        [form_data]="form_data"
+        [visualType]="visualType"
+        (applyQuery)="applyQuery()"
+      ></chart_format>
+      <chart_color
+        (collapseOnClick)="collapsible($event)"
+        [activeColapse]="activeColapse"
+        (onChange)="onChange($event)"
+        [form_data]="form_data"
+        [visualType]="visualType"
+        (applyQuery)="applyQuery()"
+        [exploreJson]="exploreJson"
+      ></chart_color>
+      <chart_sort
+        (collapseOnClick)="collapsible($event)"
+        [activeColapse]="activeColapse"
+        (onChange)="onChange($event)"
+        [form_data]="form_data"
+        [visualType]="visualType"
+      ></chart_sort>
+      <dual_axis
+        (collapseOnClick)="collapsible($event)"
+        [activeColapse]="activeColapse"
+        (onChange)="onChange($event)"
+        [form_data]="form_data"
+        [visualType]="visualType"
+      ></dual_axis>
+      <chart_label
+        (collapseOnClick)="collapsible($event)"
+        [activeColapse]="activeColapse"
+        (onChange)="onChange($event)"
+        [form_data]="form_data"
+        [visualType]="visualType"
+      ></chart_label>
+      <chart_legend
+        (collapseOnClick)="collapsible($event)"
+        [activeColapse]="activeColapse"
+        (onChange)="onChange($event)"
+        [form_data]="form_data"
+        [visualType]="visualType"
+      ></chart_legend>
+      <chart_on_dashboard
+        (collapseOnClick)="collapsible($event)"
+        [activeColapse]="activeColapse"
+        (onChange)="onChange($event)"
+        [form_data]="form_data"
+        [visualType]="visualType"
+        [explore]="explore"
+      ></chart_on_dashboard>
+
+      <custom_display
+        (collapseOnClick)="collapsible($event)"
+        [activeColapse]="activeColapse"
+        (onChange)="onChange($event)"
+      ></custom_display>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="toastr-main-wrapper" *ngIf="toastrMessages && toastrMessages.length > 0">
+  <div
+    class="toastr-card"
+    *ngFor="let toastrMessage of toastrMessages; index as i"
+    [ngClass]="toastrMessage.toastrType"
+    (click)="onClick(i)"
+    [ngStyle]="calcTop(i)"
+  >
+    <div class="toastr-card-content">
+      <div class="toastr-body">
+        {{ toastrMessage.message | translate }}
+      </div>
+    </div>
+  </div>
+</div>

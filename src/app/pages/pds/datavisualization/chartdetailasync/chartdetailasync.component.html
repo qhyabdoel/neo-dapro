@@ -1,0 +1,346 @@
+<div class="card">
+  <div
+    class="header"
+    [ngClass]="{
+      'header-transparent': explore.form_data?.hide_title || explore.form_data?.hide_background,
+      'd-none': explore.form_data?.hide_title
+    }"
+    *ngIf="explore.form_data?.slice_id > 0 && explore.form_data?.slice_id != undefined"
+  >
+    <h2 [ngClass]="{ 'd-none': explore.form_data?.hide_title }">{{ title }}</h2>
+    <ul class="header-dropdown d-none">
+      <li>
+        <a role="button" (click)="onRefresh(myChartID)">
+          <i class="zmdi zmdi-refresh-alt"></i>
+        </a>
+      </li>
+      <li>
+        <a role="button" *ngIf="explore?.can_add" (click)="onEdit(myChartID)">
+          <i class="zmdi zmdi-edit"></i>
+        </a>
+      </li>
+      <li>
+        <a role="button" *ngIf="explore?.can_download" (click)="onDownload(myChartID)">
+          <i class="zmdi zmdi-download"></i>
+        </a>
+      </li>
+      <li class="remove"></li>
+    </ul>
+  </div>
+  <div
+    class="body"
+    [ngClass]="{
+      'body-transparent': explore.form_data?.hide_background,
+      roundeds: explore.form_data?.hide_title || explore.form_data?.slice_id == undefined
+    }"
+  >
+    <div
+      pq-predictive-async
+      *ngIf="typeChart == 'predictive' || typeChart == 'scatter'"
+      [autoResize]="autoResize"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-line-async
+      *ngIf="typeChart == 'line' || typeChart == 'dual_line'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-histogram
+      *ngIf="typeChart == 'histogram'"
+      [autoResize]="autoResize"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-bignumber-async
+      *ngIf="typeChart == 'big_number_total'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-pie-async
+      *ngIf="typeChart == 'pie'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-markup-async
+      *ngIf="typeChart == 'markup'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-heatmap-async
+      *ngIf="typeChart == 'heatmap'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-filterbox-async
+      *ngIf="typeChart == 'filter_box'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-d3-directed-force-async
+      *ngIf="typeChart == 'directed_force'"
+      [autoResize]="autoResize"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-tableview-async
+      *ngIf="typeChart == 'table'"
+      [config]="data"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+      [records]="records"
+      [columns]="columns"
+      [token]="token"
+    ></div>
+    <div
+      pq-bar-async
+      *ngIf="typeChart == 'dist_bar' || typeChart == 'horizontal_bar'"
+      [autoResize]="autoResize"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-treemap-async
+      *ngIf="typeChart == 'treemap'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-gauge-async
+      *ngIf="typeChart == 'gauge'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-sunburst-async
+      *ngIf="typeChart == 'sunburst'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-countrymap-async
+      *ngIf="typeChart == 'country_map' || typeChart == 'map'"
+      [autoResize]="autoResize"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-d3-cloud-async
+      *ngIf="typeChart == 'word_cloud'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-pivot-async
+      *ngIf="typeChart == 'pivot_table'"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+    ></div>
+
+    <div
+      pq-tablecomparison-async
+      *ngIf="typeChart == 'table_comparison'"
+      [config]="data"
+      [autoResize]="autoResize"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [exploreJson]="exploreJson"
+      [records]="records"
+      [columns]="columns"
+    ></div>
+
+    <div
+      pq-bubble-async
+      *ngIf="typeChart == 'bubble'"
+      [autoResize]="autoResize"
+      [mapGeoJSON]="mapGeoJSON"
+      [formdata]="explore"
+      [data]="data"
+      [title]="title"
+      [themes]="themes"
+      [cardID]="id"
+      [myChartID]="myChartID"
+      [index]="index"
+      [title]="title"
+      [exploreJson]="exploreJson"
+    ></div>
+  </div>
+</div>

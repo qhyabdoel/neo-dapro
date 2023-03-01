@@ -1,0 +1,497 @@
+<!-- section start for dashboard datavisualization -->
+<div class="card" style="height: inherit" *ngIf="['dashboard', 'dashboardview', 'app_preview'].includes(typePage)">
+  <div
+    class="header"
+    [ngClass]="{
+      'header-transparent': explore?.form_data?.hide_title || explore?.form_data?.hide_background
+    }"
+  >
+    <div class="row clearfix">
+      <div class="col-auto" [ngClass]="{ 'd-none': !loadingChart }">
+        <loading-component [loading]="loadingChart"></loading-component>
+      </div>
+      <div class="col">
+        <h2 [ngClass]="{ 'd-none': explore?.form_data?.hide_title }">{{ title }}</h2>
+      </div>
+    </div>
+
+    <!-- loop buttons -->
+    <ul
+      class="header-dropdown"
+      [ngClass]="{ 'h-title-bg': explore?.form_data?.hide_title }"
+      *ngIf="!explore?.form_data.instant_filtering || typePage === 'dashboard'"
+    >
+      <button
+        type="submit"
+        class="btn btn-info btn-outline btn-sm pr-2 my-2"
+        *ngIf="['dashboardview', 'app_preview'].includes(typePage) && explore?.form_data?.viz_type === 'filter_box'"
+        (click)="handleEventButton('Apply')"
+      >
+        Apply
+        <i class="zmdi zmdi-check ml-1"></i>
+      </button>
+      <li *ngFor="let item of eventButtonData">
+        <a
+          role="button"
+          (click)="handleEventButton(item.type)"
+          *ngIf="item.type !== 'Apply' && item.typeChart.includes(typeChart) && item.typePage.includes(typePage)"
+        >
+          <i [class]="item.icon"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="body"
+    [ngClass]="{ 'body-transparent': explore?.form_data?.hide_background, roundeds: explore?.form_data?.hide_title }"
+  >
+    <div
+      class="containerList"
+      *ngIf="
+        exploreJson?.form_data?.filter_date &&
+        !['table', 'preview', 'filter_box', 'pivot_table', 'table_comparison'].includes(explore.form_data.viz_type) &&
+        !exploreJson?.form_data?.initial_chart_blank
+      "
+    >
+      <div class="row clearfix justify-content-end align-items-center px-3">
+        <div class="col-auto">
+          <custom_date_picker_component
+            *ngIf="!explore?.form_data?.is_hide_togle_filter"
+            [filter_date]="exploreJson ? exploreJson.form_data.filter_date : ''"
+            [date_type]="exploreJson ? exploreJson.form_data.filter_date_type : ''"
+            (setState)="setState($event)"
+            [value1]="since ? since : ''"
+            [value2]="until ? until : ''"
+            [type]="'dynamic'"
+          >
+          </custom_date_picker_component>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        !noData &&
+        explore &&
+        !['big_number_total', 'markup', 'table', 'preview', 'filter_box', 'pivot_table', 'table_comparison'].includes(
+          explore.form_data.viz_type
+        ) &&
+        !exploreJson?.form_data?.initial_chart_blank
+      "
+      [ngClass]="{
+        'h-85':
+          exploreJson?.form_data?.filter_date &&
+          !['table', 'preview', 'filter_box', 'pivot_table', 'table_comparison'].includes(explore.form_data.viz_type) &&
+          !exploreJson?.form_data?.initial_chart_blank
+      }"
+      class="demo-chart"
+      echarts
+      [options]="chartOption"
+      (chartInit)="onChartInit($event)"
+      [theme]="themes"
+      [id]="myChartID"
+      [autoResize]="true"
+    ></div>
+    <!-- section visualization without echart -->
+
+    <!-- section big number start -->
+    <big-number-component
+      [myChartID]="myChartID"
+      [explore]="explore"
+      [chartOption]="chartOption"
+      [exploreJson]="exploreJson"
+      (handleFilterGeneralChart)="handleFilterGeneralChart($event)"
+    ></big-number-component>
+    <!-- section big number end -->
+
+    <div
+      class="embed-responsive embed-responsive-21by9 h-100"
+      *ngIf="explore && ['markup'].includes(explore.form_data.viz_type) && !exploreJson?.form_data?.initial_chart_blank"
+    >
+      <iframe
+        #myiFrame
+        id="myiFrame"
+        class="embed-responsive-item"
+        sandbox="allow-same-origin allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-top-navigation allow-top-navigation-by-user-activation"
+        [srcdoc]="chartOption?.html"
+      >
+      </iframe>
+    </div>
+
+    <!-- section table start -->
+    <div
+      class="h-100"
+      *ngIf="
+        explore &&
+        ['table', 'preview', 'pivot_table'].includes(explore.form_data.viz_type) &&
+        !exploreJson?.form_data?.initial_chart_blank
+      "
+    >
+      <table-component
+        [myChartID]="myChartID"
+        [explore]="explore"
+        [exploreJson]="exploreJson"
+        [chartOption]="chartOption"
+        [since]="since"
+        [until]="until"
+        [tableColumnsList]="tableColumnsList"
+        [dataSource]="dataSource"
+        [viewColumnTable]="viewColumnTable"
+        [displayedColumns]="displayedColumns"
+        [searchMultiCols]="searchMultiCols"
+        [displayGrid]="displayGrid"
+        [pagelength]="pagelength"
+        [myHtml]="myHtml"
+        [realRecords]="realRecords"
+        (handleGenerate)="handleGenerate($event)"
+        (handleSetData)="setState($event)"
+        (handleFilterGeneralChart)="handleFilterGeneralChart($event)"
+      ></table-component>
+    </div>
+    <!-- section table end -->
+
+    <!-- section table comparison start -->
+    <pq-table-comparison
+      *ngIf="
+        explore &&
+        ['table_comparison'].includes(explore.form_data.viz_type) &&
+        dataSource &&
+        !exploreJson?.form_data?.initial_chart_blank
+      "
+      [explore]="explore"
+      [exploreJson]="exploreJson"
+      [dataSource]="dataSource"
+      [displayedColumns]="displayedColumns"
+      [chartOption]="chartOption"
+      [pagelength]="pagelength"
+    >
+    </pq-table-comparison>
+    <!-- section table comparison end -->
+
+    <!-- section filter box start -->
+    <!-- <filterbox-component
+      [myChartID]="myChartID"
+      [explore]="explore"
+      [exploreJson]="exploreJson"
+      [chartOption]="chartOption"
+      [since]="since"
+      [until]="until"
+      [listOfChartOnDashboard]="listOfChartOnDashboard"
+      [filterCheckboxList]="filterCheckboxList"
+      [isExtraFilter]="isExtraFilter"
+      (handleSetData)="setState($event)"
+      (applyFunction)="handleApplyFilter()"
+    ></filterbox-component> -->
+    <!-- section filter box end -->
+    <!-- section visualization without echart -->
+
+    <!-- filter box akan menggunakan component terpisah, code dibawah ini dipertahakan karena masih ada fungsi yg masih belum berjalan dengan baik -->
+
+    <div
+      *ngIf="
+        explore && ['filter_box'].includes(explore.form_data.viz_type) && !exploreJson?.form_data?.initial_chart_blank
+      "
+    >
+      <div [ngClass]="explore?.form_data?.filter_alignment_horizontal ? 'flex-center row clearfix' : ''">
+        <div
+          [ngClass]="explore?.form_data?.filter_alignment_horizontal ? 'col' : 'row clearfix'"
+          *ngFor="let item of listFilterColumn; let i = index"
+        >
+          <div *ngIf="item !== explore.form_data.filter_control_checkbox">
+            <div class="form-control-label">
+              <label class="text-capitalize mb-2">{{ item.col }}</label>
+            </div>
+            <div class="form-group">
+              <ng-select
+                class="text-light"
+                [items]="chartOption ? chartOption.data[item.col] : []"
+                [multiple]="true"
+                [closeOnSelect]="true"
+                [searchable]="true"
+                bindLabel="text"
+                placeholder="Select"
+                (change)="filter_function($event, i)"
+                [(ngModel)]="item.val"
+              >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row clearfix" *ngIf="explore?.form_data?.alphabet_filter">
+        <div class="col-md-12">
+          <div class="mw-100 d-flex overflow-auto border-0 mb-4">
+            <button
+              class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini ml-0 mr-1"
+              [ngClass]="{ active: filter[0] === activeAlphabet }"
+              id="AlphabethBtn-{{ filter[0] }}"
+              *ngFor="let filter of alphabethList; let i = index"
+              (click)="onAlphabetFilter(filter[0])"
+            >
+              {{ filter[1] }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix" *ngIf="explore?.form_data?.filter_checkbox">
+        <div class="col">
+          <div class="form-line">
+            <div class="checkbox">
+              <input id="fcb-selectAll" type="checkbox" (change)="onCheckboxFilter($event, 'all')" />
+              <label for="fcb-selectAll"> Select All</label>
+            </div>
+          </div>
+        </div>
+        <div class="col" *ngFor="let filter of filterCheckboxList">
+          <div class="form-line">
+            <div class="checkbox">
+              <input
+                id="{{ 'fcb-' + filter.id }}"
+                [(ngModel)]="filter.isChecked"
+                [ngModelOptions]="{ standalone: true }"
+                type="checkbox"
+                (change)="onCheckboxFilter($event, filter.id)"
+              />
+              <label for="{{ 'fcb-' + filter.id }}">{{ filter.text }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <custom_date_picker_component
+        *ngIf="explore?.form_data?.date_filter"
+        [filter_date]="explore ? explore?.form_data?.filter_date : ''"
+        [date_type]="explore ? explore?.form_data?.filter_date_type : ''"
+        (setState)="setState($event)"
+        [type]="'dynamic'"
+        [value1]="since ? since : ''"
+        [value2]="until ? until : ''"
+      >
+      </custom_date_picker_component>
+    </div>
+  </div>
+</div>
+<!-- section end for dashboard datavisualization -->
+
+<!-- section start for chart datavisualization -->
+<div *ngIf="!['dashboard', 'dashboardview', 'app_preview'].includes(typePage)">
+  <div
+    class="containerList"
+    *ngIf="
+      exploreJson?.form_data?.filter_date &&
+      !['table', 'preview', 'filter_box', 'pivot_table', 'table_comparison'].includes(explore.form_data.viz_type)
+    "
+  >
+    <div class="row clearfix justify-content-end align-items-center px-3">
+      <div class="col-auto">
+        <custom_date_picker_component
+          *ngIf="!explore?.form_data?.is_hide_togle_filter"
+          [filter_date]="exploreJson ? exploreJson.form_data.filter_date : ''"
+          [date_type]="exploreJson ? exploreJson.form_data.filter_date_type : ''"
+          (setState)="setState($event)"
+          [value1]="since ? since : ''"
+          [value2]="until ? until : ''"
+          [type]="'dynamic'"
+        >
+        </custom_date_picker_component>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="row clearfix justify-content-end align-items-center px-3"
+    *ngIf="!noData && exploreJson?.form_data.show_row_limit && ['directed_force'].includes(explore.form_data.viz_type)"
+  >
+    <div class="col-auto">
+      <custom_select_component
+        [name]="'row_limit'"
+        [options]="list_row_limit"
+        [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CL'"
+        [title]="'Row Limit'"
+        [type]="'select'"
+        [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.CL'"
+        (onChangeValue)="handleSelectRowLimit($event)"
+        [selectedValue]="exploreJson.form_data.row_limit"
+      ></custom_select_component>
+    </div>
+  </div>
+
+  <div
+    *ngIf="
+      !noData &&
+      explore &&
+      !['big_number_total', 'markup', 'table', 'preview', 'filter_box', 'pivot_table', 'table_comparison'].includes(
+        explore.form_data.viz_type
+      )
+    "
+    class="demo-chart"
+    echarts
+    [options]="chartOption"
+    (chartInit)="onChartInit($event)"
+    [theme]="themes"
+    [id]="myChartID"
+    [autoResize]="true"
+  ></div>
+  <!-- section visualization without echart -->
+
+  <!-- section big number start -->
+  <big-number-component
+    [myChartID]="myChartID"
+    [explore]="explore"
+    [chartOption]="chartOption"
+    [exploreJson]="exploreJson"
+  ></big-number-component>
+
+  <!-- section big number end -->
+
+  <div
+    class="embed-responsive embed-responsive-21by9 h-100"
+    *ngIf="explore && ['markup'].includes(explore.form_data.viz_type)"
+  >
+    <iframe
+      #myiFrame
+      id="myiFrame"
+      class="embed-responsive-item"
+      sandbox="allow-same-origin allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-top-navigation allow-top-navigation-by-user-activation"
+      [srcdoc]="chartOption?.html"
+    >
+    </iframe>
+  </div>
+
+  <!-- section table start -->
+  <div
+    class="wrapTableView"
+    *ngIf="explore && ['table', 'preview', 'pivot_table'].includes(explore.form_data.viz_type)"
+  >
+    <table-component
+      [myChartID]="myChartID"
+      [explore]="explore"
+      [exploreJson]="exploreJson"
+      [chartOption]="chartOption"
+      [since]="since"
+      [until]="until"
+      [tableColumnsList]="tableColumnsList"
+      [dataSource]="dataSource"
+      [viewColumnTable]="viewColumnTable"
+      [displayedColumns]="displayedColumns"
+      [searchMultiCols]="searchMultiCols"
+      [displayGrid]="displayGrid"
+      [pagelength]="pagelength"
+      [myHtml]="myHtml"
+      [realRecords]="realRecords"
+      (handleGenerate)="handleGenerate($event)"
+      (handleSetData)="setState($event)"
+    ></table-component>
+  </div>
+
+  <!-- section table end -->
+
+  <!-- section table comparison start -->
+  <pq-table-comparison
+    *ngIf="explore && ['table_comparison'].includes(explore.form_data.viz_type) && dataSource"
+    [explore]="explore"
+    [exploreJson]="exploreJson"
+    [dataSource]="dataSource"
+    [displayedColumns]="displayedColumns"
+    [chartOption]="chartOption"
+    [pagelength]="pagelength"
+  >
+  </pq-table-comparison>
+  <!-- section table comparison end -->
+
+  <!-- section filter box start -->
+  <!-- <filterbox-component
+[myChartID]="myChartID"
+[explore]="explore"
+[exploreJson]="exploreJson"
+[chartOption]="chartOption"
+[since]="since"
+[until]="until"
+[listOfChartOnDashboard]="listOfChartOnDashboard"
+[filterCheckboxList]="filterCheckboxList"
+[isExtraFilter]="isExtraFilter"
+(handleSetData)="setState($event)"
+(applyFunction)="handleApplyFilter()"
+></filterbox-component> -->
+  <!-- section filter box end -->
+  <!-- section visualization without echart -->
+
+  <div *ngIf="explore && ['filter_box'].includes(explore.form_data.viz_type)">
+    <div [ngClass]="explore?.form_data?.filter_alignment_horizontal ? 'flex-center row clearfix' : ''">
+      <div
+        [ngClass]="explore?.form_data?.filter_alignment_horizontal ? 'col' : 'row clearfix'"
+        *ngFor="let item of explore?.form_data?.groupby; let i = index"
+      >
+        <div *ngIf="item !== explore.form_data.filter_control_checkbox">
+          <div class="form-control-label">
+            <label class="text-capitalize mb-2">{{ item }}</label>
+          </div>
+          <div class="form-group">
+            <ng-select
+              class="text-light"
+              [items]="chartOption ? chartOption.data[item] : []"
+              [multiple]="true"
+              [closeOnSelect]="true"
+              [searchable]="true"
+              bindLabel="text"
+              placeholder="Select"
+              (change)="filter_function($event, i)"
+            >
+            </ng-select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row clearfix" *ngIf="explore?.form_data?.alphabet_filter">
+      <div class="col-md-12">
+        <div class="mw-100 d-flex overflow-auto border-0 mb-4">
+          <button
+            class="btn btn-info btn-outline btn-icon btn-sm btn-outline-mini ml-0 mr-1"
+            [ngClass]="{ active: filter[0] === activeAlphabet }"
+            id="AlphabethBtn-{{ filter[0] }}"
+            *ngFor="let filter of alphabethList; let i = index"
+            (click)="onAlphabetFilter(filter[0])"
+          >
+            {{ filter[1] }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix" *ngIf="explore?.form_data?.filter_checkbox">
+      <div class="col">
+        <div class="form-line">
+          <div class="checkbox">
+            <input id="fcb-selectAll" type="checkbox" (change)="onCheckboxFilter($event, 'all')" />
+            <label for="fcb-selectAll"> Select All</label>
+          </div>
+        </div>
+      </div>
+      <div class="col" *ngFor="let filter of filterCheckboxList">
+        <div class="form-line">
+          <div class="checkbox">
+            <input
+              id="{{ 'fcb-' + filter.id }}"
+              [(ngModel)]="filter.isChecked"
+              [ngModelOptions]="{ standalone: true }"
+              type="checkbox"
+              (change)="onCheckboxFilter($event, filter.id)"
+            />
+            <label for="{{ 'fcb-' + filter.id }}">{{ filter.text }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <custom_date_picker_component
+      *ngIf="explore?.form_data?.date_filter"
+      [filter_date]="explore ? explore?.form_data?.filter_date : ''"
+      [date_type]="explore ? explore?.form_data?.filter_date_type : ''"
+      (setState)="setState($event)"
+      [type]="'dynamic'"
+      [value1]="since ? since : ''"
+      [value2]="until ? until : ''"
+    >
+    </custom_date_picker_component>
+  </div>
+</div>
+<!-- section end for chart datavisualization -->

@@ -1,0 +1,120 @@
+<div class="row py-1 sub-top-nav" topbar-visualization [options]="topbarOption" (refresh)="reload()"></div>
+
+<section class="content content-full">
+  <div class="row clearfix align-items-center">
+    <div class="col-sm-6 col-md-8">
+      <div class="block-header d-inline-box p-0">
+        <i class="{{ options?.iconTitle }} align-middle mr-2"></i>
+        <h2 *ngIf="options?.type == 'chart'">{{ 'GRID_VIEW.LIST_CHART' | translate }}</h2>
+        <h2 *ngIf="options?.type == 'dashboard'">{{ 'GRID_VIEW.LIST_DASHBOARD' | translate }}</h2>
+        <h2 *ngIf="options?.type == 'application'">{{ 'GRID_VIEW.LIST_APP' | translate }}</h2>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control form-bottomline"
+          placeholder="{{ 'GRID_VIEW.SEARCH' | translate }} {{ options?.title }}"
+          [(ngModel)]="generalSearch"
+          [ngModelOptions]="{ standalone: true }"
+          (keyup)="$event.which == 13 ? search() : 0"
+        />
+        <div class="input-group-append form-bottomline group-bottomline">
+          <button class="input-group-text border-0">
+            <span class="input-group-addon"><i class="ti-search f-12" (click)="search()"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row clearfix">
+    <!-- loading shimmer -->
+    <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let row of loadingList">
+      <mat-card
+        *ngIf="loading"
+        class="shimmer col-lg-3 col-md-6 col-sm-12 card bg-grey"
+        style="height: 13em"
+      ></mat-card>
+    </div>
+    <!-- loading shimmer -->
+    <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let row of dataSource; index as i">
+      <a href="javascript:void(0)" [routerLink]="[options?.linkUrl]" [queryParams]="getQueryParam(row)">
+        <div class="card info-box-2">
+          <div class="body" [ngClass]="getBackground(i + 1)">
+            <div class="icon col-12">
+              <img width="85" height="85" [src]="getRandomImage(i)" *ngIf="options?.isRandomImageBackground" />
+              <img width="85" height="85" [src]="getImageByValue(row)" *ngIf="!options?.isRandomImageBackground" />
+            </div>
+            <div class="content col-12">
+              <div class="text" title="{{ getBodyTitle(row) }}">{{ getBodyTitle(row) }}</div>
+              <div class="flex-fill bd-highlight" *ngIf="options?.isLabelType">
+                <span [innerText]="getTypeLabel(row)"></span>
+              </div>
+              <div class="d-flex bd-highlight mt-4">
+                <div class="flex-fill bd-highlight text-left">
+                  <span>{{ 'GRID_VIEW.LM' | translate }}</span
+                  ><br />
+                  <h5 class="mb-0">
+                    {{ getUpdatedDate(row) }}
+                  </h5>
+                </div>
+                <div class="flex-fill bd-highlight text-right">
+                  <div *ngIf="options?.type === 'dashboard'">
+                    <span
+                      >{{ options?.secondTitle.split(' ').length > 1 ? '' : 'Total' }} {{ options?.secondTitle }}</span
+                    ><br />
+                    <h5 class="mb-0" title="{{ getTotalItems(row) }}">
+                      {{ getTotalItems(row) }}
+                      {{ options?.secondTitle.split(' ').length > 1 ? '' : options?.secondTitle }}
+                    </h5>
+                  </div>
+                  <div *ngIf="options?.type === 'application'">
+                    <span
+                      >{{ options?.secondTitle.split(' ').length > 1 ? '' : 'Total' }} {{ options?.secondTitle }}</span
+                    ><br />
+                    <h5 class="mb-0" title="{{ getTotalItems(row) }}">
+                      {{ getTotalItems(row) }}
+                      {{ options?.secondTitle.split(' ').length > 1 ? '' : options?.secondTitle }}
+                    </h5>
+                  </div>
+                  <div *ngIf="options?.type === 'chart'">
+                    <span
+                      >{{ options?.secondTitle.split(' ').length > 1 ? '' : 'Total' }} {{ options?.secondTitle }}</span
+                    ><br />
+                    <h5 class="mb-0" title="{{ getTotalItems(row) }}">
+                      {{ getTotalItems(row) }}
+                      {{ options?.secondTitle.split(' ').length > 1 ? '' : options?.secondTitle }}
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="row clearfix" *ngIf="totalSize == 0">
+    <div class="col-12 text-center">
+      <img alt="Paques" class="logo-light" width="300" src="./assets/images/gif/nodata-light-300.gif" />
+      <img alt="Paques" class="logo-dark op-7" width="300" src="./assets/images/gif/nodata-dark-300.gif" />
+      <h6 class="f-18">{{ 'GRID_VIEW.ND' | translate }}</h6>
+    </div>
+  </div>
+
+  <!--begin:: Components/Pagination/Default-->
+  <div class="pagination pagination-success justify-content-center" *ngIf="totalSize > 0">
+    <mat-paginator
+      #paginator
+      [pageSize]="pageSize"
+      [showFirstLastButtons]="true"
+      [pageSizeOptions]="[12]"
+      [length]="totalSize"
+      [pageIndex]="currentPage"
+      (page)="pageEvent = handlePage($event)"
+    >
+    </mat-paginator>
+  </div>
+</section>

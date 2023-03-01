@@ -1,0 +1,178 @@
+{
+    "data" : [
+        { "text" : "DATASOURCE", "value" : 125200, "icon" : "/assets/media/icons/svg/Devices/Server.svg"},
+        { "text" : "QUERIES", "value" : 82000, "icon" : "/assets/media/icons/svg/General/Settings-2.svg"},
+        { "text" : "CHARTS", "value" : 250, "icon" : "/assets/media/icons/svg/Shopping/Chart-pie.svg"},
+        { "text" : "DASHBOARD", "value" : 90, "icon" : "/assets/media/icons/svg/Files/File-done.svg"}
+    ],
+    "list" : [
+        {
+            "name" : "datasource",
+            "text" : "RECENT DATASOURCE",
+            "menu" : "Data Processing",
+            "prefixIcon" : "/assets/media/icons/svg/Devices/Server.svg",
+            "sufixIcon" : "/assets/media/icons/svg/Files/Upload.svg",
+            "class" : "bg-cyan",
+            "data" :[
+                {
+                    "query_id": 1,
+                    "query_name": "Sample",
+                    "last_modified": "8 Hours ago"
+                },
+                {
+                    "query_id": 2,
+                    "query_name": "Insurance",
+                    "last_modified": "10 Hours ago"
+                },{
+                    "query_id": 3,
+                    "query_name": "Bank",
+                    "last_modified": "3 Days ago"
+                },
+                {
+                    "query_id": 4,
+                    "query_name": "Untitled",
+                    "last_modified": "5 Days ago"
+                },{
+                    "query_id": 5,
+                    "query_name": "Sample",
+                    "last_modified": "1 Week ago"
+                },
+                {
+                    "query_id": 6,
+                    "query_name": "Insurance",
+                    "last_modified": "20/12/2019"
+                },{
+                    "query_id": 7,
+                    "query_name": "Bank",
+                    "last_modified": "15/12/2019"
+                },
+                {
+                    "query_id": 8,
+                    "query_name": "Untitled",
+                    "last_modified": "10/12/2019"
+                },{
+                    "query_id": 9,
+                    "query_name": "Sample",
+                    "last_modified": "06/12/2019"
+                },
+                {
+                    "query_id": 10,
+                    "query_name": "Insurance",
+                    "last_modified": "03/12/2019"
+                }
+            ]
+        },
+        {
+            "name" : "query",
+            "text" : "RECENT QUERY",
+            "menu" : "Data Processing",
+            "prefixIcon" : "/assets/media/icons/svg/Devices/Server.svg",
+            "sufixIcon" : "/assets/media/icons/svg/Code/Plus.svg",
+            "class" : "bg-green",
+            "data" :[
+                {
+                    "query_id": 1,
+                    "query_name": "Sample",
+                    "last_modified": "8 Hours ago"
+                },
+                {
+                    "query_id": 2,
+                    "query_name": "Insurance",
+                    "last_modified": "10 Hours ago"
+                },{
+                    "query_id": 3,
+                    "query_name": "Bank",
+                    "last_modified": "3 Days ago"
+                },
+                {
+                    "query_id": 4,
+                    "query_name": "Untitled",
+                    "last_modified": "5 Days ago"
+                },{
+                    "query_id": 5,
+                    "query_name": "Sample",
+                    "last_modified": "1 Week ago"
+                },
+                {
+                    "query_id": 6,
+                    "query_name": "Insurance",
+                    "last_modified": "20/12/2019"
+                },{
+                    "query_id": 7,
+                    "query_name": "Bank",
+                    "last_modified": "15/12/2019"
+                },
+                {
+                    "query_id": 8,
+                    "query_name": "Untitled",
+                    "last_modified": "10/12/2019"
+                },{
+                    "query_id": 9,
+                    "query_name": "Sample",
+                    "last_modified": "06/12/2019"
+                },
+                {
+                    "query_id": 10,
+                    "query_name": "Insurance",
+                    "last_modified": "03/12/2019"
+                }
+            ]
+        },
+        {
+            "name" : "dashboard",
+            "text" : "RECENT DASHBOARD",
+            "menu" : "Data Visualization",
+            "prefixIcon" : "/assets/media/icons/svg/Devices/Server.svg",
+            "sufixIcon" : "/assets/media/icons/svg/Code/Plus.svg",
+            "class" : "bg-orange",
+            "data" : [
+                {
+                    "query_id": 1,
+                    "query_name": "Sample",
+                    "last_modified": "8 Hours ago"
+                },
+                {
+                    "query_id": 2,
+                    "query_name": "Insurance",
+                    "last_modified": "10 Hours ago"
+                },{
+                    "query_id": 3,
+                    "query_name": "Bank",
+                    "last_modified": "3 Days ago"
+                },
+                {
+                    "query_id": 4,
+                    "query_name": "Untitled",
+                    "last_modified": "5 Days ago"
+                },{
+                    "query_id": 5,
+                    "query_name": "Sample",
+                    "last_modified": "1 Week ago"
+                },
+                {
+                    "query_id": 6,
+                    "query_name": "Insurance",
+                    "last_modified": "20/12/2019"
+                },{
+                    "query_id": 7,
+                    "query_name": "Bank",
+                    "last_modified": "15/12/2019"
+                },
+                {
+                    "query_id": 8,
+                    "query_name": "Untitled",
+                    "last_modified": "10/12/2019"
+                },{
+                    "query_id": 9,
+                    "query_name": "Sample",
+                    "last_modified": "06/12/2019"
+                },
+                {
+                    "query_id": 10,
+                    "query_name": "Insurance",
+                    "last_modified": "03/12/2019"
+                }
+            ]
+        }
+    ]
+}

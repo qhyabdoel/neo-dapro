@@ -1,0 +1,114 @@
+<form
+  [formGroup]="loginForm"
+  autocomplete="off"
+  #f="ngForm"
+  (ngSubmit)="submit()"
+  [ngClass]="isApplication ? 'card auth_form signin-form-app' : 'card auth_form signin-form'"
+>
+  <div class="text-center pt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h5 class="title" *ngIf="isApplication">Sign In</h5>
+        <h1 class="title" *ngIf="!isApplication">{{ 'AUTH.LOGIN.BUTTON' | translate }}</h1>
+      </div>
+      <div class="col-md-12">
+        <h5 class="acc mt-1" *ngIf="isApplication">to your account</h5>
+        <h5 class="acc mt-1" *ngIf="!isApplication">{{ 'AUTH.LOGIN.TO_YOUR_ACCOUNT' | translate }}</h5>
+      </div>
+    </div>
+  </div>
+  <div class="body pb-3 mx-3">
+    <div class="form-group w-100">
+      <div class="input-group">
+        <input
+          type="text"
+          formControlName="email"
+          class="form-control form-bottomline"
+          placeholder="Email"
+          name="Email"
+          required
+          [ngClass]="{'pad-23': isApplication}"
+        />
+      </div>
+      <span matError *ngIf="isControlHasError('email','required')">
+        <small class="text-danger">{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</small>
+      </span>
+    </div>
+    <div class="form-group w-100">
+      <div class="input-group">
+        <input
+          [type]="fieldTextType ? 'text' : 'password'"
+          formControlName="password"
+          class="form-control form-bottomline"
+          placeholder="Password"
+          name="password"
+          required
+          [ngClass]="{'pad-23': isApplication}"
+        />
+        <div class="input-group-append form-bottomline group-bottomline">
+          <a href="javascript:void(0)" class="input-group-text border-0"
+            ><span class="input-group-addon p-1">
+              <i
+                class="zmdi"
+                [ngClass]="{
+                'zmdi-eye-off': !fieldTextType,
+                'zmdi-eye': fieldTextType
+              }"
+                (click)="toggleFieldTextType()"
+              ></i></span
+          ></a>
+        </div>
+      </div>
+      <span matError *ngIf="isControlHasError('password','required')">
+        <small class="text-danger">{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</small>
+      </span>
+    </div>
+    <!-- start capcha -->
+    <div class="form-group w-100">
+      <input
+        type="text"
+        formControlName="captcha"
+        class="form-control form-bottomline"
+        placeholder="Captcha"
+        name="captcha"
+        required
+      />
+      <span matError *ngIf="isControlHasError('captcha', 'required')">
+        <small class="text-danger">{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</small>
+      </span>
+    </div>
+
+    <img
+      [attr.src]="captchaBase64"
+      alt="captcha"
+      style="width: 50%; margin-bottom: 12px; margin-left: 4px; background-color: white; height: 40px"
+    />
+    <!-- end capcha -->
+    <small class="float-right mb-4" style="float: right"
+      ><a href="javascript:;" (click)="forgotPassword()" data-type="forgot-password">Forgot Password?</a></small
+    >
+
+    <div class="jsdemo-notification-button">
+      <button
+        href="javascript:;"
+        type="submit"
+        [ngClass]="isApplication ? 'btn btn-lg signin-btn-app btn-block waves-effect waves-light mb-5 ml-auto' : 'btn btn-warning btn-lg signin-btn btn-block waves-effect waves-light'"
+        data-placement-from="bottom"
+        data-placement-align="center"
+        data-animate-enter=""
+        data-animate-exit=""
+        data-color-name="bg-red"
+      >
+        SIGN IN
+      </button>
+    </div>
+  </div>
+
+  <div class="copyright text-center pb-5 f-10">
+    Copyright &copy;
+    <script>
+      document.write(new Date().getFullYear());
+    </script>
+    <a href="https://paques.id/" target="_blank">PT Informatika Solusi Bisnis</a>
+  </div>
+</form>

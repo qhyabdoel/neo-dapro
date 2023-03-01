@@ -1,0 +1,229 @@
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <ul class="navbar-nav" *ngIf="moduleName == 'pds' && (isShowMenu$ | async) && !isAppPreview">
+    <li
+      class="nav-item mr-2"
+      [ngClass]="{
+        active: ['/pds/dataprocessing'].includes(currentRouteUrl)
+      }"
+    >
+      <a
+        class="nav-link"
+        href="javascript:"
+        (click)="activeClass('/pds/dataprocessing')"
+        [routerLink]="['/pds/dataprocessing']"
+        >{{ 'MENU_BAR.DATA_PROCESSING' | translate }}</a
+      >
+    </li>
+    <li
+      class="nav-item mr-2"
+      [ngClass]="{
+        active: [
+          '/pds/listdatavisualization',
+          '/pds/dashboardeditor',
+          '/pds/dashboardvisualization',
+          '/pds/dashboard/view',
+          '/pds/dashboard/view/shared',
+          '/pds/datavisualization',
+          '/pds/newdatavisualization'
+        ].includes(currentRouteUrl)
+      }"
+    >
+      <a
+        class="nav-link"
+        href="javascript:"
+        (click)="activeClass('/pds/listdatavisualization')"
+        [routerLink]="['/pds/listdatavisualization']"
+        >{{ 'MENU_BAR.DATA_VISUAL' | translate }}</a
+      >
+    </li>
+    <li
+      class="nav-item mr-2"
+      [ngClass]="{
+        active: [
+          '/pds/applicationlist',
+          '/pds/applicationbuilder_app',
+          '/pds/app_preview',
+          '/pds/application_login'
+        ].includes(currentRouteUrl)
+      }"
+    >
+      <a
+        class="nav-link"
+        href="javascript:"
+        (click)="activeClass('/pds/applicationlist')"
+        [routerLink]="['/pds/applicationlist']"
+        >{{ 'MENU_BAR.DATA_APPLICATIONS' | translate }}</a
+      >
+    </li>
+  </ul>
+  <ul class="navbar-nav" *ngIf="moduleName == 'pamedi' && (isShowMenu$ | async)">
+    <li
+      class="nav-item mr-2"
+      [ngClass]="{
+        active: [
+          '/pamedi/media-intelligence',
+          '/pamedi/media-intelligence/quick-search',
+          '/pamedi/media-intelligence/projects',
+          '/pamedi/media-intelligence/dashboard'
+        ].includes(currentRouteUrl)
+      }"
+    >
+      <a
+        class="nav-link"
+        href="javascript:"
+        (click)="activeClass('/pamedi/media-intelligence')"
+        [routerLink]="['/pamedi/media-intelligence/quick-search']"
+        >{{ 'MENU_BAR.MI' | translate }}</a
+      >
+    </li>
+    <li
+      class="nav-item mr-2"
+      [ngClass]="{
+        active: [
+          '/pamedi/csb',
+          '/pamedi/csb/sentiment',
+          '/pamedi/csb/bot',
+          '/pamedi/csb/campaign',
+          '/pamedi/sentiment',
+          '/pamedi/bot',
+          '/pamedi/campaign'
+        ].includes(currentRouteUrl)
+      }"
+    >
+      <a class="nav-link" href="javascript:" (click)="activeClass('/pamedi/csb')" [routerLink]="['/pamedi/csb']">{{
+        'MENU_BAR.CSB' | translate
+      }}</a>
+    </li>
+    <li
+      class="d-none nav-item mr-2"
+      [ngClass]="{
+        active: [
+          '/pamedi/media-crawler',
+          '/pamedi/media-crawler/news',
+          '/pamedi/sosmed',
+          'pamedi/news',
+          '/pamedi/sosmed'
+        ].includes(currentRouteUrl)
+      }"
+    >
+      <a
+        class="nav-link"
+        href="javascript:"
+        (click)="activeClass('/pamedi/media-crawler')"
+        [routerLink]="['/pamedi/media-crawler']"
+        >{{ 'MENU_BAR.MC' | translate }}</a
+      >
+    </li>
+  </ul>
+  <ul class="navbar-nav" *ngIf="moduleName == 'trueai' && (isShowMenu$ | async)">
+    <li
+      class="nav-item mr-2"
+      [ngClass]="{
+        active: ['/trueai/modeling'].includes(currentRouteUrl)
+      }"
+    >
+      <a
+        class="nav-link"
+        href="javascript:"
+        (click)="activeClass('/trueai/modeling')"
+        [routerLink]="['/trueai/modeling']"
+        >{{ 'MENU_BAR.MODELING' | translate }}</a
+      >
+    </li>
+    <li
+      class="nav-item mr-2"
+      [ngClass]="{
+        active: ['/trueai/pilot-testing'].includes(currentRouteUrl)
+      }"
+    >
+      <a
+        class="nav-link"
+        href="javascript:"
+        (click)="activeClass('/trueai/pilot-testing')"
+        [routerLink]="['/trueai/pilot-testing']"
+        >{{ 'MENU_BAR.PILOT_TESTING' | translate }}</a
+      >
+    </li>
+  </ul>
+
+  <div class="navbar-nav menu-nav" *ngIf="moduleName == 'pds' && (isShowMenu$ | async)">
+    <li class="dropdown nav-item">
+      <a
+        class="dropdown-toggle nav-link"
+        data-toggle="dropdown"
+        role="button"
+        title="Navigation Menu"
+        data-tooltip="tooltip"
+        data-placement="bottom"
+      >
+        <i class="zmdi zmdi-menu f-16"></i>
+      </a>
+      <ul class="dropdown-menu slideUp2">
+        <li class="body">
+          <ul class="menu list-unstyled p-4" *ngIf="moduleName == 'pds' && (isShowMenu$ | async)">
+            <li class="py-2">
+              <a
+                class="nav-link"
+                href="javascript:"
+                (click)="activeClass('/pds/dataprocessing')"
+                [routerLink]="['/pds/dataprocessing']"
+                [ngClass]="{ active: ['/pds/dataprocessing'].includes(currentRouteUrl) }"
+              >
+                <div class="menu-info">
+                  <h4 class="f-12">{{ 'MENU_BAR.DATA_PROCESSING' | translate }}</h4>
+                </div>
+              </a>
+            </li>
+            <li class="py-2">
+              <a
+                class="nav-link"
+                href="javascript:"
+                (click)="activeClass('/pds/listdatavisualization')"
+                [routerLink]="['/pds/listdatavisualization']"
+                [ngClass]="{
+                  active: [
+                    '/pds/listdatavisualization',
+                    '/pds/dashboardeditor',
+                    '/pds/dashboardvisualization',
+                    '/pds/dashboard/view',
+                    '/pds/dashboard/view/shared',
+                    '/pds/datavisualization',
+                    '/pds/newdatavisualization'
+                  ].includes(currentRouteUrl)
+                }"
+              >
+                <div class="menu-info">
+                  <h4 class="f-12">{{ 'MENU_BAR.DATA_VISUAL' | translate }}</h4>
+                </div>
+              </a>
+            </li>
+            <li class="py-2">
+              <a
+                class="nav-link"
+                href="javascript:"
+                (click)="activeClass('/pds/applicationlist')"
+                [routerLink]="['/pds/applicationlist']"
+                [ngClass]="{
+                  active: [
+                    '/pds/applicationlist',
+                    '/pds/applicationbuilder_app',
+                    '/pds/app_preview',
+                    '/pds/application_login'
+                  ].includes(currentRouteUrl)
+                }"
+              >
+                <div class="menu-info">
+                  <h4 class="f-12">{{ 'MENU_BAR.DATA_APPLICATIONS' | translate }}</h4>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </div>
+
+  <kt-topbar></kt-topbar>
+</div>
+
+<pq-menu-vertical></pq-menu-vertical>

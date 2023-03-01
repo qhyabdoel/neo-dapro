@@ -1,0 +1,384 @@
+<aside class="sidebar">
+  <div class="menu">
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a [ngClass]="{ 'nav-link': true, active: activeTab === 'tabChart' }" (click)="tabOnClick('tabChart')">
+            <div class="loader loader--style1" title="0" *ngIf="isLoadingCharts">
+              <svg
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="20px"
+                height="20px"
+                viewBox="0 0 40 40"
+                enable-background="new 0 0 40 40"
+                xml:space="preserve"
+              >
+                <path
+                  opacity="0.2"
+                  fill="#000"
+                  d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                              s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                              c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+                />
+                <path
+                  fill="#000"
+                  d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                              C22.32,8.481,24.301,9.057,26.013,10.047z"
+                >
+                  <animateTransform
+                    attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 20 20"
+                    to="360 20 20"
+                    dur="0.5s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
+            </div>
+            {{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.CL' | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            [ngClass]="{ 'nav-link': true, active: activeTab === 'tabDashboard' }"
+            (click)="tabOnClick('tabDashboard')"
+          >
+            <div class="loader loader--style1" title="0" *ngIf="isLoadingDashboards">
+              <svg
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="20px"
+                height="20px"
+                viewBox="0 0 40 40"
+                enable-background="new 0 0 40 40"
+                xml:space="preserve"
+              >
+                <path
+                  opacity="0.2"
+                  fill="#000"
+                  d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                              s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                              c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+                />
+                <path
+                  fill="#000"
+                  d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                              C22.32,8.481,24.301,9.057,26.013,10.047z"
+                >
+                  <animateTransform
+                    attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 20 20"
+                    to="360 20 20"
+                    dur="0.5s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
+            </div>
+            {{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.DL' | translate }}
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content list dv-sidebar">
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'tabChart' }">
+          <div class="row clearfix">
+            <div class="col-sm-10 pr-2 mb-1">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.SCN' | translate }}"
+                  [(ngModel)]="searchChartText"
+                  [ngModelOptions]="{ standalone: true }"
+                  (keyup)="$event.which == 13 ? searchChart() : 0"
+                />
+                <div class="input-group-append">
+                  <a href="javascript:void(0)" class="input-group-text p-0 pt-1" (click)="searchChart()"
+                    ><span class="input-group-addon mx-2"><i class="ti-search f-12"></i></span
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 pl-0">
+              <a
+                href="javascript:void(0)"
+                class="p-1"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                (click)="refreshChart()"
+                [attr.data-original-title]="'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.RCL' | translate"
+                ><i class="ti-reload"></i
+              ></a>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-10 pr-2">
+              <button
+                id="selectall"
+                type="checkbox"
+                class="btn btn-info btn-outline btn-sm w-100 mb-1 mt-1 ml-0"
+                data-toggle="tooltip"
+                [attr.data-placement]="'bottom'"
+                [attr.data-original-title]="'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.SA' | translate"
+                (click)="checkUncheckAll('chart')"
+              >
+                {{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.SA' | translate }} &nbsp;<i
+                  class="zmdi zmdi-check-square f-12 ml-1"
+                ></i>
+              </button>
+            </div>
+            <div class="col-sm-2 pl-0 mt-1">
+              <a
+                *ngIf="selectedChartListforDelete.length > 0"
+                href="javascript:void(0)"
+                id="deletebutton"
+                class="p-1"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="{{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.D' | translate }}"
+                (click)="multipleDelete('chart')"
+                ><i class="ti-trash"></i
+              ></a>
+            </div>
+          </div>
+          <div class="panel-group mt-1 dv-sc" role="tablist" aria-multiselectable="true">
+            <div *ngIf="chartList.length == 0" class="panel panel-primary m-0">
+              <br />
+              <h6 align="center">{{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.ND' | translate }}</h6>
+            </div>
+            <div class="panel panel-primary m-0" *ngFor="let chart of chartList">
+              <div class="panel-heading">
+                <h4 class="panel-title align-self-center">
+                  <div class="row clearfix">
+                    <div class="col-md-2 pl-4 align-self-center">
+                      <div class="checkbox simple individual">
+                        <input
+                          id="{{ 'mcc-' + chart.id }}"
+                          type="checkbox"
+                          [(ngModel)]="chart.isChecked"
+                          (change)="checkedList(chart.id, chart.isChecked, 'chart')"
+                        />
+                        <label for="{{ 'mcc-' + chart.id }}"></label>
+                      </div>
+                    </div>
+                    <div class="col-md-8 px-0">
+                      <a
+                        role="button"
+                        data-toggle="collapse"
+                        href="javascript:void()"
+                        (dblclick)="loadChartToWorkspace(chart)"
+                      >
+                        <p class="mb-0">
+                          <span class="zmdi zmdi-chart text-center m-0 mr-1 align-middle"></span>{{ chart.name }}
+                          |
+                          {{ chart.viz_type }}
+                        </p>
+                        <span class="ml-0">{{ chart.changed_on | dateformat: 'DD/MM/YYYY' }}</span
+                        ><br />
+                        <span class="ml-0">{{ chart.ds_name }}</span>
+                      </a>
+                    </div>
+                    <div class="col-md-1 align-self-center p-0">
+                      <div class="dropdown">
+                        <a
+                          href="javascript:void(0);"
+                          class="dropdown-toggle pr-2 float-right"
+                          data-toggle="dropdown"
+                          role="button"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          <i class="zmdi zmdi-more-vert d-inline"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                          <li>
+                            <!-- (click)="loadChartToWorkspace(chart)" -->
+                            <a href="javascript:void(0);">{{
+                              'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.LD' | translate
+                            }}</a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);" (click)="delete('chart', chart)">{{
+                              'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.D' | translate
+                            }}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'tabDashboard' }">
+          <div class="row clearfix">
+            <div class="col-sm-10 pr-2 mb-1">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.SDN' | translate }}"
+                  [(ngModel)]="searchDashboardText"
+                  [ngModelOptions]="{ standalone: true }"
+                  (keyup)="$event.which == 13 ? searchDashboard() : 0"
+                />
+                <div class="input-group-append">
+                  <a href="javascript:void(0)" class="input-group-text p-0 pt-1" (click)="searchDashboard()"
+                    ><span class="input-group-addon mx-2"><i class="ti-search f-12"></i></span
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 pl-0">
+              <a
+                href="javascript:void(0)"
+                class="p-1"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                (click)="refreshDashboard()"
+                [attr.data-original-title]="'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.RDL' | translate"
+                ><i class="ti-reload"></i
+              ></a>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-10 pr-2">
+              <button
+                id="selectall"
+                type="checkbox"
+                class="btn btn-info btn-outline btn-sm w-100 mt-1 ml-0"
+                data-toggle="tooltip"
+                [attr.data-placement]="'bottom'"
+                [attr.data-original-title]="'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.SA' | translate"
+                (click)="checkUncheckAll('dashboard')"
+              >
+                {{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.SA' | translate }} &nbsp;<i
+                  class="zmdi zmdi-check-square f-12 ml-1"
+                ></i>
+              </button>
+            </div>
+            <div class="col-sm-2 pl-0 mt-1">
+              <a
+                *ngIf="selectedDashboardListforDelete.length > 0"
+                href="javascript:void(0)"
+                id="deletebutton"
+                class="p-1"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="{{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.D' | translate }} "
+                (click)="multipleDelete('dashboard')"
+                ><i class="ti-trash"></i
+              ></a>
+            </div>
+          </div>
+          <div class="panel-group mt-1 dv-sc" role="tablist" aria-multiselectable="true">
+            <div *ngIf="dashboardList.length == 0" class="panel panel-primary m-0">
+              <br />
+              <h6 align="center">{{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.ND' | translate }}</h6>
+            </div>
+            <div class="panel panel-primary m-0" *ngFor="let dashboard of dashboardList">
+              <div class="panel-heading" role="tab">
+                <h4 class="panel-title align-self-center">
+                  <div class="row clearfix">
+                    <div class="col-md-2 pl-4 align-self-center">
+                      <div class="checkbox simple individual">
+                        <input
+                          id="{{ 'mcd-' + dashboard.id }}"
+                          type="checkbox"
+                          [(ngModel)]="dashboard.isChecked"
+                          (change)="checkedList(dashboard.id, dashboard.isChecked, 'dashboard')"
+                        />
+                        <label for="{{ 'mcd-' + dashboard.id }}"></label>
+                      </div>
+                    </div>
+                    <div class="col-md-8 px-0">
+                      <a
+                        [ngClass]="paramEdit?.id == dashboard.id ? 'is-active' : ''"
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordion_1"
+                        aria-expanded="true"
+                        aria-controls="collapseOne_1"
+                        (dblclick)="loadDashboardToWorkspace(dashboard)"
+                      >
+                        <p class="mb-0">{{ dashboard.dashboard_title }}</p>
+                        <span class="ml-0">{{
+                          dashboard.changed_on
+                            | dateformat: 'DD/MM/YYYY
+                                                    hh:mm:ss'
+                        }}</span>
+                        <span class="zmdi zmdi-more-vert f-8 mx-1"></span>
+                        <span class="ml-0"> {{ dashboard.charts != null ? dashboard.charts.length : 0 }} Charts</span>
+                      </a>
+                    </div>
+                    <div class="col-md-1 align-self-center p-0">
+                      <div class="dropdown">
+                        <a
+                          href="javascript:void(0);"
+                          class="dropdown-toggle pr-2 float-right"
+                          data-toggle="dropdown"
+                          role="button"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          <i class="zmdi zmdi-more-vert d-inline"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                          <li>
+                            <a href="javascript:void(0);" (click)="loadDashboardToWorkspace(dashboard)">{{
+                              'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.OD' | translate
+                            }}</a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);" (click)="delete('dashboard', dashboard)">
+                              {{ 'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.D' | translate }}</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </h4>
+              </div>
+
+              <div class="panel-collapse collapse in" role="tabpanel">
+                <div class="panel-body">
+                  <div class="body">
+                    <span *ngFor="let id of dashboard.charts">
+                      <a href="javascript:void(0);" class="p-0">{{ getChartNameById(id) }}</a>
+                      <hr class="my-2" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="hide-menu"
+    (click)="hideAndShowLeftbar()"
+    data-toggle="tooltip"
+    data-placement="right"
+    [attr.data-original-title]="'MODULE.DATA_VISUAL.DASHBOARD.LEFT_BAR.HIDE' | translate"
+  >
+    <div class="btn-toggle btn-toggle-menu">
+      <a href="javascript:void(0);" class="btn-menu"></a>
+    </div>
+  </div>
+</aside>

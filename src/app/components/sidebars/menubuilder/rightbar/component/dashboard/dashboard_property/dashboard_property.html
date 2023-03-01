@@ -1,0 +1,76 @@
+<div class="panel panel-primary m-0">
+  <div class="panel-heading" role="tab">
+    <h4 class="panel-title">
+      <a
+        class="menu-toggle text-uppercase"
+        role="button"
+        [ngClass]="{ toggled: activeColapse.dashboardProperty == true }"
+        (click)="collapsible('dashboardProperty')"
+      >
+        {{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.DP' | translate }}
+      </a>
+    </h4>
+  </div>
+  <div [ngClass]="{ show: activeColapse.dashboardProperty == true }" class="panel-collapse collapse in" role="tabpanel">
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <div class="row clearfix">
+          <div class="col-sm-12 form-control-label">
+            <label for="last_run">Charts</label>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div class="form-line">
+                <ng-select
+                  class="text-light"
+                  [items]="chartList"
+                  [multiple]="true"
+                  [closeOnSelect]="true"
+                  [searchable]="true"
+                  bindLabel="name"
+                  placeholder="{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.S' | translate }} Charts"
+                  (remove)="onChartDeleteInSelect($event)"
+                  (clear)="buttonNew()"
+                  (add)="loadChartTo($event)"
+                  [(ngModel)]="chartSelected"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                    <div class="ng-value" *ngFor="let item of items">
+                      <span class="ng-value-label"> {{ item.name || item.title}}</span>
+                      <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                    </div>
+                  </ng-template>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-sm-12 form-control-label">
+            <label for="email_address_2">{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.DU' | translate }}</label>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group mb-0">
+              <input type="text" class="form-control" placeholder="url_name" />
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-sm-12">
+            <button
+              class="btn btn-danger btn-sm w-100 m-0 mt-4 p-2 f-10 text-white"
+              mat-raised-button
+              matTooltip="{{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.DD' | translate }}"
+              [disabled]="parameter?.id == null"
+              (click)="delete()"
+            >
+              {{ 'MODULE.DATA_VISUAL.DASHBOARD.RIGHT_BAR.DD' | translate }}
+              <i class="zmdi zmdi-delete f-12 ml-1"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

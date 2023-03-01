@@ -1,0 +1,194 @@
+<div class="panel panel-primary m-0 resume">
+  <div class="panel-heading" role="tab">
+    <h4 class="panel-title">
+      <a
+        [ngClass]="{ toggled: activeColapse.option == true }"
+        class="menu-toggle text-uppercase"
+        role="button"
+        (click)="collapsible('option')"
+      >
+        <i
+          class="zmdi zmdi-info"
+          [matMenuTriggerFor]="showPopover"
+          #triggerpopover="matMenuTrigger"
+          (mouseover)="triggerpopover.openMenu(); setPopover();"
+          (mouseleave)="triggerpopover.closeMenu(); hidePopover()"
+        ></i
+        >&nbsp; {{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.O' | translate }}
+        <span
+          *ngIf="
+              menuContentSelected != 'sub_topbar' &&
+              menuContentSelected != 'top_bar' &&
+              menuContentSelected != '' &&
+              propertyMenuSelected.id
+            "
+          >{{ propertyMenuSelected.title }}</span
+        >
+      </a>
+      <mat-menu #showPopover="matMenu" class="tooltips popover pds-popover">
+        <h3 class="popover-header">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.O' | translate }}</h3>
+        <div class="popover-body">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.O_CONTENT' | translate }}</div>
+      </mat-menu>
+    </h4>
+  </div>
+  <div class="panel-collapse collapse" role="tabpanel" [ngClass]="{ show: activeColapse.option }">
+    <div class="panel-body">
+      <label *ngIf="menuContentSelected == '' || propertyMenuSelected.id == undefined"
+        >Please Choose Menu to Show Option</label
+      >
+      <form
+        class="form-horizontal"
+        *ngIf="
+            menuContentSelected != 'sub_topbar' &&
+            menuContentSelected != 'top_bar' &&
+            menuContentSelected != '' &&
+            propertyMenuSelected.id
+          "
+      >
+        <div class="row clearfix">
+          <div class="col-md-12 form-control-label">
+            <label for="menu_name">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.MN' | translate }}</label>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <input
+                type="text"
+                id="menu_name"
+                class="form-control"
+                placeholder="{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.PL' | translate }}"
+                [(ngModel)]="propertyMenuSelected.title"
+                [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onChange($event)"
+              />
+            </div>
+
+            <div class="row clearfix">
+              <div class="col-md-12 form-control-label">
+                <label>{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.SIMD' | translate }}</label>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <select
+                    class="form-control show-tick ms select2"
+                    [attr.data-placeholder]="'MODULE.DATA_APPLICATIONS.RIGHT_BAR.SIMD' | translate"
+                    (change)="iconChange($event)"
+                    [ngModelOptions]="{ standalone: true }"
+                    [(ngModel)]="enableIconDefault"
+                  >
+                    <option [value]="false">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.CI' | translate }}</option>
+                    <option [value]="true">{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.DI' | translate }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Start Default Icon Selector -->
+
+              <div class="col-md-12" *ngIf="propertyMenuSelected.options.enable_icon_default">
+                <div class="card mb-3" *ngIf="!menuIcon">
+                  <div class="header rounded">
+                    <button
+                      class="btn btn-info btn-outline btn-sm mx-auto my-3"
+                      data-toggle="modal"
+                      data-target="#selectDefaultIcon"
+                      (click)="openIconModal()"
+                    >
+                      {{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.SDI' | translate }}
+                    </button>
+                  </div>
+                </div>
+                <div class="card mb-3" *ngIf="menuIcon">
+                  <div class="header rounded">
+                    <div class="row clearfix">
+                      <div class="col-12 d-flex justify-content-between">
+                        <a
+                          href="javascript:void(0);"
+                          data-toggle="modal"
+                          data-target="#selectDefaultIcon"
+                          class="text-grey"
+                          (click)="openIconModal()"
+                        >
+                          {{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.CHI' | translate }}
+                        </a>
+                        <a href="javascript:void(0);">
+                          <i class="zmdi zmdi-delete text-danger" (click)="deleteMenuIcon()"></i>
+                        </a>
+                      </div>
+                      <div class="col-12">
+                        <hr class="my-2" />
+                      </div>
+                      <div class="col-12 text-center">
+                        <i [class]="menuIcon + ' f-28 my-2'"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- End Default Icon Selector -->
+
+              <div
+                class="clear-fix drop-down-show-hide w-100"
+                *ngIf="!propertyMenuSelected.options.enable_icon_default"
+              >
+                <div class="col-md-12 form-control-label">
+                  <label for="menu_name"
+                    >{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.IL' | translate }} &nbsp;
+                    <i
+                      class="zmdi zmdi-info"
+                      matTooltip="{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.IL_CONTENT' | translate }}"
+                    ></i
+                  ></label>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      id="menu_name"
+                      class="form-control"
+                      placeholder="Icon link"
+                      [(ngModel)]="menuCustomIconLink"
+                      [ngModelOptions]="{ standalone: true }"
+                      [disabled]="propertyMenuSelected.options.enable_icon_default"
+                      (blur)="menuUpdate()"
+                      (ngModelChange)="customIconChange($event)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-md-12 form-control-label">
+                <label>{{ 'MODULE.DATA_APPLICATIONS.RIGHT_BAR.SD' | translate }}</label>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="form-line">
+                    <ng-select
+                      class="text-light"
+                      [items]="dashboardList"
+                      [multiple]="false"
+                      [closeOnSelect]="true"
+                      [searchable]="true"
+                      bindLabel="dashboard_title"
+                      bindValue="id"
+                      placeholder="Choose Dashboard"
+                      (change)="menuUpdate('dashboard', $event)"
+                      [(ngModel)]="propertyMenuSelected.dashboard_id"
+                      [ngModelOptions]="{ standalone: true }"
+                    >
+                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                        <div class="ng-value" *ngFor="let item of items">
+                          <span class="ng-value-label"> {{ item.dashboard_title }}</span>
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

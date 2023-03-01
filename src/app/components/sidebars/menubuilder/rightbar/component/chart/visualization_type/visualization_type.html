@@ -1,0 +1,50 @@
+<div class="panel panel-primary m-0">
+  <div class="panel-heading" role="tab" id="headingSix_1">
+    <h4 class="panel-title">
+      <a
+        [ngClass]="{ toggled: activeColapse.visualization == true }"
+        class="menu-toggle collapsed text-uppercase"
+        role="button"
+        (click)="collapsible('visualization')"
+      >
+        <i
+          class="zmdi zmdi-info"
+          [matMenuTriggerFor]="showPopover"
+          #triggerpopover="matMenuTrigger"
+          (mouseover)="triggerpopover.openMenu(); setPopover();"
+          (mouseleave)="triggerpopover.closeMenu(); hidePopover()"
+        ></i
+        >&nbsp; {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.VISUALIZATION_TYPE' | translate }}
+      </a>
+      <mat-menu #showPopover="matMenu" class="tooltips popover pds-popover">
+          <h3 class="popover-header">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.VISUALIZATION_TYPE' | translate }}</h3>
+          <div class="popover-body">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.VISUALIZATION_TYPE_TOOLTIP' | translate }}</div>
+      </mat-menu>
+    </h4>
+  </div>
+  <div [ngClass]="{ show: activeColapse.visualization == true }" class="panel-collapse collapse show" role="tabpanel">
+    <div class="panel-body text-justify">
+      <label for="choose_ds" class="choose_vs">
+        <div class="flex-fill bd-highlight">
+          <small class="text-muted">{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.SELECTED_TYPE' | translate }}:</small>
+          <br />
+          <h6 class="mb-0">{{ displaySelected.split('_').join(' ') || '-' }}</h6>
+        </div>
+      </label>
+      <div class="row clearfix pl-1" *ngIf="listVisualType.length > 0">
+        <button
+          *ngFor="let row of listVisualType"
+          [ngStyle]="{ display: row.display }"
+          (click)="setVisualType(row)"
+          [ngClass]="{ active: displaySelected == row.value, 'd-none': row.value == 'osmmap' }"
+          class="btn btn-info btn-outline btn-icon btn-outline-maxi mx-2"
+          mat-raised-button
+          matTooltip="{{ row.label }}"
+          style="margin: 5px"
+        >
+          <span><img [src]="handleIcon(row)" /></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

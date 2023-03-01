@@ -1,0 +1,59 @@
+<div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="title f-16">
+        {{ (route === 'application' ? 'MODULE.DATA_APPLICATIONS.MODAL.AIG': 'MODULE.DATA_APPLICATIONS.MODAL.IG') |
+        translate }}
+      </h5>
+      <button type="button" class="close" (click)="closeFormula()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="row clearfix" *ngIf="route === 'application'">
+          <div class="col-sm-12 form-control-label">
+            <label for="last_run"> {{ 'MODULE.DATA_APPLICATIONS.MODAL.IG' | translate }} </label>
+          </div>
+          <custom-editor-component
+            (change)="onChange($event)"
+            [htmlContent]="glosaryInformation"
+          ></custom-editor-component>
+          <!-- <div class="col-sm-12">
+            <mat-form-field class="mat-form-field-fluid">
+              <textarea
+                matInput
+                type="text"
+                class="form-control"
+                placeholder=""
+                style="padding-top: 8px; height: 7em"
+                [(ngModel)]="glosaryInformation"
+                (ngModelChange)="onChange($event)"
+              ></textarea>
+            </mat-form-field>
+          </div> -->
+        </div>
+        <div class="row clearfix" *ngIf="route === 'app_preview'"><h5 class="f-16">Test test</h5></div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        class="btn btn-neutral btn-simple btn-sm close px-0"
+        type="button"
+        data-dismiss="modal"
+        (click)="closeFormula()"
+      >
+        {{ 'MODULE.DATA_APPLICATIONS.MODAL.C' | translate }}
+      </button>
+      <button
+        class="btn btn-info btn-outline btn-sm"
+        type="button"
+        data-dismiss="modal"
+        (click)="saveInformationGlosary()"
+      >
+        {{ 'MODULE.DATA_APPLICATIONS.MODAL.S' | translate }}
+      </button>
+    </div>
+  </div>
+  <div></div>
+</div>

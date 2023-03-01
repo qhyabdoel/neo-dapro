@@ -1,0 +1,119 @@
+<div class="collapse-group">
+  <div
+    class="collapse-panel"
+    *ngIf="
+  [
+    'heatmap',
+    'horizontal_bar',
+    'dist_bar',
+    'pie',
+    'line',
+    'box_plot',
+    'bubble',
+    'directed_force',
+    'word_cloud',
+    'gauge',
+    'histogram',
+    'big_number_total',
+    'treemap',
+    'map',
+    'country_map',
+    'country_map2',
+    'pivot_table',
+    'table',
+    'preview',
+    'word_cloud'
+  ].includes(visualType)
+"
+  >
+    <input class="collapse-check" type="checkbox" [ngClass]="{ checked: activeColapse.commonGroup == true }" />
+    <label class="collapse-label" (click)="collapsible('commonGroup')"
+      >{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.CHART_COMMON' | translate }}</label
+    >
+
+    <div class="collapse" [ngClass]="{ show: activeColapse.commonGroup == true }">
+      <div *ngIf="['map', 'country_map', 'country_map2'].includes(visualType)">
+        <div class="form-control-label">
+          <label>{{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.OM' | translate }}</label>
+        </div>
+        <div class="form-group">
+          <ng-select
+            [items]="listAreaMap"
+            bindLabel="label"
+            bindValue="value"
+            groupBy="group"
+            [(ngModel)]="form_data.select_province"
+            (change)="handleChange({ name: 'select_province', value: $event.value, type: 'ng-select' })"
+          >
+            <ng-template ng-optgroup-tmp let-item="item"> {{item.group || 'Other'}} </ng-template>
+          </ng-select>
+        </div>
+      </div>
+
+      <div>
+        <div class="row clearfix" *ngFor="let item of list_of_field">
+          <custom_checkbox
+            *ngIf="item.visualType.includes(visualType) && item.type === 'checkbox'"
+            [value]="item.value"
+            [name]="item.name"
+            [title]="item.label"
+            (onChangeValue)="handleChange($event)"
+          ></custom_checkbox>
+          <custom_select_component
+            *ngIf="item.visualType.includes(visualType) && item.type === 'select'"
+            (onChangeValue)="handleChange($event)"
+            [selectedValue]="item.value"
+            [name]="item.name"
+            [options]="handleOptionsDropdown(item.name)"
+            [defaultValue]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.QUERY.S'"
+            [title]="item.label"
+            [type]="'select'"
+          ></custom_select_component>
+          <custom_input
+            *ngIf="item.visualType.includes(visualType) && item.type === 'input'"
+            [value]="item.value"
+            [name]="item.name"
+            [title]="item.label"
+            [type]="'number'"
+            (onChangeValue)="handleChange($event)"
+          >
+          </custom_input>
+        </div>
+
+        <div class="row clearfix" *ngIf="form_data?.custom_condition">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <button
+                type="button"
+                class="btn btn-info btn-outline btn-sm w-100 m-0"
+                (click)="openModal('modalCustomCondition')"
+              >
+                {{ 'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.ACCOND' | translate }}
+                <i class="zmdi zmdi-plus f-12 ml-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- <custom_input
+          *ngIf="['gauge'].includes(visualType)"
+          [value]="form_data.max_value"
+          [name]="'max_value'"
+          [title]="'MODULE.DATA_VISUAL.CHART.RIGHT_BAR.OPTIONS.MVG'"
+          [type]="'number'"
+          (onChangeValue)="handleChange($event)"
+          [required]="true"
+        >
+        </custom_input> -->
+
+        <custom_checkbox
+          *ngIf="['line'].includes(visualType) && form_data?.area_chart"
+          [value]="form_data.stack_area_chart"
+          [name]="'stack_area_chart'"
+          [title]="'Stack Area Chart'"
+          (onChangeValue)="handleChange($event)"
+        ></custom_checkbox>
+      </div>
+    </div>
+  </div>
+</div>

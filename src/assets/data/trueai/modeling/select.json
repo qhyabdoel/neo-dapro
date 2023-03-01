@@ -1,0 +1,178 @@
+{
+	"boolean": [
+		{
+			"id": true,
+			"text": "True"
+		},
+		{
+			"id": false,
+			"text": "False"
+		}
+	],
+	"selection": [
+		{
+			"id": "cyclic",
+			"text": "cyclic"
+		},
+		{
+			"id": "random",
+			"text": "random"
+		}
+	],
+	"solver": [
+		{
+			"id": "auto",
+			"text": "auto"
+		},
+		{
+			"id": "svd",
+			"text": "svd"
+		},
+		{
+			"id": "cholesky",
+			"text": "cholesky"
+		},
+		{
+			"id": "lsqr",
+			"text": "lsqr"
+		},
+		{
+			"id": "sparse_cg",
+			"text": "sparse_cg"
+		},
+		{
+			"id": "sag",
+			"text": "sag"
+		},
+		{
+			"id": "saga",
+			"text": "saga"
+		}
+	],
+	"solverLogReg": [
+		{
+			"id": "newton-cg",
+			"text": "newton-cg"
+		},
+		{
+			"id": "lbfgs",
+			"text": "lbfgs"
+		},
+		{
+			"id": "liblinear",
+			"text": "liblinear"
+		},
+		{
+			"id": "sag",
+			"text": "sag"
+		},
+		{
+			"id": "saga",
+			"text": "saga"
+		}
+	],
+	"init": [
+		{
+			"id": "k-means++",
+			"text": "k-means++"
+		},
+		{
+			"id": "random",
+			"text": "random"
+		}
+	],
+	"precompute_distances": [
+		{
+			"id": "auto",
+			"text": "auto"
+		},
+		{
+			"id": true,
+			"text": "True"
+		},
+		{
+			"id": false,
+			"text": "False"
+		}
+	],
+	"algorithm": [
+		{
+			"id": "auto",
+			"text": "auto"
+		},
+		{
+			"id": "full",
+			"text": "full"
+		},
+		{
+			"id": "elkan",
+			"text": "elkan"
+		}
+	],
+	"criterion": [
+		{
+			"id": "gini",
+			"text": "gini"
+		},
+		{
+			"id": "entropy",
+			"text": "entropy"
+		}
+	],
+	"splitter": [
+		{
+			"id": "best",
+			"text": "best"
+		},
+		{
+			"id": "random",
+			"text": "random"
+		}
+	],
+	"penalty": [
+		{
+			"id": "l1",
+			"text": "l1"
+		},
+		{
+			"id": "l2",
+			"text": "l2"
+		},
+		{
+			"id": "elasticnet",
+			"text": "elasticnet"
+		},
+		{
+			"id": null,
+			"text": "none"
+		}
+	],
+	"class_weight": [
+		{
+			"id": "dict",
+			"text": "dict"
+		},
+		{
+			"id": "balanced",
+			"text": "balanced"
+		},
+		{
+			"id": null,
+			"text": "None"
+		}
+	],
+	"multi_class": [
+		{
+			"id": "auto",
+			"text": "auto"
+		},
+		{
+			"id": "ovr",
+			"text": "ovr"
+		},
+		{
+			"id": "multinomial",
+			"text": "multinomial"
+		}
+	]
+}

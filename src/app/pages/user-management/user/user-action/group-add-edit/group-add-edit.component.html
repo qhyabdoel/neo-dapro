@@ -1,0 +1,94 @@
+<!-- Modal Create Group -->
+
+<div class="modal-open">
+  <div class="modal d-block" role="dialog" style="overflow: hidden">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" *ngIf="group">
+          <mat-progress-bar mode="indeterminate" *ngIf="viewLoading"></mat-progress-bar>
+
+          <h5 class="title f-16">{{ getTitle() }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="group">
+          <!-- <div class="kt-portlet__body-progress">
+                <mat-spinner [diameter]="20"></mat-spinner>
+            </div> -->
+
+          <kt-alert *ngIf="hasFormErrors" [type]="" [showCloseButton]="true" (close)="onAlertClose($event)">
+            {{ errorMessage }}
+          </kt-alert>
+
+          <form [formGroup]="groupForm" class="form-horizontal">
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark"
+                  >{{ 'MODULE.USER_MANAGEMENT.GN' | translate }}&nbsp;<span class="text-red">*</span>
+                </label>
+              </div>
+              <div class="col-sm-12">
+                <mat-form-field class="mat-form-field-fluid">
+                  <input matInput type="text" id="groupname" class="form-control" formControlName="groupname" />
+                  <mat-error>{{ 'MODULE.USER_MANAGEMENT.GNR' | translate }} </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark">{{ 'MODULE.USER_MANAGEMENT.GD' | translate }}</label>
+              </div>
+              <div class="col-sm-12">
+                <mat-form-field class="mat-form-field-fluid">
+                  <textarea matInput rows="4" class="form-control no-resize" formControlName="groupdesc"></textarea>
+                  <mat-error>{{ 'MODULE.USER_MANAGEMENT.GDR' | translate }} </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-sm-12 form-control-label">
+                <label class="text-dark">Role</label>
+              </div>
+              <div
+                class="ml-3"
+                style="
+                  overflow-x: scroll;
+                  max-height: 150px;
+                  border: 1px solid #505050;
+                  width: 449px;
+                  padding: 0 0 0 10px;
+                  border-radius: 6px;
+                "
+              >
+                <div class="checkbox mb-0" *ngFor="let role of roleList">
+                  <input
+                    id="checkbox-{{ role.uuid }}"
+                    type="checkbox"
+                    [(ngModel)]="role.isChecked"
+                    [ngModelOptions]="{ standalone: true }"
+                    (change)="getCheckedRole(role.uuid, role.isChecked)"
+                  />
+                  <label class="text-dark" for="checkbox-{{ role.uuid }}">
+                    {{ role.rolename }}
+                  </label>
+                </div>
+                <mat-error class="f-11" *ngIf="!isRoleCheckedValidation"
+                  >{{ 'MODULE.USER_MANAGEMENT.PCR' | translate }}
+                </mat-error>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-neutral btn-simple btn-sm close px-0" type="button" (click)="onNoClick()">
+            {{ 'MODULE.USER_MANAGEMENT.C' | translate }}
+          </button>
+          <button class="btn btn-info btn-outline btn-sm f-12" type="button" (click)="onSubmit()">
+            {{ 'MODULE.USER_MANAGEMENT.S' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

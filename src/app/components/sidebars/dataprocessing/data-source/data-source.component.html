@@ -1,0 +1,798 @@
+<aside id="leftSidebar" class="sidebar data-source-sidebar">
+  <div class="menu">
+    <div class="tabbable">
+      <!-- navigation tabs -->
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a [ngClass]="{ 'nav-link': true, active: activeTab === 'tab1' }" (click)="tabOnClick('tab1')">
+            <div class="loader loader--style1" title="0" *ngIf="loadingDataSourceList$ | async">
+              <svg
+                version="1.1"
+                id="loader-1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="20px"
+                height="20px"
+                viewBox="0 0 40 40"
+                enable-background="new 0 0 40 40"
+                xml:space="preserve"
+              >
+                <path
+                  opacity="0.2"
+                  fill="#000"
+                  d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                            s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                            c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+                />
+                <path
+                  fill="#000"
+                  d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                            C22.32,8.481,24.301,9.057,26.013,10.047z"
+                >
+                  <animateTransform
+                    attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 20 20"
+                    to="360 20 20"
+                    dur="0.5s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
+            </div>
+            <span> {{ 'MODULE.DATA_PROCESSING.LEFT_BAR.DATA_SOURCE' | translate }} </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [ngClass]="{ 'nav-link': true, active: activeTab === 'tab2' }" (click)="tabOnClick('tab2')">
+            <div class="loader loader--style1" title="0" *ngIf="loadingDatasetList$ | async">
+              <svg
+                version="1.1"
+                id="loader-1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="20px"
+                height="20px"
+                viewBox="0 0 40 40"
+                enable-background="new 0 0 40 40"
+                xml:space="preserve"
+              >
+                <path
+                  opacity="0.2"
+                  fill="#000"
+                  d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                        s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                        c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+                />
+                <path
+                  fill="#000"
+                  d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                            C22.32,8.481,24.301,9.057,26.013,10.047z"
+                >
+                  <animateTransform
+                    attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 20 20"
+                    to="360 20 20"
+                    dur="0.5s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
+            </div>
+            <span> {{ 'MODULE.DATA_PROCESSING.LEFT_BAR.DATA_QUERY' | translate }} </span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- tab contents -->
+      <div class="tab-content list dp-sidebar">
+        <!-- TAB 1 -->
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'tab1' }" id="tab1">
+          <div class="dd">
+            <!-- upload file input -->
+            <input
+              type="file"
+              id="upload_file"
+              accept=".csv, text/csv, text/html, .json"
+              #file
+              (change)="onChangeInputFile(file)"
+              style="display: none"
+              multiple
+            />
+
+            <!-- buttons -->
+            <div class="row">
+              <div class="col-sm-12 btn-group mb-1">
+                <!-- Upload File at Root Dir -->
+                <button
+                  (click)="treeItemUpload()"
+                  class="btn btn-info btn-outline btn-sm p-2 ml-0 mt-0 mb-2"
+                  [matMenuTriggerFor]="popoverUpload"
+                  #triggerpopoverUpload="matMenuTrigger"
+                  menuEnter
+                  (mouseover)="triggerpopoverUpload.openMenu(); setPopover()"
+                  (mouseleave)="triggerpopoverUpload.closeMenu(); hidePopover()"
+                >
+                  <i class="zmdi zmdi-file icon-group"></i>
+                  <i class="zmdi zmdi-plus"></i>
+                </button>
+                <mat-menu #popoverUpload="matMenu" class="tooltips popover pds-popover">
+                  <h3 class="popover-header">
+                    {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.UPLOAD_FILE' | translate }}
+                  </h3>
+                  <div class="popover-body">
+                    {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.UPLOAD_FILE_TOOLTIP' | translate }}
+                  </div>
+                </mat-menu>
+
+                <!-- Add Folder at Root Dir -->
+                <button
+                  id="btnAddFolder"
+                  (click)="treeItemAddFolder()"
+                  class="btn btn-info btn-outline btn-sm p-2 ml-0 mt-0 mb-2"
+                  [matMenuTriggerFor]="popoverAddFolder"
+                  #triggerpopoverAddFolder="matMenuTrigger"
+                  menuEnter
+                  (mouseover)="triggerpopoverAddFolder.openMenu(); setPopover()"
+                  (mouseleave)="triggerpopoverAddFolder.closeMenu(); hidePopover()"
+                >
+                  <i class="zmdi zmdi-folder icon-group"></i>
+                  <i class="zmdi zmdi-plus"></i>
+                </button>
+                <mat-menu #popoverAddFolder="matMenu" class="tooltips popover pds-popover">
+                  <h3 class="popover-header">{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.CF' | translate }}</h3>
+                  <div class="popover-body">{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.CF_TOOLTIP' | translate }}</div>
+                </mat-menu>
+
+                <!-- Add Database / API Data Source -->
+                <button
+                  (click)="openModalDataSourceConnector()"
+                  class="btn btn-info btn-outline btn-sm p-2 ml-0 mt-0 mb-2"
+                  [matMenuTriggerFor]="popoverConnector"
+                  #triggerpopoverConnector="matMenuTrigger"
+                  menuEnter
+                  (mouseover)="triggerpopoverConnector.openMenu(); setPopover()"
+                  (mouseleave)="triggerpopoverConnector.closeMenu(); hidePopover()"
+                >
+                  <i class="zmdi zmdi-input-power icon-group"></i>
+                  <i class="zmdi zmdi-plus"></i>
+                </button>
+                <mat-menu #popoverConnector="matMenu" class="tooltips popover pds-popover">
+                  <h3 class="popover-header">{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.ODS' | translate }}</h3>
+                  <div class="popover-body">
+                    {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.ODS_TOOLTIP' | translate }}
+                  </div>
+                </mat-menu>
+              </div>
+            </div>
+
+            <!-- Header Template -->
+            <ng-template #headerTemplate let-config="config" let-item="item">
+              <div class="row row-filter">
+                <!-- search file & reload button -->
+                <div class="col-10 pr-2">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.SF' | translate }}"
+                      [(ngModel)]="filterText"
+                      (ngModelChange)="({ standalone: true })"
+                      [ngModelOptions]="{ standalone: true }"
+                      (keyup)="$event.which == 13 ? search() : 0"
+                    />
+                    <div class="input-group-text p-0">
+                      <a href="javascript:;" class="input-group-append p-0 pt-1" (click)="search()"
+                        ><span class="input-group-addon mx-2"><i class="ti-search f-12"></i></span
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- filter based reload -->
+                <div class="col-2 pl-0">
+                  <a
+                    href="javascript:"
+                    class="p-1 text-center"
+                    (click)="refreshExplorer()"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    [attr.data-original-title]="'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.RDS' | translate"
+                    ><i class="ti-reload align-middle"></i
+                  ></a>
+                </div>
+              </div>
+            </ng-template>
+
+            <!-- Item Template -->
+            <ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand">
+              <!-- Item Source: File -->
+              <div
+                class="form-inline row-item datasource-item"
+                (click)="onClickTreeviewItem(item)"
+                (contextmenu)="onContextMenuTreeviewItem($event, item)"
+                (dblclick)="onDoubleClickTreeviewItem(item)"
+                [draggable]="!item.value.isRoot"
+                (dragend)="onDragDropTreeviewItem($event, item)"
+                title="{{ item.text }} - {{ item.value.size || '' }}"
+              >
+                <!-- arrow -->
+                <i
+                  *ngIf="item.value && item.value.isDir"
+                  aria-hidden="true"
+                  class="fa"
+                  [class.fa-caret-right]="item.collapsed"
+                  [class.fa-caret-down]="!item.collapsed"
+                ></i>
+                <!-- file / folder icon -->
+                <mat-icon *ngIf="item.value && !item.value.isDir && !item.value.isHdfs" class="icon-dark"
+                  >insert_drive_file</mat-icon
+                >
+                <mat-icon *ngIf="item.value && item.value.isDir && !item.value.isHdfs" class="icon-dark">{{
+                  item.collapsed ? 'folder' : 'folder_open'
+                }}</mat-icon>
+
+                <!-- icon hdfs -->
+                <img *ngIf="item.value && item.value.isHdfs" src="assets/images/hadoop-icon.svg" alt="" width="20" />
+
+                <!-- text label -->
+                <label
+                  class="form-check-label"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  >{{ item.text.length > 20 ? (item.text | slice: 0:20) + '...' : item.text }}</label
+                >
+              </div>
+
+              <!-- MatMenu Trigger -->
+              <div
+                [id]="item.id"
+                style="visibility: hidden; position: fixed"
+                [style.left]="contextMenuPosition.x"
+                [style.top]="contextMenuPosition.y"
+                #trigger="matMenuTrigger"
+                [matMenuTriggerFor]="contextMenuTreeview"
+              ></div>
+
+              <!-- Context Material Menu -->
+              <mat-menu
+                #contextMenuTreeview="matMenu"
+                class="form-control2 show-tick ms select2"
+                [overlapTrigger]="false"
+              >
+                <ng-template matMenuContent let-item="item">
+                  <div>
+                    <!-- Search from file -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="addSearchToWorkspace(item)"
+                      *ngIf="item.value && !item.value.isDir && !item.value.isRoot"
+                    >
+                      <img
+                        src="assets/images/dropdown-icon{{ folderIconRightClick }}/icon-search-file.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.SF_FILE' | translate }}
+                    </button>
+
+                    <!-- Search data tabular -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="addConfigSelectToWorkspace(item)"
+                      *ngIf="item.value && !item.value.isDir && !item.value.isRoot"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-set-reff.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.SF_TABULAR' | translate }}
+                    </button>
+
+                    <!-- search from folder -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="addSearchToWorkspace(item, 'folder')"
+                      *ngIf="item.value && item.value.isDir && !item.value.isRoot && !item.value.isConnection"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-new-folder.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.SF_FOLDER' | translate }}
+                    </button>
+
+                    <div
+                      class="dropdown-divider"
+                      *ngIf="item.value && !item.value.isRoot && !item.value.isConnection"
+                    ></div>
+
+                    <!-- Refresh Explorer -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="treeItemReload()"
+                      *ngIf="!item.value.isConnection"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-refresh.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.REFRESH' | translate }}
+                    </button>
+
+                    <div class="dropdown-divider" *ngIf="!item.value.isConnection"></div>
+
+                    <!-- Rename File / Folder -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="treeItemRename(item)"
+                      *ngIf="!item.value.isRoot && !item.value.isConnection"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-rename.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.RENAME' | translate }}
+                    </button>
+
+                    <!-- add folder -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="treeItemAddFolder(item)"
+                      *ngIf="!item.value.isConnection"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-new-folder.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.NEW_FOLDER' | translate }}
+                    </button>
+
+                    <!-- upload file at folder -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="treeItemUpload(item)"
+                      *ngIf="!item.value.isConnection"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-upload.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.UPLOAD_FILE' | translate }}
+                    </button>
+
+                    <!-- download file / dir -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="treeItemDownload(item)"
+                      *ngIf="!item.value.isRoot && !item.value.isConnection"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-download.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.DOWNLOAD' | translate }}
+                    </button>
+
+                    <!-- properties -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      *ngIf="!item.value.isRoot && item.value.isDir && item.value.isConnection"
+                    >
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.PROPERTIES' | translate }}
+                    </button>
+
+                    <!-- remove connection -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      *ngIf="!item.value.isRoot && item.value.isDir && item.value.isConnection"
+                    >
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.REMOVE_CONNECTION' | translate }}
+                    </button>
+
+                    <!-- copy path -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="treeItemCopyPath(item)"
+                      *ngIf="!item.value.isRoot"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-copy-path.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.COPY_PATH' | translate }}
+                    </button>
+
+                    <div class="dropdown-divider" *ngIf="!item.value.isRoot && !item.value.isConnection"></div>
+
+                    <!-- delete file / dir -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="treeItemDelete(item)"
+                      *ngIf="!item.value.isRoot && !item.value.isConnection"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-delete.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.DELETE' | translate }}
+                    </button>
+
+                    <div class="dropdown-divider" *ngIf="!item.value.isRoot && !item.value.isConnection"></div>
+
+                    <!-- copy item -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="treeItemCopyCut(item, 'copy')"
+                      *ngIf="!item.value.isRoot && !item.value.isConnection"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-copy.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.COPY' | translate }}
+                    </button>
+
+                    <!-- cut item -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="treeItemCopyCut(item, 'cut')"
+                      *ngIf="!item.value.isRoot && !item.value.isConnection"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-cut.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.CUT' | translate }}
+                    </button>
+
+                    <!-- paste item -->
+                    <button
+                      mat-menu-item
+                      class="tree-rc-btn"
+                      (click)="treeItemPaste(item)"
+                      [disabled]="disablePaste"
+                      [ngClass]="{ 'disabled-gray': disablePaste }"
+                      *ngIf="!item.value.isConnection"
+                    >
+                      <img
+                        src="../../../../../assets/images/dropdown-icon{{ folderIconRightClick }}/icon-paste.svg"
+                        width="10%"
+                      />
+                      {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.SOURCE_TYPE.PASTE' | translate }}
+                    </button>
+                  </div>
+                </ng-template>
+              </mat-menu>
+            </ng-template>
+
+            <!-- Item Source: HDFS File -->
+            <!-- <div class="treeview-container">
+              <div class="treeview-item">
+                <div class="form-inline row-item" >
+                  <i aria-hidden="true" class="fa fa-caret-down mr-2" ></i>
+                  <img src="assets/images/hadoop-icon.svg" height="28">
+                  <label class="form-check-label" data-toggle="tooltip" data-placement="bottom">HDFS Connection</label>
+                </div>
+              </div>
+              <div>
+                <div class="treeview-item">
+                  <div class="form-inline row-item" >
+                    <mat-icon class="icon-dark">grid_on</mat-icon>
+                    <label class="form-check-label" data-toggle="tooltip" data-placement="bottom">Connection 1</label>
+                  </div>
+                </div>
+                <div class="treeview-item">
+                  <div class="form-inline row-item" >
+                    <mat-icon class="icon-dark">grid_on</mat-icon>
+                    <label class="form-check-label" data-toggle="tooltip" data-placement="bottom">Connection 2</label>
+                  </div>
+                </div>
+                <div class="treeview-item">
+                  <div class="form-inline row-item" >
+                    <mat-icon class="icon-dark">grid_on</mat-icon>
+                    <label class="form-check-label" data-toggle="tooltip" data-placement="bottom">Connection 3</label>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <ngx-treeview
+              [config]="config"
+              [headerTemplate]="headerTemplate"
+              [itemTemplate]="itemTemplate"
+              [items]="rootTreeview"
+            ></ngx-treeview>
+
+            <!-- datasource no data -->
+            <div
+              class="datasource-no-data"
+              *ngIf="
+                rootTreeview &&
+                (rootTreeview.length === 0 || !rootTreeview[0].children || rootTreeview[0].children.length === 0)
+              "
+            >
+              <img class="mb-4 mx-auto d-block" src="assets/images/no-data-found.svg" alt="" />
+              <h6 align="center">{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.NODATA' | translate }}</h6>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2 -->
+        <div [ngClass]="{ 'tab-pane': true, active: activeTab === 'tab2' }" id="tab2">
+          <!-- search file -->
+          <div class="row clearfix">
+            <div class="col-10 pr-2 mb-1">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.SF' | translate }}"
+                  [(ngModel)]="searchDataqueryText"
+                  [ngModelOptions]="{ standalone: true }"
+                  (keyup)="$event.which == 13 ? searchDataquery() : 0"
+                />
+                <div class="input-group-text p-0">
+                  <a href="javascript:;" class="input-group-append p-0 pt-1" (click)="searchDataquery()"
+                    ><span class="input-group-addon mx-2"><i class="ti-search f-12"></i></span
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-2 pl-0">
+              <a
+                href="javascript:"
+                class="p-1"
+                (click)="refreshQuery()"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                [attr.data-original-title]="'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.RDQL' | translate"
+              >
+                <i class="ti-reload"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- select all checkbox -->
+          <div class="row clearfix">
+            <div class="col-10 pr-2">
+              <button
+                id="selectall"
+                type="checkbox"
+                class="btn btn-info btn-outline btn-sm w-100 mb-1 mt-1 ml-0"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                [attr.data-original-title]="'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.SA' | translate"
+                (click)="checkUncheckAll()"
+              >
+                {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.SA' | translate }} &nbsp;<i
+                  class="zmdi zmdi-check-square f-12 ml-1"
+                ></i>
+              </button>
+            </div>
+            <div class="col-2 pl-0 mt-1">
+              <a
+                *ngIf="selectedQueryListforDelete.length > 0"
+                href="javascript:void(0)"
+                id="deletebutton"
+                class="p-1 text-center"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.FILTER.D' | translate }}"
+                (click)="multipleDelete()"
+                ><i class="ti-trash align-middle"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- dataset list -->
+          <div
+            class="panel-group mt-1 dq-sc"
+            id="accordion_1"
+            role="tablist"
+            aria-multiselectable="true"
+            *ngIf="queryFileWrapperList && queryFileWrapperList.length > 0"
+          >
+            <!-- query item list -->
+            <div
+              class="panel panel-primary m-0 dataset-item"
+              *ngFor="let queryFileWrapper of queryFileWrapperList; index as idx"
+            >
+              <div class="panel-heading" role="tab" [id]="queryFileWrapper.queryFile.ID + '_'">
+                <h4 class="panel-title align-self-center">
+                  <div class="row clearfix">
+                    <!-- checkbox -->
+                    <div class="col-2 pl-4 align-self-center">
+                      <div class="checkbox simple individual">
+                        <input
+                          id="{{ 'mc-' + queryFileWrapper.queryFile.ID }}"
+                          type="checkbox"
+                          [(ngModel)]="queryFileWrapper.isChecked"
+                          (change)="getCheckedQuery(queryFileWrapper.queryFile.ID, queryFileWrapper.isChecked)"
+                        />
+                        <label for="{{ 'mc-' + queryFileWrapper.queryFile.ID }}"></label>
+                      </div>
+                    </div>
+
+                    <!-- query name -->
+                    <div class="col-8 px-0">
+                      <a
+                        role="button"
+                        data-toggle="collapse"
+                        data-parent="#accordion_1"
+                        aria-expanded="true"
+                        aria-controls="collapseOne_1"
+                        [ngClass]="{
+                          'is-active':
+                            selectedQuery?.ID != undefined && selectedQuery?.ID == queryFileWrapper.queryFile.ID
+                        }"
+                        (dblclick)="datasetToWorkspace(queryFileWrapper.queryFile)"
+                        (click)="toggleQueryFile(idx)"
+                      >
+                        <p class="mb-0">{{ queryFileWrapper.queryFile.title }}</p>
+                        <span class="ml-0"
+                          >{{ queryFileWrapper.queryFile.updatedDate | dateformat: 'DD/MM/YYYY - hh:mm:ss' }}
+                        </span>
+                        <span class="zmdi zmdi-more-vert mx-1"></span>
+                        <span class="ml-0">
+                          {{ dataSetCount(queryFileWrapper.queryFile.datasetAlias) }}
+                          {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.RESULT' | translate }}
+                        </span>
+                      </a>
+                    </div>
+
+                    <!-- three dot menu -->
+                    <div class="col-1 align-self-center p-0">
+                      <div class="dropdown">
+                        <a
+                          class="dropdown-toggle pr-2 float-right"
+                          data-toggle="dropdown"
+                          role="button"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                          [matMenuTriggerFor]="queryListItemMenu"
+                        >
+                          <i class="zmdi zmdi-more-vert d-inline"></i>
+                        </a>
+                        <mat-menu #queryListItemMenu="matMenu" class="form-control2 show-tick ms select2">
+                          <button mat-menu-item (click)="datasetToWorkspace(queryFileWrapper.queryFile)">
+                            {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.LTE' | translate }}
+                          </button>
+                          <button mat-menu-item (click)="datasetDuplicate(queryFileWrapper.queryFile)">
+                            {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.DUPLICATE' | translate }}
+                          </button>
+                          <button mat-menu-item (click)="shareQuery(queryFileWrapper.queryFile)">
+                            {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.SQ' | translate }}
+                          </button>
+                          <button mat-menu-item (click)="datasetDelete(queryFileWrapper.queryFile)">
+                            {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.DQ' | translate }}
+                          </button>
+                        </mat-menu>
+                      </div>
+                    </div>
+                  </div>
+                </h4>
+              </div>
+
+              <!-- dataset aliases -->
+              <div
+                [id]="'_' + queryFileWrapper.queryFile.ID"
+                *ngIf="checkDataForArray(queryFileWrapper.queryFile.datasetAlias)"
+                class="panel-collapse"
+                [ngClass]="{ collapse: !queryFileExpanded[idx] }"
+                role="tabpanel"
+              >
+                <div class="panel-body">
+                  <div class="body">
+                    <div *ngFor="let item of Object.keys(queryFileWrapper.queryFile.datasetAlias); index as i">
+                      <form class="editable-text">
+                        <input
+                          type="text"
+                          [(ngModel)]="queryFileDatasetAliases[idx][i]"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="text-edit-input"
+                          [style]="{ display: 'inline-block' }"
+                          *ngIf="queryFileEditable[idx][i]"
+                        />
+                        <label
+                          id="{{ 'label-edit-input-' + queryFileWrapper.queryFile.ID + '-' + i }}"
+                          class="w-65"
+                          for="text-edit-input"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="{{ queryFileWrapper.queryFile.datasetAlias[item] }}"
+                          *ngIf="!queryFileEditable[idx][i]"
+                          >{{ queryFileWrapper.queryFile.datasetAlias[item] }}</label
+                        >
+                        <a
+                          href="javascript:;"
+                          (click)="saveDatasetName(idx, i)"
+                          class="relative-right"
+                          aria-label="Stop editing"
+                          *ngIf="queryFileEditable[idx][i]"
+                        >
+                          <svg role="img" viewBox="0 0 24 24">
+                            <path
+                              role="presentation"
+                              class="svg-icon"
+                              d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                            />
+                          </svg>
+                        </a>
+                        <a
+                          href="javascript:;"
+                          (click)="editDatasetName(idx, i)"
+                          class="relative-right"
+                          aria-label="Edit the name of this article"
+                          *ngIf="!queryFileEditable[idx][i]"
+                        >
+                          <svg role="img" viewBox="0 0 24 24">
+                            <path
+                              role="presentation"
+                              class="svg-icon"
+                              d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                            />
+                          </svg>
+                        </a>
+                      </form>
+                      <hr class="my-2" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- load more button -->
+            <div class="row clearfix justify-content-center mt-1" *ngIf="queryFileWrapperList.length > 8">
+              <button class="btn btn-info btn-outline btn-sm mb-0 w-100" (click)="loadmore()">
+                {{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.LM' | translate }}
+              </button>
+            </div>
+          </div>
+
+          <!-- dataset no data -->
+          <div
+            class="dataset-no-data panel panel-primary m-0"
+            *ngIf="!queryFileWrapperList || (queryFileWrapperList && queryFileWrapperList.length === 0)"
+          >
+            <img class="mb-4 mx-auto d-block" src="assets/images/no-data-found.svg" alt="" />
+            <h6 align="center">{{ 'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY.NODATA' | translate }}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- toggle button -->
+    <div
+      class="hide-menu"
+      (click)="addRemoveBodyClass('left_icon_toggle', 'left')"
+      data-toggle="tooltip"
+      data-placement="right"
+      [attr.data-original-title]="'MODULE.DATA_PROCESSING.RIGHT_BAR.QUERY_PROPERTY_HIDE_LEFT' | translate"
+    >
+      <div class="btn-toggle btn-toggle-menu">
+        <a href="javascript:void(0);" class="btn-menu"></a>
+      </div>
+    </div>
+  </div>
+</aside>
